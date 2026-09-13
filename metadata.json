@@ -1,0 +1,6 @@
+{
+  "name": "Campus Pick",
+  "description": "Secure campus Lost & Found platform for PES College of Engineering, Mandya (PESCE Mandya). Lost it? Pick it back.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

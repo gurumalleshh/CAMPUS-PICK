@@ -1,0 +1,132 @@
+import React from 'react';
+import { useApp } from '../context/AppContext';
+
+export const BottomNav: React.FC = () => {
+  const {
+    activeTab,
+    setActiveTab,
+    matches,
+    unreadCount,
+    openReportModal,
+    currentUser,
+  } = useApp();
+
+  const pendingMatchesCount = matches.filter((m) => m.status === 'PENDING').length;
+
+  if (!currentUser) return null;
+
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 w-full z-40 bg-[#f4f7f5]/95 backdrop-blur-xl border-t border-[#064e3b]/10 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+      <div className="h-16 max-w-md md:max-w-lg mx-auto flex items-center justify-between px-1">
+        {/* 1. HOME */}
+        <button
+          onClick={() => setActiveTab('home')}
+          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer ${
+            activeTab === 'home'
+              ? 'text-emerald-700 font-bold scale-102'
+              : 'text-[#54656f] hover:text-[#0b1c30]'
+          }`}
+          title="Home Dashboard"
+        >
+          <span
+            className="material-symbols-outlined text-[22px]"
+            style={{ fontVariationSettings: activeTab === 'home' ? "'FILL' 1" : "'FILL' 0" }}
+          >
+            home
+          </span>
+          <span className="text-[10px] tracking-tight font-medium truncate w-full text-center mt-0.5">
+            Home
+          </span>
+        </button>
+
+        {/* 2. MATCHES */}
+        <button
+          onClick={() => setActiveTab('matches')}
+          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer relative ${
+            activeTab === 'matches'
+              ? 'text-emerald-700 font-bold scale-102'
+              : 'text-[#54656f] hover:text-[#0b1c30]'
+          }`}
+          title="Potential Matches"
+        >
+          <div className="relative">
+            <span
+              className="material-symbols-outlined text-[22px]"
+              style={{ fontVariationSettings: activeTab === 'matches' ? "'FILL' 1" : "'FILL' 0" }}
+            >
+              join_inner
+            </span>
+            {pendingMatchesCount > 0 && (
+              <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 bg-emerald-600 text-white rounded-full text-[8.5px] font-bold flex items-center justify-center shadow-xs">
+                {pendingMatchesCount}
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] tracking-tight font-medium truncate w-full text-center mt-0.5">
+            Matches
+          </span>
+        </button>
+
+        {/* 3. CENTER ACTION: REPORT */}
+        <button
+          onClick={() => openReportModal('LOST')}
+          className="flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 group transition-all cursor-pointer"
+          title="Report Lost or Found Item"
+          aria-label="Report Item"
+        >
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex items-center justify-center shadow-sm group-hover:scale-105 active:scale-95 transition-all">
+            <span className="material-symbols-outlined text-[20px]">add</span>
+          </div>
+          <span className="text-[10px] font-bold text-emerald-800 tracking-tight truncate w-full text-center mt-0.5">
+            Report
+          </span>
+        </button>
+
+        {/* 4. MESSAGES / CHAT */}
+        <button
+          onClick={() => setActiveTab('messages')}
+          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer relative ${
+            activeTab === 'messages'
+              ? 'text-emerald-700 font-bold scale-102'
+              : 'text-[#54656f] hover:text-[#0b1c30]'
+          }`}
+          title="WhatsApp Campus Chats"
+        >
+          <div className="relative">
+            <span
+              className="material-symbols-outlined text-[22px]"
+              style={{ fontVariationSettings: activeTab === 'messages' ? "'FILL' 1" : "'FILL' 0" }}
+            >
+              chat
+            </span>
+            <span className="absolute -top-0.5 -right-1 w-2 h-2 bg-emerald-500 rounded-full ring-1 ring-white" />
+          </div>
+          <span className="text-[10px] tracking-tight font-medium truncate w-full text-center mt-0.5">
+            Chats
+          </span>
+        </button>
+
+        {/* 5. HEROES */}
+        <button
+          onClick={() => setActiveTab('heroes')}
+          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer ${
+            activeTab === 'heroes'
+              ? 'text-emerald-700 font-bold scale-102'
+              : 'text-[#54656f] hover:text-[#0b1c30]'
+          }`}
+          title="Campus Heroes Leaderboard"
+        >
+          <span
+            className="material-symbols-outlined text-[22px]"
+            style={{ fontVariationSettings: activeTab === 'heroes' ? "'FILL' 1" : "'FILL' 0" }}
+          >
+            military_tech
+          </span>
+          <span className="text-[10px] tracking-tight font-medium truncate w-full text-center mt-0.5">
+            Heroes
+          </span>
+        </button>
+      </div>
+    </nav>
+  );
+};
