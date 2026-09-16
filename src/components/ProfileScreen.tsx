@@ -35,7 +35,7 @@ export const ProfileScreen: React.FC = () => {
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b1c30] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
               User Profile & Settings
             </h1>
             <p className="text-xs text-[#3d4a42]">
@@ -75,7 +75,7 @@ export const ProfileScreen: React.FC = () => {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h1 className="font-heading font-bold text-lg text-[#0b1c30] truncate">
+              <h1 className="font-heading font-bold text-lg text-[#0b241c] truncate">
                 {currentUser.displayName}
               </h1>
               <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
@@ -104,7 +104,7 @@ export const ProfileScreen: React.FC = () => {
 
           <div className="p-2 rounded-xl bg-slate-50">
             <span className="text-[10px] text-slate-400 font-bold uppercase">POINTS</span>
-            <p className="text-base font-bold text-[#0b1c30] mt-0.5">
+            <p className="text-base font-bold text-[#0b241c] mt-0.5">
               {currentUser.points}
             </p>
           </div>
@@ -289,7 +289,7 @@ export const ProfileScreen: React.FC = () => {
       </div>
 
       {/* Evaluator 8-Act Walkthrough Simulator Button */}
-      <div className="p-4 rounded-2xl bg-gradient-to-br from-[#0c3123] to-[#0b1c30] text-white space-y-2 shadow-xs">
+      <div className="p-4 rounded-2xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white space-y-2 shadow-xs">
         <div className="flex items-center gap-2 font-bold text-emerald-400 text-sm">
           <span className="material-symbols-outlined text-[20px]">play_circle</span>
           <span>Section 75 Interactive Walkthrough</span>

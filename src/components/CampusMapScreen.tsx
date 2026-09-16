@@ -31,7 +31,7 @@ export const CampusMapScreen: React.FC = () => {
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b1c30] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
               Interactive Campus Map
             </h1>
             <p className="text-xs text-[#3d4a42]">
@@ -42,7 +42,8 @@ export const CampusMapScreen: React.FC = () => {
 
         <button
           onClick={() => triggerToast('GPS Geofence active within PESCE Mandya bounds', 'gps_fixed')}
-          className="p-2 rounded-xl bg-white border border-slate-200 text-emerald-700 hover:bg-slate-50 flex items-center gap-1 text-xs font-bold"
+          className="p-2 rounded-xl bg-white border border-slate-200 text-emerald-700 hover:bg-slate-50 flex items-center gap-1 text-xs font-bold shadow-2xs cursor-pointer"
+          aria-label="Recenter Map to Campus Bounds"
         >
           <span className="material-symbols-outlined text-[18px]">my_location</span>
           <span className="hidden sm:inline">Recenter</span>
@@ -58,7 +59,7 @@ export const CampusMapScreen: React.FC = () => {
               onClick={() => setFilterType(type)}
               className={`px-3 py-1.5 rounded-full font-bold uppercase tracking-wider text-[10px] transition-all cursor-pointer ${
                 filterType === type
-                  ? 'bg-[#0b1c30] text-white'
+                  ? 'bg-[#0b241c] text-white shadow-xs'
                   : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
               }`}
             >
@@ -296,7 +297,7 @@ export const CampusMapScreen: React.FC = () => {
               <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
                 SELECTED SECTOR
               </span>
-              <h3 className="font-heading font-bold text-base text-[#0b1c30] mt-1">
+              <h3 className="font-heading font-bold text-base text-[#0b241c] mt-1">
                 {selectedBuilding.name}
               </h3>
               <p className="text-xs text-slate-500">
@@ -393,7 +394,7 @@ export const CampusMapScreen: React.FC = () => {
               </button>
             </div>
 
-            <h3 className="font-heading font-bold text-base text-[#0b1c30]">
+            <h3 className="font-heading font-bold text-base text-[#0b241c]">
               {selectedPinReport.itemName}
             </h3>
 

@@ -31,7 +31,7 @@ export const CampusHeroesScreen: React.FC = () => {
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b1c30] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
               Campus Heroes Leaderboard
             </h1>
             <p className="text-xs text-[#3d4a42]">
@@ -106,7 +106,7 @@ export const CampusHeroesScreen: React.FC = () => {
                 onClick={() => setTimeFilter(period.id as any)}
                 className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   timeFilter === period.id
-                    ? 'bg-[#0b1c30] text-white'
+                    ? 'bg-[#0b241c] text-white shadow-xs'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                 }`}
               >
@@ -129,7 +129,7 @@ export const CampusHeroesScreen: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="font-heading font-bold text-xs text-[#0b1c30] truncate w-full">
+              <h3 className="font-heading font-bold text-xs text-[#0b241c] truncate w-full">
                 {leaderboard[1].name}
               </h3>
               <p className="text-[10px] text-slate-500">{leaderboard[1].dept}</p>
@@ -150,7 +150,7 @@ export const CampusHeroesScreen: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="font-heading font-bold text-sm text-[#0b1c30] truncate w-full">
+              <h3 className="font-heading font-bold text-sm text-[#0b241c] truncate w-full">
                 {leaderboard[0].name}
               </h3>
               <p className="text-[10px] text-amber-800 font-semibold">{leaderboard[0].dept}</p>
@@ -171,7 +171,7 @@ export const CampusHeroesScreen: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="font-heading font-bold text-xs text-[#0b1c30] truncate w-full">
+              <h3 className="font-heading font-bold text-xs text-[#0b241c] truncate w-full">
                 {leaderboard[2].name}
               </h3>
               <p className="text-[10px] text-slate-500">{leaderboard[2].dept}</p>
@@ -349,7 +349,7 @@ export const CampusHeroesScreen: React.FC = () => {
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <h4 className="font-heading font-bold text-sm text-[#0b1c30]">
+                    <h4 className="font-heading font-bold text-sm text-[#0b241c]">
                       {reward.name}
                     </h4>
                     <p className="text-xs text-slate-600 mt-0.5">

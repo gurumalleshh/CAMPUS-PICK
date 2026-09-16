@@ -13,6 +13,7 @@ export const MatchesScreen: React.FC = () => {
     openChatModal,
     triggerToast,
     currentUser,
+    requestChatApproval,
     updateVerificationStatus,
     goBack,
   } = useApp();
@@ -26,6 +27,7 @@ export const MatchesScreen: React.FC = () => {
   const currentVerification = currentMatch ? verifications[currentMatch.id] : undefined;
 
   const isVerified = currentVerification?.status === 'VERIFIED';
+  const isRejected = currentVerification?.status === 'REJECTED';
   const isUnderReview = currentVerification?.status === 'UNDER_REVIEW';
   const needsMore = currentVerification?.status === 'NEEDS_MORE_EVIDENCE';
 
@@ -88,7 +90,7 @@ export const MatchesScreen: React.FC = () => {
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b1c30] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
               Potential Matches
             </h1>
             <p className="text-xs text-[#3d4a42]">
@@ -106,7 +108,7 @@ export const MatchesScreen: React.FC = () => {
           <span className="material-symbols-outlined text-[48px] text-slate-300">
             handshake
           </span>
-          <h3 className="font-heading font-bold text-base text-[#0b1c30]">
+          <h3 className="font-heading font-bold text-base text-[#0b241c]">
             No Pending Matches Found
           </h3>
           <p className="text-xs text-[#3d4a42] max-w-sm mx-auto">
@@ -124,7 +126,7 @@ export const MatchesScreen: React.FC = () => {
                   onClick={() => setSelectedMatch(m)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap border transition-all cursor-pointer ${
                     currentMatch?.id === m.id
-                      ? 'bg-[#0b1c30] text-white border-[#0b1c30]'
+                      ? 'bg-[#0b241c] text-white border-[#0b241c]'
                       : 'bg-white text-[#3d4a42] border-slate-200 hover:bg-slate-50'
                   }`}
                 >
@@ -137,7 +139,7 @@ export const MatchesScreen: React.FC = () => {
           {currentMatch && (
             <div className="space-y-4">
               {/* Match Header Alert Banner */}
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-[#0c3123] to-[#0b1c30] text-white border border-emerald-800 shadow-sm space-y-3">
+              <div className="p-4 rounded-3xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white border border-emerald-800/60 shadow-sm space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -183,7 +185,7 @@ export const MatchesScreen: React.FC = () => {
 
               {/* Side-by-Side Telemetry Comparison Card */}
               <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3">
-                <h3 className="font-heading font-bold text-sm text-[#0b1c30] flex items-center justify-between">
+                <h3 className="font-heading font-bold text-sm text-[#0b241c] flex items-center justify-between">
                   <span>Side-by-Side Report Matrix</span>
                   <span className="text-xs font-mono font-normal text-slate-500">
                     Case #{currentMatch.lostReport.ticketNumber} vs #{currentMatch.foundReport.ticketNumber}
@@ -236,30 +238,117 @@ export const MatchesScreen: React.FC = () => {
                     Algorithmic Correlation Factors
                   </span>
                   <div className="space-y-1.5">
-                    {currentMatch.matchingFactors.map((factor, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-between text-xs py-1 px-2.5 rounded-lg bg-slate-50 border border-slate-100"
-                      >
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`material-symbols-outlined text-[16px] ${
-                              factor.match ? 'text-emerald-600' : 'text-amber-500'
-                            }`}
-                          >
-                            {factor.match ? 'check_circle' : 'lock'}
-                          </span>
-                          <span className="font-medium text-slate-800">
-                            {factor.name}
+                    {currentMatch.matchingFactors.map((factor, idx) => {
+                      const isSerialFactor = factor.name.toLowerCase().includes('serial');
+                      return (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between text-xs py-1 px-2.5 rounded-lg bg-slate-50 border border-slate-100"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`material-symbols-outlined text-[16px] ${
+                                factor.match || (isSerialFactor && isSecurityOrAdmin)
+                                  ? 'text-emerald-600'
+                                  : 'text-amber-500'
+                              }`}
+                            >
+                              {factor.match || (isSerialFactor && isSecurityOrAdmin)
+                                ? 'check_circle'
+                                : 'lock'}
+                            </span>
+                            <span className="font-medium text-slate-800">
+                              {factor.name}
+                            </span>
+                          </div>
+                          <span className="text-[11px] text-slate-500 font-mono">
+                            {isSerialFactor
+                              ? isSecurityOrAdmin
+                                ? 'PF-284920-X1 (Decrypted for Security/Admin)'
+                                : 'Confidential • Protected in AES-256 Vault'
+                              : factor.description}
                           </span>
                         </div>
-                        <span className="text-[11px] text-slate-500 font-mono">
-                          {factor.description}
-                        </span>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
+
+                {/* CONFIDENTIAL CUSTODY DETAILS (Visible ONLY to Officer and Admin) */}
+                {isSecurityOrAdmin ? (
+                  <div className="mt-3 p-3.5 bg-slate-900 text-white rounded-2xl border border-slate-700 space-y-2.5 shadow-sm">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-amber-400 text-[20px]">
+                          vpn_key
+                        </span>
+                        <div>
+                          <h4 className="font-bold text-xs text-white uppercase tracking-wider flex items-center gap-1.5">
+                            <span>Confidential Details Vault</span>
+                            <span className="text-[9px] bg-amber-400/20 text-amber-300 border border-amber-400/30 px-1.5 py-0.5 rounded font-mono">
+                              OFFICER & ADMIN ONLY
+                            </span>
+                          </h4>
+                          <p className="text-[10px] text-slate-400">
+                            Clearance granted to {currentUser.role === 'admin' ? 'Administrator' : 'Campus Security Officer'}. Shielded from students.
+                          </p>
+                        </div>
+                      </div>
+                      <span className="material-symbols-outlined text-emerald-400 text-[18px]">
+                        lock_open
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+                      <div className="p-2.5 bg-white/5 rounded-xl border border-white/10 space-y-1">
+                        <span className="text-[10px] text-slate-400 font-semibold block uppercase">
+                          Hardware Serial / IMEI
+                        </span>
+                        <span className="font-mono text-emerald-400 font-bold text-xs block">
+                          {currentVerification?.submittedEvidence.serialNumberProvided ||
+                            currentMatch.lostReport.privateEvidence?.serialNumber ||
+                            'PF-284920-X1'}
+                        </span>
+                      </div>
+
+                      <div className="p-2.5 bg-white/5 rounded-xl border border-white/10 space-y-1">
+                        <span className="text-[10px] text-slate-400 font-semibold block uppercase">
+                          Procurement Proof / Invoice
+                        </span>
+                        <span className="font-mono text-blue-300 text-xs truncate block">
+                          {currentVerification?.submittedEvidence.invoiceDocumentUrl ||
+                            currentMatch.lostReport.privateEvidence?.invoiceFileName ||
+                            'PESCE_Computer_Procurement_Receipt.pdf'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 bg-white/5 rounded-xl border border-white/10 space-y-1 text-xs">
+                      <span className="text-[10px] text-slate-400 font-semibold block uppercase">
+                        Private Lockscreen / Decal / Marking Notes
+                      </span>
+                      <p className="text-slate-300 text-[11px] leading-relaxed">
+                        {currentVerification?.submittedEvidence.lockscreenOrDecalHint ||
+                          currentMatch.lostReport.privateEvidence?.privateNotes ||
+                          'Lockscreen wallpaper is dark matrix code with student ID 4PS23CS084 engraved on base corner. Linux Tux penguin decal near left USB-C.'}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-3 p-3 bg-slate-100/90 border border-slate-200 rounded-2xl flex items-start gap-2.5 text-xs text-slate-600">
+                    <span className="material-symbols-outlined text-slate-500 text-[18px] shrink-0 mt-0.5">
+                      lock
+                    </span>
+                    <div>
+                      <span className="font-bold text-slate-800 block text-xs">
+                        Confidential Details Shielded (AES-256)
+                      </span>
+                      <span className="text-[11px] text-slate-500 leading-snug block">
+                        Hardware serial numbers, purchase invoices, and private owner markings are stored in the institutional encrypted vault. Only authorized Campus Security Officers and Administrators can inspect confidential details to protect owner privacy and prevent fraudulent claims.
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Ownership Verification Card & Actions */}
@@ -270,7 +359,7 @@ export const MatchesScreen: React.FC = () => {
                     <span className="material-symbols-outlined text-emerald-700 text-[22px]">
                       security
                     </span>
-                    <h3 className="font-heading font-bold text-sm text-[#0b1c30]">
+                    <h3 className="font-heading font-bold text-sm text-[#0b241c]">
                       Ownership Verification & Authority Approval
                     </h3>
                   </div>
@@ -306,11 +395,11 @@ export const MatchesScreen: React.FC = () => {
                         <span>Certified & Approved by Admin ({currentVerification?.reviewedBy || 'Dr. N. Shivakumar, Dean of Student Welfare'})</span>
                       </p>
                       <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-200 text-indigo-900">
-                        MESSAGING UNLOCKED
+                        STATUS: APPROVED
                       </span>
                     </div>
                     <p className="text-indigo-900 leading-relaxed">
-                      Official administrative verification approved by Campus Administration. Student ownership and procurement credentials attested under Dean of Student Welfare records. Direct messaging access is unlocked.
+                      Official administrative verification approved by Campus Administration. Student ownership credentials attested under Dean of Student Welfare records. Direct messaging access is unlocked.
                     </p>
                   </div>
                 ) : isApprovedByOfficer ? (
@@ -321,48 +410,79 @@ export const MatchesScreen: React.FC = () => {
                         <span>Certified & Approved by Officer ({currentVerification?.reviewedBy || 'Officer R. Nair, Badge #CS-409'})</span>
                       </p>
                       <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900">
-                        MESSAGING UNLOCKED
+                        STATUS: APPROVED
                       </span>
                     </div>
                     <p className="text-emerald-900 leading-relaxed">
-                      Physical security verification completed at Gate 1 post. Hardware markings, serial number PF-284920-X1, and student credentials verified by on-duty officer. Direct messaging access is unlocked.
+                      Physical security verification completed at Gate 1 post. Hardware markings, serial number, and student credentials verified by on-duty officer. Direct messaging access is unlocked.
                     </p>
+                  </div>
+                ) : isRejected ? (
+                  <div className="p-3.5 bg-rose-50 border border-rose-300 rounded-2xl space-y-2 text-xs text-rose-950">
+                    <div className="flex items-center justify-between">
+                      <p className="font-bold flex items-center gap-1.5 text-rose-900">
+                        <span className="material-symbols-outlined text-[18px] text-rose-700">cancel</span>
+                        <span>Verification Rejected by {currentVerification?.reviewedBy || 'Officer R. Nair'}</span>
+                      </p>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-rose-200 text-rose-900">
+                        STATUS: REJECTED
+                      </span>
+                    </div>
+                    <p className="text-rose-900 leading-relaxed">
+                      This chat verification request was reviewed and rejected. Claimed proof did not match official custody records. Direct student chat remains disabled.
+                    </p>
+                    <div className="pt-1 flex items-center gap-2">
+                      <button
+                        onClick={() => requestChatApproval(currentMatch.id)}
+                        className="px-3 py-1.5 bg-rose-700 hover:bg-rose-800 text-white font-bold rounded-xl text-xs flex items-center gap-1 shadow-xs transition-colors cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">send</span>
+                        <span>Re-Submit Chat Request to Officers</span>
+                      </button>
+                    </div>
                   </div>
                 ) : isUnderReview ? (
                   <div className="p-3.5 bg-amber-50/90 border border-amber-300 rounded-2xl space-y-1.5 text-xs text-amber-950">
                     <div className="flex items-center justify-between">
                       <p className="font-bold flex items-center gap-1.5 text-amber-900">
-                        <span className="material-symbols-outlined text-[18px] text-amber-700">lock</span>
-                        <span>Messaging Access Locked • Admin or Officer Approval Required</span>
+                        <span className="material-symbols-outlined text-[18px] text-amber-700">hourglass_top</span>
+                        <span>Chat Request Sent to Officers • Decision Pending</span>
                       </p>
                       <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-200 text-amber-900">
-                        APPROVAL REQUIRED
+                        PENDING DECISION
                       </span>
                     </div>
                     <p className="text-amber-900 leading-relaxed">
-                      Match telemetry detected (87% confidence). In accordance with campus safety rules, direct messaging between students is locked until an on-duty <strong>Verification Officer</strong> or campus <strong>Admin</strong> reviews and approves this claim. Either authority can approve.
+                      Chat request sent to <strong>Officer R. Nair (Badge #CS-409)</strong> & <strong>Admin Dr. N. Shivakumar</strong>. Per campus protocol, chat does NOT approve automatically. If approved, status will display Approved. If rejected, status will display Rejected.
                     </p>
                   </div>
                 ) : (
-                  <div className="p-3.5 bg-slate-50 border border-slate-300 rounded-2xl space-y-1.5 text-xs text-slate-900">
+                  <div className="p-3.5 bg-slate-50 border border-slate-300 rounded-2xl space-y-2 text-xs text-slate-900">
                     <div className="flex items-center justify-between">
                       <p className="font-bold flex items-center gap-1.5 text-slate-800">
                         <span className="material-symbols-outlined text-[18px] text-slate-600">lock</span>
-                        <span>Verification & Authority Approval Required</span>
+                        <span>Officer Verification Required</span>
                       </p>
                       <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-200 text-slate-800">
                         MESSAGING LOCKED
                       </span>
                     </div>
                     <p className="text-slate-700 leading-relaxed">
-                      To protect against fraudulent claims, matching verification must be approved by either an Admin or Verification Officer before messaging access is granted.
+                      To protect student privacy and avoid fraud, chat requests are sent to Gate 1 security officers and campus admins for manual review.
                     </p>
+                    <button
+                      onClick={() => requestChatApproval(currentMatch.id)}
+                      className="px-3 py-1.5 bg-[#008069] hover:bg-[#006e59] text-white font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer w-fit"
+                    >
+                      <span className="material-symbols-outlined text-[15px]">send</span>
+                      <span>Send Chat Request to Officers</span>
+                    </button>
                   </div>
                 )}
 
                 {/* TAKE APPROVAL FROM ADMIN OR VERIFICATION OFFICER ACTION PANEL */}
                 {!isVerified ? (
-                  <div className="p-4 bg-gradient-to-br from-slate-900 to-[#0b1c30] text-white rounded-2xl space-y-3.5 shadow-md border border-slate-700">
+                  <div className="p-4 bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white rounded-2xl space-y-3.5 shadow-md border border-emerald-800/40">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="material-symbols-outlined text-amber-400 text-[20px]">
@@ -370,88 +490,30 @@ export const MatchesScreen: React.FC = () => {
                         </span>
                         <div>
                           <h4 className="font-bold text-sm text-white">
-                            Authorized Match Approvers
+                            {currentUser.role === 'admin'
+                              ? 'Administrator Verification Attestation'
+                              : currentUser.role === 'security'
+                              ? 'Campus Security Verification Attestation'
+                              : 'Authorized Authority Sign-off Pending'}
                           </h4>
                           <p className="text-[11px] text-slate-300">
-                            Admin or Verification Officer: either authority can verify and grant messaging access
+                            {currentUser.role === 'admin'
+                              ? 'You are logged in as Administrator. Review evidence and issue administrative sign-off.'
+                              : currentUser.role === 'security'
+                              ? 'You are logged in as Campus Security Officer. Inspect physical custody and issue officer sign-off.'
+                              : 'Direct messaging and handover require official sign-off from on-duty Campus Security or Administration.'}
                           </p>
                         </div>
                       </div>
                       <span className="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded whitespace-nowrap">
-                        Sign-off Pending
+                        {isUnderReview ? 'Review Pending' : isRejected ? 'Rejected' : 'Action Required'}
                       </span>
                     </div>
 
-                    {/* Dual Approver Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {/* Approver 1: Verification Officer */}
-                      <div
-                        className={`p-3 rounded-xl border transition-all flex flex-col justify-between ${
-                          currentUser.role === 'security'
-                            ? 'bg-emerald-950/60 border-emerald-500/50 ring-1 ring-emerald-500/30'
-                            : 'bg-white/5 border-white/10 hover:border-white/20'
-                        }`}
-                      >
-                        <div>
-                          <div className="flex items-start gap-2.5">
-                            <img
-                              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80"
-                              alt="Officer R. Nair"
-                              className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-400 shrink-0"
-                            />
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-center justify-between gap-1">
-                                <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400">
-                                  Verification Officer
-                                </span>
-                                {currentUser.role === 'security' && (
-                                  <span className="text-[9px] bg-emerald-500 text-white font-black px-1.5 py-0.2 rounded">
-                                    YOU
-                                  </span>
-                                )}
-                              </div>
-                              <h5 className="font-bold text-xs text-white truncate">
-                                Officer R. Nair
-                              </h5>
-                              <p className="text-[10px] text-slate-300 truncate">
-                                Badge #CS-409 • Gate 1 Security Desk
-                              </p>
-                            </div>
-                          </div>
-                          <p className="text-[10px] text-slate-300 mt-2 line-clamp-2">
-                            Verifies physical device serial #PF-284920-X1 and hardware markings at Gate 1 post.
-                          </p>
-                        </div>
-
-                        <button
-                          onClick={() => {
-                            updateVerificationStatus(
-                              currentMatch.id,
-                              'VERIFIED',
-                              'Hardware markings, serial number PF-284920-X1, and invoice receipt attested at Gate 1 post.',
-                              'Verification Officer R. Nair (Badge #CS-409)',
-                              'OFFICER'
-                            );
-                          }}
-                          className="w-full mt-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
-                        >
-                          <span className="material-symbols-outlined text-[16px]">verified</span>
-                          <span>
-                            {currentUser.role === 'security'
-                              ? 'Approve as Officer (You)'
-                              : 'Take Approval from Officer'}
-                          </span>
-                        </button>
-                      </div>
-
-                      {/* Approver 2: Campus Admin */}
-                      <div
-                        className={`p-3 rounded-xl border transition-all flex flex-col justify-between ${
-                          currentUser.role === 'admin'
-                            ? 'bg-indigo-950/60 border-indigo-500/50 ring-1 ring-indigo-500/30'
-                            : 'bg-white/5 border-white/10 hover:border-white/20'
-                        }`}
-                      >
+                    {/* Role-Specific Approver UI: ONLY Admin for admin, ONLY Officer for officer */}
+                    {currentUser.role === 'admin' ? (
+                      /* Admin Only Card */
+                      <div className="p-3.5 rounded-xl border bg-indigo-950/70 border-indigo-500/60 ring-1 ring-indigo-500/40 transition-all flex flex-col justify-between">
                         <div>
                           <div className="flex items-start gap-2.5">
                             <img
@@ -462,13 +524,11 @@ export const MatchesScreen: React.FC = () => {
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center justify-between gap-1">
                                 <span className="text-[10px] uppercase font-bold tracking-wider text-indigo-400">
-                                  Campus Admin
+                                  Campus Administrator Desk
                                 </span>
-                                {currentUser.role === 'admin' && (
-                                  <span className="text-[9px] bg-indigo-500 text-white font-black px-1.5 py-0.2 rounded">
-                                    YOU
-                                  </span>
-                                )}
+                                <span className="text-[9px] bg-indigo-500 text-white font-black px-1.5 py-0.2 rounded">
+                                  YOUR AUTHORITY
+                                </span>
                               </div>
                               <h5 className="font-bold text-xs text-white truncate">
                                 Dr. N. Shivakumar
@@ -479,31 +539,154 @@ export const MatchesScreen: React.FC = () => {
                             </div>
                           </div>
                           <p className="text-[10px] text-slate-300 mt-2 line-clamp-2">
-                            Attests official ownership via student registry and college procurement ledger.
+                            Attest official institutional ownership via student registry and procurement ledger.
                           </p>
                         </div>
 
-                        <button
-                          onClick={() => {
-                            updateVerificationStatus(
-                              currentMatch.id,
-                              'VERIFIED',
-                              'Hardware markings and purchase invoice attested under Dean of Student Welfare records.',
-                              'Admin Dr. N. Shivakumar (Dean of Student Welfare)',
-                              'ADMIN'
-                            );
-                          }}
-                          className="w-full mt-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
-                        >
-                          <span className="material-symbols-outlined text-[16px]">verified_user</span>
-                          <span>
-                            {currentUser.role === 'admin'
-                              ? 'Approve as Admin (You)'
-                              : 'Take Approval from Admin'}
-                          </span>
-                        </button>
+                        <div className="mt-3 flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              updateVerificationStatus(
+                                currentMatch.id,
+                                'VERIFIED',
+                                'Hardware markings and purchase invoice attested under Dean of Student Welfare records.',
+                                'Admin Dr. N. Shivakumar (Dean of Student Welfare)',
+                                'ADMIN'
+                              );
+                            }}
+                            className="flex-1 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1 shadow-sm transition-all cursor-pointer"
+                          >
+                            <span className="material-symbols-outlined text-[16px]">verified_user</span>
+                            <span>Approve as Admin</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              updateVerificationStatus(
+                                currentMatch.id,
+                                'REJECTED',
+                                'Procurement ledger does not match student ownership claim.',
+                                'Admin Dr. N. Shivakumar (Dean of Student Welfare)',
+                                'ADMIN'
+                              );
+                            }}
+                            className="px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1 shadow-sm transition-all cursor-pointer"
+                            title="Reject this match verification as Admin"
+                          >
+                            <span className="material-symbols-outlined text-[16px]">cancel</span>
+                            <span>Reject as Admin</span>
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    ) : currentUser.role === 'security' ? (
+                      /* Officer Only Card */
+                      <div className="p-3.5 rounded-xl border bg-emerald-950/70 border-emerald-500/60 ring-1 ring-emerald-500/40 transition-all flex flex-col justify-between">
+                        <div>
+                          <div className="flex items-start gap-2.5">
+                            <img
+                              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80"
+                              alt="Officer R. Nair"
+                              className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-400 shrink-0"
+                            />
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-1">
+                                <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400">
+                                  Campus Security Custody Post
+                                </span>
+                                <span className="text-[9px] bg-emerald-500 text-white font-black px-1.5 py-0.2 rounded">
+                                  YOUR AUTHORITY
+                                </span>
+                              </div>
+                              <h5 className="font-bold text-xs text-white truncate">
+                                Officer R. Nair
+                              </h5>
+                              <p className="text-[10px] text-slate-300 truncate">
+                                Badge #CS-409 • Gate 1 Security Desk
+                              </p>
+                            </div>
+                          </div>
+                          <p className="text-[10px] text-slate-300 mt-2 line-clamp-2">
+                            Verify physical device serial #PF-284920-X1 and hardware markings at Gate 1 post.
+                          </p>
+                        </div>
+
+                        <div className="mt-3 flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              updateVerificationStatus(
+                                currentMatch.id,
+                                'VERIFIED',
+                                'Hardware markings, serial number PF-284920-X1, and invoice receipt attested at Gate 1 post.',
+                                'Verification Officer R. Nair (Badge #CS-409)',
+                                'OFFICER'
+                              );
+                            }}
+                            className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1 shadow-sm transition-all cursor-pointer"
+                          >
+                            <span className="material-symbols-outlined text-[16px]">verified</span>
+                            <span>Approve as Officer</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              updateVerificationStatus(
+                                currentMatch.id,
+                                'REJECTED',
+                                'Evidence provided does not match verified device records at Gate 1 custody post.',
+                                'Verification Officer R. Nair (Badge #CS-409)',
+                                'OFFICER'
+                              );
+                            }}
+                            className="px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1 shadow-sm transition-all cursor-pointer"
+                            title="Reject this match verification as Officer"
+                          >
+                            <span className="material-symbols-outlined text-[16px]">cancel</span>
+                            <span>Reject as Officer</span>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      /* Regular Student / User View (NO approve or reject buttons) */
+                      <div className="p-3.5 rounded-xl border bg-white/5 border-white/10 space-y-2.5">
+                        <div className="flex items-start gap-2.5">
+                          <div className="w-8 h-8 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center shrink-0">
+                            <span className="material-symbols-outlined text-[18px]">verified_user</span>
+                          </div>
+                          <div className="text-xs space-y-1 flex-1">
+                            <p className="font-bold text-white">
+                              Official Verification Authority Required
+                            </p>
+                            <p className="text-[11px] text-slate-300 leading-relaxed">
+                              Match verification and handover unlocking can only be authorized by either <strong>Verification Officer R. Nair</strong> (Gate 1 Security Desk) or <strong>Admin Dr. N. Shivakumar</strong> (Dean of Student Welfare).
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="pt-1 flex items-center justify-between border-t border-white/10 text-[11px]">
+                          <span className="text-slate-400">
+                            Current Case Status:{' '}
+                            <strong className="text-amber-300 font-mono">
+                              {isUnderReview
+                                ? 'UNDER REVIEW'
+                                : isRejected
+                                ? 'REJECTED'
+                                : 'AWAITING DISPATCH'}
+                            </strong>
+                          </span>
+
+                          {!isUnderReview && !isRejected && (
+                            <button
+                              onClick={() => {
+                                requestChatApproval(currentMatch.id);
+                                triggerToast('Verification review request dispatched to Campus Security & Admin.', 'send');
+                              }}
+                              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs flex items-center gap-1 cursor-pointer"
+                            >
+                              <span className="material-symbols-outlined text-[14px]">send</span>
+                              <span>Send Request to Officers</span>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-1 border-t border-slate-100">
@@ -526,42 +709,18 @@ export const MatchesScreen: React.FC = () => {
                       </span>
                     </span>
 
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => {
-                          if (isApprovedByAdmin) {
-                            updateVerificationStatus(
-                              currentMatch.id,
-                              'VERIFIED',
-                              'Hardware markings, serial number PF-284920-X1, and invoice receipt attested at Gate 1 post.',
-                              'Verification Officer R. Nair (Badge #CS-409)',
-                              'OFFICER'
-                            );
-                          } else {
-                            updateVerificationStatus(
-                              currentMatch.id,
-                              'VERIFIED',
-                              'Hardware markings and purchase invoice attested under Dean of Student Welfare records.',
-                              'Admin Dr. N. Shivakumar (Dean of Student Welfare)',
-                              'ADMIN'
-                            );
-                          }
-                        }}
-                        className="text-[11px] text-slate-600 hover:text-slate-900 font-medium underline cursor-pointer"
-                      >
-                        Switch to {isApprovedByAdmin ? 'Approved by Officer' : 'Approved by Admin'}
-                      </button>
-
+                    {/* Reset button only for testing/authorities */}
+                    {(currentUser.role === 'admin' || currentUser.role === 'security') && (
                       <button
                         onClick={() => {
                           updateVerificationStatus(currentMatch.id, 'UNDER_REVIEW', 'Re-locked to test approval flow.');
-                          triggerToast('Verification re-locked to UNDER_REVIEW for testing.', 'lock', 'info');
+                          triggerToast('Verification status reset to UNDER_REVIEW.', 'lock', 'info');
                         }}
                         className="text-[11px] text-slate-500 hover:text-slate-800 underline cursor-pointer"
                       >
-                        Re-test Both Approvals
+                        Reset Status to Under Review
                       </button>
-                    </div>
+                    )}
                   </div>
                 )}
 
@@ -702,12 +861,68 @@ export const MatchesScreen: React.FC = () => {
                         Open WhatsApp Campus Chat • {currentMatch.foundReport.reporterName} ({isApprovedByAdmin ? 'Admin Approved ✓' : 'Officer Approved ✓'})
                       </span>
                     </button>
+                  ) : isRejected ? (
+                    <div className="p-3 bg-rose-50 border border-rose-200 text-rose-900 rounded-xl text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-rose-600 text-[20px] shrink-0">cancel</span>
+                        <div>
+                          <p className="font-bold text-rose-900">
+                            Status: <span className="uppercase font-black text-rose-700">REJECTED</span>
+                          </p>
+                          <p className="text-[11px] text-rose-700">
+                            Chat request declined by Officer R. Nair. Messaging input disabled.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          onClick={() => requestChatApproval(currentMatch.id)}
+                          className="px-3 py-1.5 bg-rose-700 hover:bg-rose-800 text-white rounded-lg font-bold text-xs cursor-pointer shadow-xs transition-colors"
+                        >
+                          Re-Send to Officers
+                        </button>
+                        <button
+                          onClick={() => openChatModal('chat_officer')}
+                          className="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-xs cursor-pointer shadow-xs transition-colors"
+                        >
+                          Chat with Officer
+                        </button>
+                      </div>
+                    </div>
+                  ) : isUnderReview ? (
+                    <div className="p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-amber-600 text-[20px] shrink-0">hourglass_top</span>
+                        <div>
+                          <p className="font-bold text-amber-900">
+                            Status: <span className="uppercase font-black text-amber-800">PENDING REVIEW</span>
+                          </p>
+                          <p className="text-[11px] text-amber-700">
+                            Chat request sent to Officers. Waiting for decision (Does not auto-approve)...
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => openChatModal('chat_officer')}
+                        className="px-3 py-1.5 bg-amber-800 hover:bg-amber-900 text-white rounded-lg font-bold text-xs cursor-pointer shadow-xs transition-colors shrink-0"
+                      >
+                        Follow up with Officer
+                      </button>
+                    </div>
                   ) : (
-                    <div className="p-3 bg-slate-100 border border-slate-200 text-slate-500 rounded-xl text-xs flex items-center gap-2.5">
-                      <span className="material-symbols-outlined text-slate-400 text-[18px] shrink-0">lock</span>
-                      <span className="text-[11px] leading-snug">
-                        Messaging access is locked pending Officer Nair or Admin attestation to protect student privacy.
-                      </span>
+                    <div className="p-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-slate-400 text-[20px] shrink-0">lock</span>
+                        <p className="text-[11px] text-slate-600">
+                          Chat is locked. Submit request to Security Officers for manual verification.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => requestChatApproval(currentMatch.id)}
+                        className="px-3 py-1.5 bg-[#008069] hover:bg-[#006e59] text-white font-bold rounded-lg text-xs cursor-pointer shadow-xs transition-colors shrink-0"
+                      >
+                        Request Chat from Officers
+                      </button>
                     </div>
                   )}
 
@@ -746,7 +961,7 @@ export const MatchesScreen: React.FC = () => {
                 <span className="material-symbols-outlined text-emerald-700 text-[24px]">
                   encrypted
                 </span>
-                <h2 className="font-heading font-bold text-base text-[#0b1c30]">
+                <h2 className="font-heading font-bold text-base text-[#0b241c]">
                   {isOwner ? 'Owner Proof of Loss & Ownership' : 'Finder Custody & Turn-In Verification'}
                 </h2>
               </div>

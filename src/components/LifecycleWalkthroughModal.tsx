@@ -123,7 +123,7 @@ export const LifecycleWalkthroughModal: React.FC = () => {
             <span className="material-symbols-outlined text-emerald-600 text-[22px]">
               route
             </span>
-            <h3 className="font-heading font-bold text-base text-[#0b1c30]">
+            <h3 className="font-heading font-bold text-base text-[#0b241c]">
               Campus Pick End-to-End Walkthrough
             </h3>
           </div>
@@ -161,7 +161,7 @@ export const LifecycleWalkthroughModal: React.FC = () => {
         {/* Card Body */}
         <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
           <div className="flex items-center justify-between">
-            <h4 className="font-heading font-bold text-sm text-[#0b1c30]">
+            <h4 className="font-heading font-bold text-sm text-[#0b241c]">
               {currentAct.title}
             </h4>
             <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
@@ -197,7 +197,7 @@ export const LifecycleWalkthroughModal: React.FC = () => {
           <button
             onClick={nextWalkthroughStep}
             disabled={walkthroughStep === 8}
-            className="px-4 py-1.5 bg-[#0b1c30] text-white hover:bg-slate-900 rounded-xl text-xs font-bold disabled:opacity-40 cursor-pointer"
+            className="px-4 py-1.5 bg-[#0b241c] text-white hover:bg-emerald-950 rounded-xl text-xs font-bold disabled:opacity-40 cursor-pointer shadow-xs"
           >
             Next Act →
           </button>

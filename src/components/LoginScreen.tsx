@@ -317,7 +317,7 @@ export const LoginScreen: React.FC = () => {
 
                           <div className="min-w-0">
                             <div className="flex items-center gap-2">
-                              <span className="font-heading font-bold text-sm text-[#0b1c30] truncate group-hover:text-emerald-900">
+                              <span className="font-heading font-bold text-sm text-[#0b241c] truncate group-hover:text-emerald-900">
                                 {user.displayName}
                               </span>
                               <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded ${badgeColor}`}>

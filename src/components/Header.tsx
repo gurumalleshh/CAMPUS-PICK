@@ -102,43 +102,46 @@ export const Header: React.FC = () => {
           {/* Map Shortcut */}
           <button
             onClick={() => setActiveTab('map')}
-            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
               activeTab === 'map'
                 ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-white text-[#3d4a42] hover:bg-slate-100 border border-slate-200'
+                : 'bg-white text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/50 border border-slate-200 shadow-xs'
             }`}
             title="Campus Map"
+            aria-label="Campus Map"
           >
-            <span className="material-symbols-outlined text-[19px]">map</span>
+            <span className="material-symbols-outlined text-[20px]">map</span>
           </button>
 
           {/* Student Messaging Window Shortcut */}
           <button
             onClick={() => setActiveTab('messages')}
-            className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+            className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
               activeTab === 'messages'
                 ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-white text-[#3d4a42] hover:bg-slate-100 border border-slate-200'
+                : 'bg-white text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/50 border border-slate-200 shadow-xs'
             }`}
             title="Messaging Window & Coordination"
+            aria-label="Messaging Window"
           >
-            <span className="material-symbols-outlined text-[19px]">chat</span>
+            <span className="material-symbols-outlined text-[20px]">chat</span>
             <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white" />
           </button>
 
           {/* Notifications Trigger */}
           <button
             onClick={() => setActiveTab('notifications')}
-            className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+            className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
               activeTab === 'notifications'
                 ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-white text-[#3d4a42] hover:bg-slate-100 border border-slate-200'
+                : 'bg-white text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/50 border border-slate-200 shadow-xs'
             }`}
             title="Notifications"
+            aria-label="Notifications"
           >
             <span className="material-symbols-outlined text-[20px]">notifications</span>
             {unreadCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] px-1 bg-rose-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center shadow-xs">
+              <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-rose-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center shadow-xs">
                 {unreadCount}
               </span>
             )}
@@ -148,14 +151,15 @@ export const Header: React.FC = () => {
           {currentUser && (currentUser.role === 'admin' || currentUser.role === 'security') && (
             <button
               onClick={() => setActiveTab('admin')}
-              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
                 activeTab === 'admin'
                   ? 'bg-indigo-700 text-white shadow-sm ring-2 ring-indigo-300'
                   : 'bg-white text-indigo-700 hover:bg-indigo-50 border border-indigo-200 shadow-xs'
               }`}
               title={currentUser.role === 'admin' ? 'Administrator Command Center' : 'Campus Security Custody Desk'}
+              aria-label="Staff Custody Center"
             >
-              <span className="material-symbols-outlined text-[19px]">shield_person</span>
+              <span className="material-symbols-outlined text-[20px]">shield_person</span>
             </button>
           )}
 
@@ -169,16 +173,17 @@ export const Header: React.FC = () => {
                   : 'bg-white border border-slate-200 hover:border-emerald-300'
               }`}
               title={`Logged in as ${currentUser.displayName} (${currentUser.role.toUpperCase()}) • View Profile & Settings`}
+              aria-label="User Profile"
             >
               <div className="relative">
                 {currentUser.avatarUrl ? (
                   <img
                     alt={currentUser.displayName}
-                    className="w-7 h-7 rounded-full object-cover ring-1 ring-emerald-600/30"
+                    className="w-8 h-8 rounded-full object-cover ring-1 ring-emerald-600/30"
                     src={currentUser.avatarUrl}
                   />
                 ) : (
-                  <div className="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center">
                     {currentUser.displayName.slice(0, 2).toUpperCase()}
                   </div>
                 )}
@@ -192,7 +197,7 @@ export const Header: React.FC = () => {
                   }`}
                 />
               </div>
-              <span className="hidden md:inline text-xs font-semibold text-[#0b1c30] pr-1 truncate max-w-[100px]">
+              <span className="hidden md:inline text-xs font-semibold text-[#0b241c] pr-1.5 truncate max-w-[110px]">
                 {currentUser.displayName}
               </span>
             </button>

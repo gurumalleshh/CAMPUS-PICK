@@ -21,12 +21,13 @@ export const BottomNav: React.FC = () => {
         {/* 1. HOME */}
         <button
           onClick={() => setActiveTab('home')}
-          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer ${
+          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-xl ${
             activeTab === 'home'
               ? 'text-emerald-700 font-bold scale-102'
-              : 'text-[#54656f] hover:text-[#0b1c30]'
+              : 'text-slate-600 hover:text-[#0b241c]'
           }`}
           title="Home Dashboard"
+          aria-label="Home"
         >
           <span
             className="material-symbols-outlined text-[22px]"
@@ -42,12 +43,13 @@ export const BottomNav: React.FC = () => {
         {/* 2. MATCHES */}
         <button
           onClick={() => setActiveTab('matches')}
-          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer relative ${
+          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-xl ${
             activeTab === 'matches'
               ? 'text-emerald-700 font-bold scale-102'
-              : 'text-[#54656f] hover:text-[#0b1c30]'
+              : 'text-slate-600 hover:text-[#0b241c]'
           }`}
           title="Potential Matches"
+          aria-label="Matches"
         >
           <div className="relative">
             <span
@@ -70,7 +72,7 @@ export const BottomNav: React.FC = () => {
         {/* 3. CENTER ACTION: REPORT */}
         <button
           onClick={() => openReportModal('LOST')}
-          className="flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 group transition-all cursor-pointer"
+          className="flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 group transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-xl"
           title="Report Lost or Found Item"
           aria-label="Report Item"
         >
@@ -85,12 +87,13 @@ export const BottomNav: React.FC = () => {
         {/* 4. MESSAGES / CHAT */}
         <button
           onClick={() => setActiveTab('messages')}
-          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer relative ${
+          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-xl ${
             activeTab === 'messages'
               ? 'text-emerald-700 font-bold scale-102'
-              : 'text-[#54656f] hover:text-[#0b1c30]'
+              : 'text-slate-600 hover:text-[#0b241c]'
           }`}
-          title="WhatsApp Campus Chats"
+          title="Campus Chats"
+          aria-label="Chats"
         >
           <div className="relative">
             <span
@@ -109,12 +112,13 @@ export const BottomNav: React.FC = () => {
         {/* 5. HEROES */}
         <button
           onClick={() => setActiveTab('heroes')}
-          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer ${
+          className={`flex-1 min-w-0 flex flex-col items-center justify-center h-full py-1 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-xl ${
             activeTab === 'heroes'
               ? 'text-emerald-700 font-bold scale-102'
-              : 'text-[#54656f] hover:text-[#0b1c30]'
+              : 'text-slate-600 hover:text-[#0b241c]'
           }`}
           title="Campus Heroes Leaderboard"
+          aria-label="Heroes Leaderboard"
         >
           <span
             className="material-symbols-outlined text-[22px]"

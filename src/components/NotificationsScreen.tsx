@@ -319,7 +319,7 @@ export const NotificationsScreen: React.FC = () => {
             </div>
 
             {/* Title */}
-            <h3 className="font-heading font-bold text-sm text-[#0b1c30] mt-1.5 group-hover:text-emerald-700 transition-colors">
+            <h3 className="font-heading font-bold text-sm text-[#0b241c] mt-1.5 group-hover:text-emerald-700 transition-colors">
               {notif.title}
             </h3>
 
@@ -376,7 +376,7 @@ export const NotificationsScreen: React.FC = () => {
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b1c30] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
               Notifications & Alerts
             </h1>
             <p className="text-xs text-[#3d4a42]">
@@ -387,7 +387,7 @@ export const NotificationsScreen: React.FC = () => {
 
         <button
           onClick={markAllNotificationsAsRead}
-          className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 transition-colors"
+          className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer bg-emerald-50 px-2.5 py-1.5 rounded-xl border border-emerald-200 transition-colors"
         >
           <span className="material-symbols-outlined text-[16px]">done_all</span>
           <span className="hidden sm:inline">Mark All Read</span>
@@ -402,7 +402,7 @@ export const NotificationsScreen: React.FC = () => {
             onClick={() => setActiveCategory('all')}
             className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
               activeCategory === 'all'
-                ? 'bg-[#0b1c30] text-white shadow-xs'
+                ? 'bg-[#0b241c] text-white shadow-xs'
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
             }`}
           >
@@ -427,7 +427,7 @@ export const NotificationsScreen: React.FC = () => {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                   isSelected
-                    ? 'bg-[#0b1c30] text-white shadow-xs'
+                    ? 'bg-[#0b241c] text-white shadow-xs'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                 }`}
               >
@@ -458,7 +458,7 @@ export const NotificationsScreen: React.FC = () => {
                 onClick={() => setViewMode('grouped')}
                 className={`px-2.5 py-1 rounded-md text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer ${
                   viewMode === 'grouped'
-                    ? 'bg-white text-[#0b1c30] shadow-xs'
+                    ? 'bg-white text-[#0b241c] shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -469,7 +469,7 @@ export const NotificationsScreen: React.FC = () => {
                 onClick={() => setViewMode('timeline')}
                 className={`px-2.5 py-1 rounded-md text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer ${
                   viewMode === 'timeline'
-                    ? 'bg-white text-[#0b1c30] shadow-xs'
+                    ? 'bg-white text-[#0b241c] shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -487,7 +487,7 @@ export const NotificationsScreen: React.FC = () => {
           <span className="material-symbols-outlined text-[36px] text-slate-300">
             notifications_off
           </span>
-          <p className="font-bold text-sm text-[#0b1c30]">No notifications available</p>
+          <p className="font-bold text-sm text-[#0b241c]">No notifications available</p>
           <p className="text-xs text-slate-400">You are all caught up with campus alerts.</p>
         </div>
       ) : activeCategory === 'all' && viewMode === 'grouped' ? (
@@ -511,7 +511,7 @@ export const NotificationsScreen: React.FC = () => {
                     <span className="text-lg">{category.badgeEmoji}</span>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h2 className="font-heading font-bold text-sm text-[#0b1c30]">
+                        <h2 className="font-heading font-bold text-sm text-[#0b241c]">
                           {category.title}
                         </h2>
                         <span
@@ -554,7 +554,7 @@ export const NotificationsScreen: React.FC = () => {
                   {CATEGORIES.find((c) => c.id === activeCategory)?.badgeEmoji}
                 </span>
                 <div>
-                  <h2 className="font-heading font-bold text-sm text-[#0b1c30]">
+                  <h2 className="font-heading font-bold text-sm text-[#0b241c]">
                     {CATEGORIES.find((c) => c.id === activeCategory)?.title}
                   </h2>
                   <p className="text-[11px] text-slate-500">
@@ -577,7 +577,7 @@ export const NotificationsScreen: React.FC = () => {
               <span className="material-symbols-outlined text-[36px] text-slate-300">
                 filter_list_off
               </span>
-              <p className="font-bold text-sm text-[#0b1c30]">
+              <p className="font-bold text-sm text-[#0b241c]">
                 No notifications in this category
               </p>
               <p className="text-xs text-slate-400">
@@ -585,7 +585,7 @@ export const NotificationsScreen: React.FC = () => {
               </p>
               <button
                 onClick={() => setActiveCategory('all')}
-                className="mt-2 px-3 py-1.5 bg-[#0b1c30] text-white text-xs font-bold rounded-xl cursor-pointer"
+                className="mt-2 px-3 py-1.5 bg-[#0b241c] text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs"
               >
                 View All Alerts
               </button>

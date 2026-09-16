@@ -49,6 +49,7 @@ interface AppContextType {
   dismissMatch: (matchId: string) => void;
   verifications: Record<string, VerificationRecord>;
   submitVerification: (matchId: string, evidence: VerificationRecord['submittedEvidence']) => void;
+  requestChatApproval: (matchId: string, requestedReviewer?: string) => void;
   updateVerificationStatus: (
     matchId: string,
     status: VerificationRecord['status'],
@@ -371,6 +372,63 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         senderRole: 'Campus Security Officer',
         content: 'Gate 1 Custody Kiosk is open until 7:30 PM. All verified items are logged in the Central Register.',
         timestamp: 'Today, 3:00 PM',
+      },
+    ],
+    chat_sarah: [
+      {
+        id: 'msg_sarah_sys',
+        senderId: 'system',
+        senderName: 'Campus Pick Trust Protocol',
+        senderRole: 'System',
+        content: 'Direct Student Channel • Sarah J. (Computer Science, 4PS23CS084)',
+        timestamp: 'Today',
+        isSystemNotice: true,
+      },
+      {
+        id: 'msg_sarah_1',
+        senderId: 'usr_sarah',
+        senderName: 'Sarah J.',
+        senderRole: 'Computer Science (Student)',
+        content: 'Hello! Coordinating regarding the lost ThinkPad X1 and CS Lab records. Please let me know where to meet for handover.',
+        timestamp: 'Today, 3:30 PM',
+      },
+    ],
+    chat_admin: [
+      {
+        id: 'msg_adm_sys',
+        senderId: 'system',
+        senderName: 'Institutional Administration Desk',
+        senderRole: 'Dean Office Dispatch',
+        content: 'Official Administration Channel • Dr. N. Shivakumar, Dean of Student Welfare (EMP-ADM-012)',
+        timestamp: 'Active',
+        isSystemNotice: true,
+      },
+      {
+        id: 'msg_adm_1',
+        senderId: 'usr_admin',
+        senderName: 'Dr. N. Shivakumar',
+        senderRole: 'Dean of Student Welfare',
+        content: 'Welcome to the Dean of Student Welfare direct desk. High-value hardware handovers and placement clearance attestations are verified through this channel.',
+        timestamp: 'Today, 11:30 AM',
+      },
+    ],
+    chat_faculty: [
+      {
+        id: 'msg_fac_sys',
+        senderId: 'system',
+        senderName: 'Academic Faculty Desk',
+        senderRole: 'Faculty Dispatch',
+        content: 'Department Faculty Channel • Prof. Divya R., Basic Sciences & Maths (FAC-BS-104)',
+        timestamp: 'Active',
+        isSystemNotice: true,
+      },
+      {
+        id: 'msg_fac_1',
+        senderId: 'usr_divya',
+        senderName: 'Prof. Divya R.',
+        senderRole: 'Basic Sciences Faculty',
+        content: 'Greetings! Any items recovered from the Basic Science tutorial rooms, physics laboratories, or drawing halls can be coordinated directly with me.',
+        timestamp: 'Today, 1:15 PM',
       },
     ],
   });
@@ -840,6 +898,69 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         ...prev.filter((n) => n.id !== nmeNotifId),
       ]);
       triggerToast('Status updated: Claimant asked for additional evidence', 'info');
+    } else if (status === 'REJECTED') {
+      setMatches((prevMatches) => {
+        const nextMatches = prevMatches.map((m) =>
+          m.id === matchId ? { ...m, status: 'PENDING' as const } : m
+        );
+        localStorage.setItem('cp_matches', JSON.stringify(nextMatches));
+        return nextMatches;
+      });
+
+      // Post system announcement to chat thread
+      setChatMessages((prevChats) => {
+        const currentThreadMsgs = prevChats[matchId] || [];
+        const systemNotice: ChatMessage = {
+          id: `msg_reject_${Date.now()}`,
+          senderId: 'system',
+          senderName: finalReviewedBy,
+          senderRole: resolvedRole === 'ADMIN' ? 'Campus Administration' : 'Verification Officer',
+          content: `❌ Chat Request Rejected by ${finalReviewedBy}. Claimed evidence does not match institutional custody records. Direct messaging remains locked.`,
+          timestamp: 'Just now',
+          isSystemNotice: true,
+        };
+        return {
+          ...prevChats,
+          [matchId]: [...currentThreadMsgs, systemNotice],
+        };
+      });
+
+      // Add rejection notification
+      const rejNotifId = `notif_rej_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      setNotifications((prev) => [
+        {
+          id: rejNotifId,
+          type: 'PRIORITY_ALERT',
+          priority: true,
+          title: '❌ Chat Request Rejected by Officer',
+          message: `${finalReviewedBy} reviewed and rejected the chat request for Case #${matchId}. Direct messaging remains locked.`,
+          relatedMatchId: matchId,
+          deepLinkTarget: 'matches',
+          timestamp: 'Just now',
+          read: false,
+        },
+        ...prev.filter((n) => n.id !== rejNotifId),
+      ]);
+
+      const logRejId = `log_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      setAuditLogs((prevLogs) => [
+        {
+          id: logRejId,
+          timestamp: 'Just now',
+          actor: finalReviewedBy,
+          action: 'VERIFICATION_REJECTED',
+          details: `Chat request for Case #${matchId} was rejected by ${finalReviewedBy}. Notes: ${
+            notes || 'Ownership proof rejected by officer.'
+          }`,
+        },
+        ...prevLogs,
+      ]);
+
+      triggerToast(
+        `Chat request rejected by ${finalReviewedBy}. Status displayed as Rejected.`,
+        'cancel',
+        'error'
+      );
     } else {
       // Re-locking or pending
       setMatches((prevMatches) => {
@@ -850,6 +971,74 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return nextMatches;
       });
     }
+  };
+
+  const requestChatApproval = (
+    matchId: string,
+    requestedReviewer = 'Officer R. Nair (Badge #CS-409)'
+  ) => {
+    const match = matches.find((m) => m.id === matchId);
+    const claimantName = currentUser ? currentUser.displayName : 'Sarah J.';
+    const claimantId = currentUser ? currentUser.id : 'usr_sarah';
+    const itemName = match ? match.lostReport.itemName : 'Claimed Item';
+
+    const verRecord: VerificationRecord = {
+      id: `ver_${Date.now()}`,
+      matchId,
+      claimantId,
+      claimantName,
+      status: 'UNDER_REVIEW',
+      submittedEvidence: {
+        serialNumberProvided: 'PF-284920-X1',
+        lockscreenOrDecalHint: 'Requested via Campus Pick Trust Protocol',
+      },
+      reviewNotes: `Chat approval requested by ${claimantName}. Dispatched to ${requestedReviewer} and Campus Administration.`,
+      reviewedBy: requestedReviewer,
+      createdAt: 'Just now',
+      updatedAt: 'Just now',
+    };
+
+    setVerifications((prev) => {
+      const updated = { ...prev, [matchId]: verRecord };
+      localStorage.setItem('cp_verifications', JSON.stringify(updated));
+      return updated;
+    });
+
+    // Notify Officer and Admin
+    const notifId = `notif_chat_req_${Date.now()}`;
+    setNotifications((prev) => [
+      {
+        id: notifId,
+        type: 'PRIORITY_ALERT',
+        priority: true,
+        title: `📩 New Chat Request: ${claimantName}`,
+        message: `${claimantName} requested verification approval to unlock messaging for ${itemName} (Case #${matchId}). Decision required.`,
+        relatedMatchId: matchId,
+        deepLinkTarget: 'matches',
+        timestamp: 'Just now',
+        read: false,
+      },
+      ...prev,
+    ]);
+
+    // Audit log
+    setAuditLogs((prev) => [
+      {
+        id: `log_${Date.now()}`,
+        timestamp: 'Just now',
+        actor: claimantName,
+        action: 'CHAT_REQUEST_SUBMITTED',
+        details: `Chat request for Case #${matchId} (${itemName}) submitted to Officer R. Nair and Admin Dr. N. Shivakumar.`,
+        caseId: match?.lostReport.ticketNumber,
+      },
+      ...prev,
+    ]);
+
+    triggerToast(
+      `Chat request sent to Officer R. Nair & Admin Dr. N. Shivakumar. Awaiting decision!`,
+      'schedule_send',
+      'info'
+    );
   };
 
   const scheduleHandover = (matchId: string, location: string, date: string, time: string) => {
@@ -1044,6 +1233,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         senderRole = "Campus Security (Badge #CS-409)";
         senderId = "usr_nair";
         replyContent = "Officer Nair here. The custody locker is ready. Please present your PESCE USN on arrival.";
+      } else if (matchId === 'chat_sarah') {
+        senderName = "Sarah J.";
+        senderRole = "Computer Science (Student)";
+        senderId = "usr_sarah";
+        replyContent = "Thank you! I am available near CS Block Room 204 or Gate 1. Let's coordinate for the return.";
+      } else if (matchId === 'chat_admin') {
+        senderName = "Dr. N. Shivakumar";
+        senderRole = "Dean of Student Welfare";
+        senderId = "usr_admin";
+        replyContent = "Dean's Office acknowledged. Please bring your institutional ID card for official clearance.";
+      } else if (matchId === 'chat_faculty') {
+        senderName = "Prof. Divya R.";
+        senderRole = "Basic Sciences Faculty";
+        senderId = "usr_divya";
+        replyContent = "Prof. Divya here. I am in the Mathematics Tutorial Hall on the 1st floor if you need to meet.";
       } else {
         // Default match_001 (Rahul K. & Lenovo ThinkPad)
         if (lower.includes('meet') || lower.includes('gate') || lower.includes('kiosk') || lower.includes('time')) {
@@ -1101,6 +1305,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         dismissMatch,
         verifications,
         submitVerification,
+        requestChatApproval,
         updateVerificationStatus,
         handovers,
         scheduleHandover,

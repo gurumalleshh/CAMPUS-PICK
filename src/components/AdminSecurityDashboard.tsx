@@ -40,7 +40,7 @@ export const AdminSecurityDashboard: React.FC = () => {
           </button>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-heading text-2xl font-bold text-[#0b1c30] tracking-tight">
+              <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
                 {currentUser.role === 'admin' ? 'Administrator Command Center' : 'Campus Security Custody Desk'}
               </h1>
               <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
@@ -138,7 +138,7 @@ export const AdminSecurityDashboard: React.FC = () => {
       {/* TAB: WHATSAPP STUDENT CHATS MONITOR */}
       {activeTab === 'chats' && (
         <div className="space-y-3">
-          <div className="p-3 bg-[#0b1c30] border border-slate-700 rounded-2xl text-xs text-emerald-300 flex items-center justify-between">
+          <div className="p-3 bg-[#0b241c] border border-emerald-800/40 rounded-2xl text-xs text-emerald-300 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-[18px] text-emerald-400">
                 admin_panel_settings
@@ -170,7 +170,7 @@ export const AdminSecurityDashboard: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-heading font-bold text-sm text-[#0b1c30]">
+                      <span className="font-heading font-bold text-sm text-[#0b241c]">
                         Claim on Case #{v.matchId}
                       </span>
                       <span

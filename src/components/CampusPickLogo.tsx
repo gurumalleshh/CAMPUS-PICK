@@ -188,7 +188,7 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
           <div className="flex items-center gap-1.5">
             <span
               className={`font-heading font-extrabold tracking-tight ${currentSize.text} ${
-                theme === 'dark' ? 'text-white' : 'text-[#0b1c30]'
+                theme === 'dark' ? 'text-white' : 'text-[#0b241c]'
               }`}
             >
               Campus <span className="text-emerald-700">Pick</span>

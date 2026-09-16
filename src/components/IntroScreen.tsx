@@ -21,27 +21,28 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onEnter }) => {
     // Stage 1 animation trigger
     const stageTimer = setTimeout(() => {
       setStage('ready');
-    }, 300);
+    }, 250);
 
-    // Auto-advance progress bar over 2.6 seconds
-    const duration = 2600;
-    const intervalMs = 40;
-    const increment = (intervalMs / duration) * 100;
+    // Auto-advance timer: cleanly triggers completion without touching state updaters
+    const durationMs = 2800;
+    const exitTimer = setTimeout(() => {
+      handleEnter();
+    }, durationMs);
 
+    // Visual progress counter interval - purely numerical state update
+    const startTime = Date.now();
     const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + increment;
-        if (next >= 100) {
-          clearInterval(progressInterval);
-          handleEnter();
-          return 100;
-        }
-        return next;
-      });
-    }, intervalMs);
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min(100, (elapsed / durationMs) * 100);
+      setProgress(pct);
+      if (pct >= 100) {
+        clearInterval(progressInterval);
+      }
+    }, 40);
 
     return () => {
       clearTimeout(stageTimer);
+      clearTimeout(exitTimer);
       clearInterval(progressInterval);
     };
   }, []);

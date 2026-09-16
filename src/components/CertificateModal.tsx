@@ -27,7 +27,7 @@ export const CertificateModal: React.FC = () => {
             <span className="material-symbols-outlined text-amber-600 text-[20px]">
               workspace_premium
             </span>
-            <span className="font-heading font-bold text-sm text-[#0b1c30]">
+            <span className="font-heading font-bold text-sm text-[#0b241c]">
               Official PESCE Civic Credential
             </span>
           </div>
@@ -65,7 +65,7 @@ export const CertificateModal: React.FC = () => {
               <span className="text-[10px] font-bold text-amber-800 uppercase tracking-widest">
                 CIVIC RECOGNITION OF INTEGRITY
               </span>
-              <h3 className="font-heading text-lg sm:text-xl font-bold text-[#0b1c30]">
+              <h3 className="font-heading text-lg sm:text-xl font-bold text-[#0b241c]">
                 {userCertificate.achievement}
               </h3>
               <p className="text-xs text-slate-600 max-w-md mx-auto pt-1 leading-relaxed">

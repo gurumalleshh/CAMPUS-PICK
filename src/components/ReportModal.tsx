@@ -136,12 +136,12 @@ export const ReportModal: React.FC = () => {
         eventDate: 'Today',
         eventTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         status: intent === 'LOST' ? 'LOST' : 'FOUND',
-        hasPrivateEvidence: Boolean(serialNumber || invoiceFileName || privateNotes),
+        hasPrivateEvidence: Boolean(serialNumber || (intent === 'LOST' && invoiceFileName) || privateNotes),
         privateEvidence:
-          serialNumber || invoiceFileName || privateNotes
+          serialNumber || (intent === 'LOST' && invoiceFileName) || privateNotes
             ? {
                 serialNumber,
-                invoiceFileName,
+                invoiceFileName: intent === 'LOST' ? invoiceFileName : undefined,
                 privateNotes,
               }
             : undefined,
@@ -179,7 +179,7 @@ export const ReportModal: React.FC = () => {
         <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between shrink-0 bg-slate-50/70">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-heading font-bold text-base text-[#0b1c30]">
+              <span className="font-heading font-bold text-base text-[#0b241c]">
                 {intent === 'LOST' ? 'Report Lost Item' : 'Report Found Item'}
               </span>
               <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
@@ -214,7 +214,10 @@ export const ReportModal: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => setIntent('FOUND')}
+              onClick={() => {
+                setIntent('FOUND');
+                setInvoiceFileName('');
+              }}
               className={`py-2 rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                 intent === 'FOUND'
                   ? 'bg-emerald-600 text-white shadow-xs'
@@ -225,6 +228,18 @@ export const ReportModal: React.FC = () => {
               <span>I Found Something</span>
             </button>
           </div>
+
+          {/* Notice for Found Items: No Document Attachment Required */}
+          {intent === 'FOUND' && (
+            <div className="p-2.5 bg-emerald-50/80 border border-emerald-200 rounded-xl flex items-center gap-2 text-emerald-950">
+              <span className="material-symbols-outlined text-emerald-700 text-[18px] shrink-0">
+                check_circle
+              </span>
+              <p className="text-[11px] leading-snug">
+                <strong className="font-bold">No Document Attachment Required:</strong> When filing a found item, ownership invoices and purchase receipts are not required. Simply record the item details and where it was located.
+              </p>
+            </div>
+          )}
 
           {/* Officer Authority Notice: No Detail Submission Required */}
           {(currentUser?.role === 'security' || currentUser?.role === 'admin') && (
@@ -318,7 +333,7 @@ export const ReportModal: React.FC = () => {
                       onClick={() => handleCategoryChange(cat.id as ItemCategory)}
                       className={`px-2.5 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 border transition-all cursor-pointer ${
                         category === cat.id
-                          ? 'bg-[#0b1c30] text-white border-[#0b1c30]'
+                          ? 'bg-[#0b241c] text-white border-[#0b241c]'
                           : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                       }`}
                     >
@@ -550,10 +565,14 @@ export const ReportModal: React.FC = () => {
                 </span>
                 <div>
                   <h4 className="font-bold text-indigo-950">
-                    Private Ownership Evidence Vault (AES-256)
+                    {intent === 'LOST'
+                      ? 'Private Ownership Evidence Vault (AES-256)'
+                      : 'Finder Custody & Verification Details'}
                   </h4>
                   <p className="text-[11px] text-indigo-900 mt-0.5 leading-snug">
-                    To protect high-value hardware and prevent imposters, this confidential evidence is kept strictly locked. Only authorized Campus Security personnel can inspect it during mediation.
+                    {intent === 'LOST'
+                      ? 'To protect high-value hardware and prevent imposters, this confidential evidence is kept strictly locked. Only authorized Campus Security personnel can inspect it during mediation.'
+                      : 'Record any visible hardware serial number or physical markings to help Campus Security verify claims against registered lost reports. (No document attachments required for found items).'}
                   </p>
                 </div>
               </div>
@@ -570,41 +589,50 @@ export const ReportModal: React.FC = () => {
                   className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500 font-mono"
                 />
                 <span className="text-[10px] text-slate-400">
-                  Visible on purchase invoice, device settings, or packaging barcode.
+                  Visible on device base, barcode sticker, or casing.
                 </span>
               </div>
 
-              <div>
-                <label className="block font-bold text-slate-800 mb-1">
-                  Proof of Purchase / Invoice PDF
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={invoiceFileName}
-                    onChange={(e) => setInvoiceFileName(e.target.value)}
-                    placeholder="e.g. PESCE_Receipt_2026.pdf"
-                    className="flex-1 px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500 font-mono text-[11px]"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setInvoiceFileName('PESCE_Procurement_Receipt_Stamped.pdf')}
-                    className="px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-bold text-slate-700"
-                  >
-                    Attach Mock
-                  </button>
+              {/* Proof of purchase invoice document attachment is strictly for LOST items */}
+              {intent === 'LOST' && (
+                <div>
+                  <label className="block font-bold text-slate-800 mb-1">
+                    Proof of Purchase / Invoice PDF
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={invoiceFileName}
+                      onChange={(e) => setInvoiceFileName(e.target.value)}
+                      placeholder="e.g. PESCE_Receipt_2026.pdf"
+                      className="flex-1 px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500 font-mono text-[11px]"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setInvoiceFileName('PESCE_Procurement_Receipt_Stamped.pdf')}
+                      className="px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-bold text-slate-700"
+                    >
+                      Attach Mock
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div>
                 <label className="block font-bold text-slate-800 mb-1">
-                  Private Distinguishing Markers / Wallpaper
+                  {intent === 'LOST'
+                    ? 'Private Distinguishing Markers / Wallpaper'
+                    : 'Finder Custody Notes / Visible Markings'}
                 </label>
                 <textarea
                   rows={2}
                   value={privateNotes}
                   onChange={(e) => setPrivateNotes(e.target.value)}
-                  placeholder="e.g. Sticker pattern, engraving on base, screen lock hint..."
+                  placeholder={
+                    intent === 'LOST'
+                      ? 'e.g. Sticker pattern, engraving on base, screen lock hint...'
+                      : 'e.g. Turned into Gate 1 Smart Locker B-12, or minor scratch on top lid...'
+                  }
                   className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
                 />
               </div>
@@ -650,8 +678,10 @@ export const ReportModal: React.FC = () => {
                     <span>Encrypted Vault Payload</span>
                   </div>
                   <p className="text-[11px] text-indigo-900">
-                    Serial: <strong className="font-mono">{serialNumber || 'Not provided'}</strong> •{' '}
-                    Receipt: <strong className="font-mono">{invoiceFileName || 'None'}</strong>
+                    Serial: <strong className="font-mono">{serialNumber || 'Not provided'}</strong>
+                    {intent === 'LOST' && (
+                      <> • Receipt: <strong className="font-mono">{invoiceFileName || 'None'}</strong></>
+                    )}
                   </p>
                   <p className="text-[10px] text-indigo-700 italic">
                     Kept hidden from public search feeds.
@@ -731,7 +761,7 @@ export const ReportModal: React.FC = () => {
                 }
                 setStep(step + 1);
               }}
-              className="px-5 py-2.5 bg-[#0b1c30] hover:bg-slate-900 text-white font-bold rounded-xl shadow-xs flex items-center gap-1 cursor-pointer"
+              className="px-5 py-2.5 bg-[#0b241c] hover:bg-emerald-950 text-white font-bold rounded-xl shadow-xs flex items-center gap-1 cursor-pointer"
             >
               <span>Continue</span>
               <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -744,7 +774,7 @@ export const ReportModal: React.FC = () => {
       {showExitConfirm && (
         <div className="fixed inset-0 z-60 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-xs w-full p-4 space-y-3 text-center shadow-xl">
-            <h3 className="font-heading font-bold text-sm text-[#0b1c30]">
+            <h3 className="font-heading font-bold text-sm text-[#0b241c]">
               Save Report Draft?
             </h3>
             <p className="text-xs text-slate-500">

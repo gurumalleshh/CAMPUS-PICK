@@ -53,7 +53,7 @@ export const HomeScreen: React.FC = () => {
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="font-heading text-2xl font-bold text-[#0b1c30] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
               Good afternoon, {currentUser.displayName.split(' ')[0]} 👋
             </h1>
           </div>
@@ -66,7 +66,8 @@ export const HomeScreen: React.FC = () => {
         {/* Quick Civic Points Badge */}
         <button
           onClick={() => setActiveTab('heroes')}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold hover:bg-emerald-100 transition-all cursor-pointer shrink-0"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold hover:bg-emerald-100 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
+          aria-label="View Civic Points and Rank"
         >
           <span className="material-symbols-outlined text-[16px] text-emerald-600">military_tech</span>
           <span>Rank #{currentUser.rank || 7} • {currentUser.points} pts</span>
@@ -74,14 +75,14 @@ export const HomeScreen: React.FC = () => {
       </div>
 
       {/* 2. Institutional Motto Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0c3123] to-[#0b1c30] text-white p-5 shadow-sm border border-emerald-900/30">
-        <div className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white p-5 sm:p-6 shadow-sm border border-emerald-800/40">
+        <div className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-emerald-400/10 blur-2xl pointer-events-none" />
         <div className="relative z-10 flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
+            <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-700/60">
               CAMPUS RECOVERY GUARANTEE
             </span>
-            <span className="text-[11px] text-emerald-200/70 font-mono">
+            <span className="text-[11px] text-emerald-200/80 font-mono">
               14 ACADEMIC BLOCKS
             </span>
           </div>
@@ -110,12 +111,13 @@ export const HomeScreen: React.FC = () => {
         {/* Report Lost */}
         <button
           onClick={() => openReportModal('LOST')}
-          className="group relative flex flex-col p-4 rounded-2xl bg-white border border-slate-200 hover:border-rose-400 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer"
+          className="group relative flex flex-col p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-rose-400 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer focus-visible:ring-2 focus-visible:ring-rose-400"
+          aria-label="Report Lost Item"
         >
           <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
             <span className="material-symbols-outlined text-[22px]">search</span>
           </div>
-          <span className="font-heading font-bold text-[15px] text-[#0b1c30]">
+          <span className="font-heading font-bold text-[15px] text-[#0b241c]">
             Report Lost
           </span>
           <span className="text-xs text-[#3d4a42] mt-0.5">
@@ -130,12 +132,13 @@ export const HomeScreen: React.FC = () => {
         {/* Report Found */}
         <button
           onClick={() => openReportModal('FOUND')}
-          className="group relative flex flex-col p-4 rounded-2xl bg-white border border-slate-200 hover:border-emerald-500 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer"
+          className="group relative flex flex-col p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-emerald-500 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500"
+          aria-label="Report Found Item"
         >
           <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
             <span className="material-symbols-outlined text-[22px]">front_hand</span>
           </div>
-          <span className="font-heading font-bold text-[15px] text-[#0b1c30]">
+          <span className="font-heading font-bold text-[15px] text-[#0b241c]">
             Report Found
           </span>
           <span className="text-xs text-[#3d4a42] mt-0.5">
@@ -244,7 +247,7 @@ export const HomeScreen: React.FC = () => {
       <div className="space-y-3 pt-1">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-heading text-lg font-bold text-[#0b1c30]">
+            <h2 className="font-heading text-lg font-bold text-[#0b241c]">
               Campus Activity Feed
             </h2>
             <p className="text-xs text-[#3d4a42]">
@@ -253,7 +256,7 @@ export const HomeScreen: React.FC = () => {
           </div>
           <button
             onClick={() => setActiveTab('map')}
-            className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1"
+            className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer"
           >
             <span>View on Map</span>
             <span className="material-symbols-outlined text-[15px]">map</span>
@@ -270,7 +273,7 @@ export const HomeScreen: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search items, categories, rooms (e.g. ThinkPad, CS-204, Wallet)..."
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-[#0b1c30] placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-[#0b241c] placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
           />
           {searchQuery && (
             <button
@@ -297,7 +300,7 @@ export const HomeScreen: React.FC = () => {
               onClick={() => setActiveFilter(pill.id)}
               className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 activeFilter === pill.id
-                  ? 'bg-[#0b1c30] text-white shadow-xs'
+                  ? 'bg-[#0b241c] text-white shadow-xs'
                   : 'bg-white text-[#3d4a42] border border-slate-200 hover:bg-slate-50'
               }`}
             >
@@ -313,7 +316,7 @@ export const HomeScreen: React.FC = () => {
               <span className="material-symbols-outlined text-[36px] text-slate-300">
                 search_off
               </span>
-              <p className="font-semibold text-sm text-[#0b1c30] mt-2">
+              <p className="font-semibold text-sm text-[#0b241c] mt-2">
                 No matching reports found
               </p>
               <p className="text-xs text-slate-400 mt-1">
@@ -374,7 +377,7 @@ export const HomeScreen: React.FC = () => {
                     </span>
                   </div>
 
-                  <h3 className="font-heading font-bold text-[15px] text-[#0b1c30] truncate mt-0.5 group-hover:text-emerald-700 transition-colors">
+                  <h3 className="font-heading font-bold text-[15px] text-[#0b241c] truncate mt-0.5 group-hover:text-emerald-700 transition-colors">
                     {report.itemName}
                   </h3>
 
@@ -414,13 +417,13 @@ export const HomeScreen: React.FC = () => {
             <span className="material-symbols-outlined text-amber-500 text-[22px]">
               emoji_events
             </span>
-            <h2 className="font-heading font-bold text-sm text-[#0b1c30]">
+            <h2 className="font-heading font-bold text-sm text-[#0b241c]">
               Campus Heroes • Integrity Leaderboard
             </h2>
           </div>
           <button
             onClick={() => setActiveTab('heroes')}
-            className="text-xs font-bold text-emerald-700 hover:text-emerald-800"
+            className="text-xs font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer"
           >
             View All →
           </button>
@@ -429,17 +432,17 @@ export const HomeScreen: React.FC = () => {
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
             <span className="text-xs font-bold text-amber-600">🥇 1st</span>
-            <p className="text-xs font-bold text-[#0b1c30] truncate mt-0.5">Ananya K.</p>
+            <p className="text-xs font-bold text-[#0b241c] truncate mt-0.5">Ananya K.</p>
             <p className="text-[10px] text-slate-500">18 Returns</p>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
             <span className="text-xs font-bold text-slate-500">🥈 2nd</span>
-            <p className="text-xs font-bold text-[#0b1c30] truncate mt-0.5">Rahul M.</p>
+            <p className="text-xs font-bold text-[#0b241c] truncate mt-0.5">Rahul M.</p>
             <p className="text-[10px] text-slate-500">15 Returns</p>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
             <span className="text-xs font-bold text-amber-700">🥉 3rd</span>
-            <p className="text-xs font-bold text-[#0b1c30] truncate mt-0.5">Priya S.</p>
+            <p className="text-xs font-bold text-[#0b241c] truncate mt-0.5">Priya S.</p>
             <p className="text-[10px] text-slate-500">13 Returns</p>
           </div>
         </div>
@@ -497,7 +500,7 @@ export const HomeScreen: React.FC = () => {
             )}
 
             <div>
-              <h2 className="font-heading text-lg font-bold text-[#0b1c30]">
+              <h2 className="font-heading text-lg font-bold text-[#0b241c]">
                 {selectedReportDetail.itemName}
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">

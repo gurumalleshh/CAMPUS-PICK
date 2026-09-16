@@ -60,7 +60,7 @@ export const AuthModal: React.FC = () => {
               src="https://lh3.googleusercontent.com/aida/AEtjO1UTb0Cfq_rqJaqIAUxgqqhhYLGaQGeyfYXpf1yEBHrdHL-gcAG5AC5ZdrCsRf_lKdyL7lM_OYH6kyKOqVKWbyO6INHedHnUQWXDxyHMJo67LY6LxoBBlo6OMX2qHXcyOU4KzehBwZbhn1euC5eN8TpDdmIsJ6dnb--HIqB65vXT42IZMt6_jzq0beXrwN7Mkxfd20xArxPe3Q_Fdq_jVvcdAMa6KPAcF94lCi8eE9P5Hff8fwHIBC4NYg"
             />
           </div>
-          <h2 className="font-heading font-extrabold text-lg text-[#0b1c30]">
+          <h2 className="font-heading font-extrabold text-lg text-[#0b241c]">
             Campus-Verified Sign In
           </h2>
           <p className="text-xs text-slate-500">

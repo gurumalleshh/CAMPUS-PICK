@@ -18,7 +18,7 @@ export const ToastContainer: React.FC = () => {
               ? 'bg-rose-900 text-white border-rose-700 shadow-rose-950/20'
               : toast.type === 'warning'
               ? 'bg-amber-900 text-amber-50 border-amber-700 shadow-amber-950/20'
-              : 'bg-[#0b1c30] text-white border-slate-700 shadow-slate-900/30'
+              : 'bg-[#0b241c] text-white border-emerald-800/40 shadow-slate-900/30'
           }`}
         >
           {toast.icon && (
