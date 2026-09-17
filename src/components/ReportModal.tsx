@@ -174,7 +174,7 @@ export const ReportModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom-6 sm:zoom-in-95">
+      <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-lg sm:max-w-xl md:max-w-2xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom-6 sm:zoom-in-95">
         {/* Modal Header */}
         <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between shrink-0 bg-slate-50/70">
           <div>

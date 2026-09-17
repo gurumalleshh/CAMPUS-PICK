@@ -111,6 +111,7 @@ export interface Report {
 export interface MatchFactor {
   name: string;
   match: boolean;
+  status?: 'MATCH' | 'MISMATCH' | 'PARTIAL' | 'PENDING';
   description: string;
   strength: 'STRONG' | 'MEDIUM' | 'WEAK';
 }
@@ -126,6 +127,8 @@ export interface PotentialMatch {
   matchingFactors: MatchFactor[];
   status: 'PENDING' | 'DISMISSED' | 'VERIFICATION_INITIATED' | 'VERIFIED' | 'RESOLVED';
   createdAt: string;
+  hasSignificantDiscrepancies?: boolean;
+  discrepancies?: string[];
 }
 
 export type VerificationStatus =

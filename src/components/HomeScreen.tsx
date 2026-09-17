@@ -48,16 +48,16 @@ export const HomeScreen: React.FC = () => {
   if (!currentUser) return null;
 
   return (
-    <div className="pb-24 pt-20 px-4 max-w-2xl mx-auto space-y-5">
+    <div className="pb-24 md:pb-12 pt-20 px-3 sm:px-6 max-w-[1600px] mx-auto space-y-6">
       {/* 1. Header Greeting & Status */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
+            <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[#0b241c] tracking-tight">
               Good afternoon, {currentUser.displayName.split(' ')[0]} 👋
             </h1>
           </div>
-          <p className="text-xs text-[#3d4a42] font-medium mt-0.5">
+          <p className="text-xs sm:text-sm text-[#3d4a42] font-medium mt-0.5">
             {currentUser.department ? `${currentUser.department} • ` : ''}
             {currentUser.semester || currentUser.role.toUpperCase()} • {INSTITUTION_INFO.shortName}
           </p>
@@ -66,7 +66,7 @@ export const HomeScreen: React.FC = () => {
         {/* Quick Civic Points Badge */}
         <button
           onClick={() => setActiveTab('heroes')}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold hover:bg-emerald-100 active:scale-95 transition-all cursor-pointer shrink-0 shadow-2xs"
+          className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold hover:bg-emerald-100 active:scale-95 transition-all cursor-pointer shadow-2xs"
           aria-label="View Civic Points and Rank"
         >
           <span className="material-symbols-outlined text-[16px] text-emerald-600">military_tech</span>
@@ -74,82 +74,159 @@ export const HomeScreen: React.FC = () => {
         </button>
       </div>
 
-      {/* 2. Institutional Motto Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white p-5 sm:p-6 shadow-sm border border-emerald-800/40">
-        <div className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-emerald-400/10 blur-2xl pointer-events-none" />
-        <div className="relative z-10 flex flex-col gap-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-700/60">
-              CAMPUS RECOVERY GUARANTEE
-            </span>
-            <span className="text-[11px] text-emerald-200/80 font-mono">
-              14 ACADEMIC BLOCKS
-            </span>
+      {/* 2. Top Grid: Institutional Motto Banner + Dual Quick Action Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        {/* Banner (Full width on mobile, 7 cols on tablet/desktop) */}
+        <div className="md:col-span-7 lg:col-span-8 relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white p-5 sm:p-6 shadow-sm border border-emerald-800/40 flex flex-col justify-between">
+          <div className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-emerald-400/10 blur-2xl pointer-events-none" />
+          <div className="relative z-10 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-700/60">
+                CAMPUS RECOVERY GUARANTEE
+              </span>
+              <span className="text-[11px] text-emerald-200/80 font-mono">
+                14 ACADEMIC BLOCKS
+              </span>
+            </div>
+
+            <h2 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-white mt-1">
+              "{INSTITUTION_INFO.tagline}"
+            </h2>
+
+            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-xl">
+              Smart multi-factor item correlation and secure custody handovers monitored by Campus Security at Gate 1 Safe Exchange Kiosk.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2 text-[11px] sm:text-xs text-emerald-300/90 font-medium">
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                16 Safe Smart Lockers Active
+              </span>
+              <span>•</span>
+              <span>Avg Return: 42 Mins</span>
+              <span>•</span>
+              <span className="text-amber-300 font-semibold">PESCE Mandya Trust Network</span>
+            </div>
           </div>
+        </div>
 
-          <h2 className="font-heading text-xl font-bold tracking-tight text-white mt-1">
-            "{INSTITUTION_INFO.tagline}"
-          </h2>
+        {/* 3. Dual Quick Action Cards (Stacked or paired on tablet/desktop) */}
+        <div className="md:col-span-5 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-3">
+          {/* Report Lost */}
+          <button
+            onClick={() => openReportModal('LOST')}
+            className="group relative flex flex-col justify-between p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-rose-400 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer focus-visible:ring-2 focus-visible:ring-rose-400"
+            aria-label="Report Lost Item"
+          >
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                <span className="material-symbols-outlined text-[22px]">search</span>
+              </div>
+              <span className="font-heading font-bold text-[15px] text-[#0b241c] block">
+                Report Lost
+              </span>
+              <span className="text-xs text-[#3d4a42] mt-0.5 line-clamp-1 sm:line-clamp-2">
+                Misplaced your calculator, ID, or laptop?
+              </span>
+            </div>
+            <div className="mt-2.5 flex items-center text-xs font-bold text-rose-700 gap-1">
+              <span>Log missing item</span>
+              <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </div>
+          </button>
 
-          <p className="text-xs text-slate-200 leading-relaxed max-w-md">
-            Smart multi-factor item correlation and secure custody handovers monitored by Campus Security at Gate 1 Safe Exchange Kiosk.
-          </p>
-
-          <div className="flex items-center gap-4 pt-2 text-[11px] text-emerald-300/90 font-medium">
-            <span className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              16 Safe Smart Lockers Active
-            </span>
-            <span>•</span>
-            <span>Avg Return: 42 Mins</span>
-          </div>
+          {/* Report Found */}
+          <button
+            onClick={() => openReportModal('FOUND')}
+            className="group relative flex flex-col justify-between p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-emerald-500 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500"
+            aria-label="Report Found Item"
+          >
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                <span className="material-symbols-outlined text-[22px]">front_hand</span>
+              </div>
+              <span className="font-heading font-bold text-[15px] text-[#0b241c] block">
+                Report Found
+              </span>
+              <span className="text-xs text-[#3d4a42] mt-0.5 line-clamp-1 sm:line-clamp-2">
+                Spotted or picked up an item on campus?
+              </span>
+            </div>
+            <div className="mt-2.5 flex items-center text-xs font-bold text-emerald-700 gap-1">
+              <span>Turn in & earn points</span>
+              <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </div>
+          </button>
         </div>
       </div>
 
-      {/* 3. Dual Quick Action Cards */}
-      <div className="grid grid-cols-2 gap-3">
-        {/* Report Lost */}
-        <button
-          onClick={() => openReportModal('LOST')}
-          className="group relative flex flex-col p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-rose-400 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer focus-visible:ring-2 focus-visible:ring-rose-400"
-          aria-label="Report Lost Item"
-        >
-          <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-            <span className="material-symbols-outlined text-[22px]">search</span>
-          </div>
-          <span className="font-heading font-bold text-[15px] text-[#0b241c]">
-            Report Lost
-          </span>
-          <span className="text-xs text-[#3d4a42] mt-0.5">
-            Misplaced your calculator, ID, or laptop?
-          </span>
-          <div className="mt-3 flex items-center text-xs font-bold text-rose-700 gap-1">
-            <span>Log item</span>
-            <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-          </div>
-        </button>
+      {/* 3b. Live Campus Dashboard Card for Student & Faculty */}
+      {(() => {
+        const found = reports.filter((r) => r.type === 'FOUND' && r.status !== 'RETURNED').length;
+        const lost = reports.filter((r) => r.type === 'LOST' && r.status !== 'RETURNED').length;
+        const returned = reports.filter((r) => r.status === 'RETURNED').length;
+        const total = reports.length;
+        const recovered = found + returned;
+        const recoveryRate = total > 0 ? ((recovered / total) * 100).toFixed(1) : '0';
 
-        {/* Report Found */}
-        <button
-          onClick={() => openReportModal('FOUND')}
-          className="group relative flex flex-col p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-emerald-500 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500"
-          aria-label="Report Found Item"
-        >
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-            <span className="material-symbols-outlined text-[22px]">front_hand</span>
-          </div>
-          <span className="font-heading font-bold text-[15px] text-[#0b241c]">
-            Report Found
-          </span>
-          <span className="text-xs text-[#3d4a42] mt-0.5">
-            Spotted or picked up an item on campus?
-          </span>
-          <div className="mt-3 flex items-center text-xs font-bold text-emerald-700 gap-1">
-            <span>Turn in & earn points</span>
-            <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-          </div>
-        </button>
-      </div>
+        return (
+          <button
+            type="button"
+            onClick={() =>
+              setActiveTab(
+                currentUser.role === 'admin' || currentUser.role === 'security'
+                  ? 'admin'
+                  : 'dashboard'
+              )
+            }
+            className="w-full text-left p-4 rounded-3xl bg-white border border-slate-200 hover:border-emerald-400 hover:shadow-xs transition-all cursor-pointer group"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[18px]">query_stats</span>
+                </span>
+                <div>
+                  <h3 className="font-heading font-bold text-sm text-[#0b241c] group-hover:text-emerald-800 transition-colors">
+                    {currentUser.role === 'faculty'
+                      ? 'Faculty Departmental & Campus Dashboard'
+                      : 'Student Campus Lost & Found Dashboard'}
+                  </h3>
+                  <p className="text-[11px] text-slate-500">
+                    Live breakdown of items found, lost, returned, and category metrics
+                  </p>
+                </div>
+              </div>
+              <span className="material-symbols-outlined text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all text-[20px]">
+                arrow_forward
+              </span>
+            </div>
+
+            <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-100 text-center">
+              <div className="p-2 rounded-xl bg-emerald-50/70 border border-emerald-100">
+                <span className="text-[10px] font-bold text-emerald-800 uppercase block">Found</span>
+                <span className="font-heading font-extrabold text-base text-emerald-900">{found}</span>
+                <span className="text-[9px] text-emerald-700 block">in custody</span>
+              </div>
+              <div className="p-2 rounded-xl bg-amber-50/70 border border-amber-100">
+                <span className="text-[10px] font-bold text-amber-800 uppercase block">Lost</span>
+                <span className="font-heading font-extrabold text-base text-amber-900">{lost}</span>
+                <span className="text-[9px] text-amber-700 block">active notices</span>
+              </div>
+              <div className="p-2 rounded-xl bg-blue-50/70 border border-blue-100">
+                <span className="text-[10px] font-bold text-blue-800 uppercase block">Returned</span>
+                <span className="font-heading font-extrabold text-base text-blue-900">{returned}</span>
+                <span className="text-[9px] text-blue-700 block">reunited</span>
+              </div>
+              <div className="p-2 rounded-xl bg-emerald-900 text-white border border-emerald-800">
+                <span className="text-[10px] font-bold text-emerald-200 uppercase block">Recovery</span>
+                <span className="font-heading font-extrabold text-base text-white">{recoveryRate}%</span>
+                <span className="text-[9px] text-emerald-300 block">{recovered}/{total} secured</span>
+              </div>
+            </div>
+          </button>
+        );
+      })()}
 
       {/* 4. Nearby Urgent Alert (Proximity Geofenced) */}
       {!dismissedAlert && (
@@ -310,27 +387,27 @@ export const HomeScreen: React.FC = () => {
         </div>
 
         {/* Report Cards List */}
-        <div className="space-y-3">
-          {filteredReports.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 text-center">
-              <span className="material-symbols-outlined text-[36px] text-slate-300">
-                search_off
-              </span>
-              <p className="font-semibold text-sm text-[#0b241c] mt-2">
-                No matching reports found
-              </p>
-              <p className="text-xs text-slate-400 mt-1">
-                Try searching for something else or submit a new report.
-              </p>
-              <button
-                onClick={() => openReportModal('LOST')}
-                className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 cursor-pointer"
-              >
-                Report Missing Item
-              </button>
-            </div>
-          ) : (
-            filteredReports.map((report) => (
+        {filteredReports.length === 0 ? (
+          <div className="bg-white rounded-2xl border border-slate-200 p-8 text-center">
+            <span className="material-symbols-outlined text-[36px] text-slate-300">
+              search_off
+            </span>
+            <p className="font-semibold text-sm text-[#0b241c] mt-2">
+              No matching reports found
+            </p>
+            <p className="text-xs text-slate-400 mt-1">
+              Try searching for something else or submit a new report.
+            </p>
+            <button
+              onClick={() => openReportModal('LOST')}
+              className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 cursor-pointer"
+            >
+              Report Missing Item
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
+            {filteredReports.map((report) => (
               <div
                 key={report.id}
                 onClick={() => setSelectedReportDetail(report)}
@@ -405,9 +482,9 @@ export const HomeScreen: React.FC = () => {
                   </div>
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* 7. Campus Heroes Leaderboard Snippet */}

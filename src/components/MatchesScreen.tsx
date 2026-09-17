@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { PotentialMatch } from '../types';
+import { evaluateReportCorrelation, extractBrand } from '../utils/matchingEngine';
 
 export const MatchesScreen: React.FC = () => {
   const {
@@ -60,6 +61,16 @@ export const MatchesScreen: React.FC = () => {
 
   const isApprovedByOfficer = isVerified && !isApprovedByAdmin;
 
+  const currentEvaluation = useMemo(() => {
+    if (!currentMatch?.lostReport || !currentMatch?.foundReport) return null;
+    return evaluateReportCorrelation(
+      currentMatch.lostReport,
+      currentMatch.foundReport,
+      isSecurityOrAdmin,
+      currentVerification?.submittedEvidence.serialNumberProvided
+    );
+  }, [currentMatch, isSecurityOrAdmin, currentVerification?.submittedEvidence.serialNumberProvided]);
+
   const handleEvidenceSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentMatch) return;
@@ -77,7 +88,7 @@ export const MatchesScreen: React.FC = () => {
   if (!currentUser) return null;
 
   return (
-    <div className="pb-24 pt-20 px-4 max-w-2xl mx-auto space-y-5">
+    <div className="pb-24 lg:pb-12 pt-20 px-3 sm:px-6 max-w-[1600px] mx-auto space-y-6">
       {/* Screen Title with Back Button */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -137,14 +148,16 @@ export const MatchesScreen: React.FC = () => {
           )}
 
           {currentMatch && (
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              {/* Left Column: Correlation Telemetry & Item Matrix */}
+              <div className="lg:col-span-7 space-y-5">
               {/* Match Header Alert Banner */}
               <div className="p-4 rounded-3xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white border border-emerald-800/60 shadow-sm space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
-                      TELEMETRY CORRELATION • {currentMatch.confidenceScore}% SIMILARITY
+                      TELEMETRY CORRELATION • {currentEvaluation?.confidenceScore ?? currentMatch.confidenceScore}% SIMILARITY
                     </span>
                   </div>
                   <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-amber-400 text-amber-950">
@@ -153,11 +166,11 @@ export const MatchesScreen: React.FC = () => {
                 </div>
 
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  A machine correlation has identified high physical and temporal proximity. Physical custody remains protected at{' '}
+                  A machine correlation has evaluated physical and temporal proximity. Physical custody remains protected at{' '}
                   <strong className="text-white font-semibold">
                     {currentMatch.foundReport.location.building}
                   </strong>{' '}
-                  pending verification.
+                  pending official verification.
                 </p>
 
                 {/* 4-Stage Verification Progress */}
@@ -183,6 +196,27 @@ export const MatchesScreen: React.FC = () => {
                 </div>
               </div>
 
+              {/* Algorithmic Discrepancy Alert Banner */}
+              {currentEvaluation?.hasSignificantDiscrepancies && (
+                <div className="p-4 rounded-2xl bg-rose-50/95 border border-rose-200 text-rose-950 space-y-2.5 shadow-xs">
+                  <div className="flex items-center gap-2 font-bold text-xs sm:text-sm text-rose-900">
+                    <span className="material-symbols-outlined text-[20px] text-rose-600">warning</span>
+                    <span>Algorithmic Correlation Discrepancy Detected</span>
+                  </div>
+                  <p className="text-xs text-rose-800 leading-relaxed">
+                    Critical attribute differences were identified between Case #{currentMatch.lostReport.ticketNumber} and Case #{currentMatch.foundReport.ticketNumber}. Automatic verification is restricted:
+                  </p>
+                  <ul className="space-y-1 text-xs text-rose-900 font-medium pl-1">
+                    {currentEvaluation.discrepancies.map((discrepancy, dIdx) => (
+                      <li key={dIdx} className="flex items-start gap-1.5">
+                        <span className="text-rose-500 font-bold">•</span>
+                        <span>{discrepancy}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {/* Side-by-Side Telemetry Comparison Card */}
               <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3">
                 <h3 className="font-heading font-bold text-sm text-[#0b241c] flex items-center justify-between">
@@ -192,81 +226,147 @@ export const MatchesScreen: React.FC = () => {
                   </span>
                 </h3>
 
-                <div className="grid grid-cols-2 gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 p-3.5 bg-slate-50 rounded-xl border border-slate-100">
                   {/* Left: Your Lost Report */}
-                  <div className="space-y-1.5 pr-2 border-r border-slate-200">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded">
-                      YOUR LOST REPORT
-                    </span>
-                    <h4 className="font-bold text-xs text-slate-900 mt-1">
+                  <div className="space-y-2 sm:pr-3 sm:border-r border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200/60">
+                        YOUR LOST REPORT
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        #{currentMatch.lostReport.ticketNumber}
+                      </span>
+                    </div>
+                    <h4 className="font-bold text-xs text-slate-900">
                       {currentMatch.lostReport.itemName}
                     </h4>
-                    <p className="text-[11px] text-slate-600">
-                      Color: {currentMatch.lostReport.color || 'Matte Black'}
-                    </p>
-                    <p className="text-[11px] text-slate-600">
-                      Loc: {currentMatch.lostReport.location.room}
-                    </p>
-                    <p className="text-[11px] text-slate-500">
-                      Time: {currentMatch.lostReport.eventTime}
-                    </p>
+                    <div className="space-y-1 text-[11px] text-slate-600">
+                      <p className="flex items-center justify-between">
+                        <span className="text-slate-500">Brand:</span>
+                        <span className="font-semibold text-slate-800">
+                          {extractBrand(currentMatch.lostReport)?.toUpperCase() || currentMatch.lostReport.brand || 'Unspecified'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between">
+                        <span className="text-slate-500">Color:</span>
+                        <span className="font-medium text-slate-700">{currentMatch.lostReport.color || 'Unspecified'}</span>
+                      </p>
+                      <p className="flex items-center justify-between">
+                        <span className="text-slate-500">Location:</span>
+                        <span className="font-medium text-slate-700">{currentMatch.lostReport.location.room}</span>
+                      </p>
+                      <p className="flex items-center justify-between">
+                        <span className="text-slate-500">Event Time:</span>
+                        <span className="font-medium text-slate-700">{currentMatch.lostReport.eventTime}</span>
+                      </p>
+                    </div>
                   </div>
 
                   {/* Right: Turned In Found Report */}
-                  <div className="space-y-1.5 pl-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
-                      TURNED IN ITEM
-                    </span>
-                    <h4 className="font-bold text-xs text-slate-900 mt-1">
+                  <div className="space-y-2 sm:pl-1 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">
+                        TURNED IN ITEM
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">
+                        #{currentMatch.foundReport.ticketNumber}
+                      </span>
+                    </div>
+                    <h4 className="font-bold text-xs text-slate-900">
                       {currentMatch.foundReport.itemName}
                     </h4>
-                    <p className="text-[11px] text-slate-600">
-                      Color: {currentMatch.foundReport.color || 'Dark Charcoal'}
-                    </p>
-                    <p className="text-[11px] text-slate-600">
-                      Loc: {currentMatch.foundReport.location.room}
-                    </p>
-                    <p className="text-[11px] text-slate-500">
-                      Time: {currentMatch.foundReport.eventTime}
-                    </p>
+                    <div className="space-y-1 text-[11px] text-slate-600">
+                      <p className="flex items-center justify-between">
+                        <span className="text-slate-500">Brand:</span>
+                        <span className="font-semibold text-slate-800">
+                          {extractBrand(currentMatch.foundReport)?.toUpperCase() || currentMatch.foundReport.brand || 'Unspecified'}
+                        </span>
+                      </p>
+                      <p className="flex items-center justify-between">
+                        <span className="text-slate-500">Color:</span>
+                        <span className="font-medium text-slate-700">{currentMatch.foundReport.color || 'Unspecified'}</span>
+                      </p>
+                      <p className="flex items-center justify-between">
+                        <span className="text-slate-500">Location:</span>
+                        <span className="font-medium text-slate-700">{currentMatch.foundReport.location.room}</span>
+                      </p>
+                      <p className="flex items-center justify-between">
+                        <span className="text-slate-500">Event Time:</span>
+                        <span className="font-medium text-slate-700">{currentMatch.foundReport.eventTime}</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 {/* Telemetry Factors Checklist */}
                 <div className="space-y-2 pt-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                    Algorithmic Correlation Factors
-                  </span>
-                  <div className="space-y-1.5">
-                    {currentMatch.matchingFactors.map((factor, idx) => {
-                      const isSerialFactor = factor.name.toLowerCase().includes('serial');
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                      Algorithmic Correlation Factors
+                    </span>
+                    <span className="text-[10px] font-medium text-slate-400">
+                      Rule-based verification score
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    {(currentEvaluation?.matchingFactors || currentMatch.matchingFactors).map((factor, idx) => {
+                      const isMismatch = factor.status === 'MISMATCH' || (!factor.match && factor.status !== 'PARTIAL' && factor.status !== 'PENDING');
+                      const isPending = factor.status === 'PENDING';
+                      const isPartial = factor.status === 'PARTIAL';
+                      const isMatch = factor.status === 'MATCH' || (factor.match && !isMismatch && !isPending && !isPartial);
+
                       return (
                         <div
                           key={idx}
-                          className="flex items-center justify-between text-xs py-1 px-2.5 rounded-lg bg-slate-50 border border-slate-100"
+                          className={`flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs py-2 px-3 rounded-xl border ${
+                            isMismatch
+                              ? 'bg-rose-50/60 border-rose-200'
+                              : isMatch
+                              ? 'bg-emerald-50/50 border-emerald-200'
+                              : isPartial
+                              ? 'bg-amber-50/50 border-amber-200'
+                              : 'bg-slate-50 border-slate-200'
+                          }`}
                         >
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 min-w-0">
                             <span
-                              className={`material-symbols-outlined text-[16px] ${
-                                factor.match || (isSerialFactor && isSecurityOrAdmin)
+                              className={`material-symbols-outlined text-[18px] shrink-0 ${
+                                isMismatch
+                                  ? 'text-rose-600'
+                                  : isMatch
                                   ? 'text-emerald-600'
-                                  : 'text-amber-500'
+                                  : isPartial
+                                  ? 'text-amber-500'
+                                  : 'text-slate-400'
                               }`}
                             >
-                              {factor.match || (isSerialFactor && isSecurityOrAdmin)
+                              {isMismatch
+                                ? 'cancel'
+                                : isMatch
                                 ? 'check_circle'
+                                : isPartial
+                                ? 'info'
                                 : 'lock'}
                             </span>
-                            <span className="font-medium text-slate-800">
+                            <span className="font-semibold text-slate-800 truncate">
                               {factor.name}
                             </span>
+                            <span
+                              className={`text-[9.5px] font-black uppercase px-1.5 py-0.5 rounded shrink-0 ${
+                                isMismatch
+                                  ? 'bg-rose-100 text-rose-800'
+                                  : isMatch
+                                  ? 'bg-emerald-100 text-emerald-800'
+                                  : isPartial
+                                  ? 'bg-amber-100 text-amber-800'
+                                  : 'bg-slate-200 text-slate-700'
+                              }`}
+                            >
+                              {isMismatch ? 'MISMATCH' : isMatch ? 'MATCH' : isPartial ? 'PARTIAL' : 'VAULT SECURED'}
+                            </span>
                           </div>
-                          <span className="text-[11px] text-slate-500 font-mono">
-                            {isSerialFactor
-                              ? isSecurityOrAdmin
-                                ? 'PF-284920-X1 (Decrypted for Security/Admin)'
-                                : 'Confidential • Protected in AES-256 Vault'
-                              : factor.description}
+                          <span className="text-[11px] text-slate-600 font-mono sm:text-right pl-6 sm:pl-0">
+                            {factor.description}
                           </span>
                         </div>
                       );
@@ -350,9 +450,12 @@ export const MatchesScreen: React.FC = () => {
                   </div>
                 )}
               </div>
+              </div>
 
-              {/* Ownership Verification Card & Actions */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3">
+              {/* Right Column: Verification Authority, Handover & Actions */}
+              <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-20">
+                {/* Ownership Verification Card & Actions */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3">
                 {/* Ownership Verification & Authority Approval Card Header */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -758,7 +861,7 @@ export const MatchesScreen: React.FC = () => {
                           : 'Officer Nair authority active. You can approve or request proof directly as Officer.'}
                       </p>
                     </div>
-                    <div className="flex gap-2 shrink-0">
+                    <div className="flex flex-wrap sm:flex-nowrap gap-2 w-full sm:w-auto shrink-0 mt-2 sm:mt-0">
                       <button
                         onClick={() =>
                           updateVerificationStatus(
@@ -773,20 +876,20 @@ export const MatchesScreen: React.FC = () => {
                             currentUser.role === 'admin' ? 'ADMIN' : 'OFFICER'
                           )
                         }
-                        className={`px-3 py-1.5 text-white font-bold rounded-xl text-xs flex items-center gap-1 shadow-xs cursor-pointer ${
+                        className={`flex-1 sm:flex-initial px-3 py-2 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer ${
                           currentUser.role === 'admin'
                             ? 'bg-indigo-700 hover:bg-indigo-800'
                             : 'bg-emerald-700 hover:bg-emerald-800'
                         }`}
                       >
                         <span className="material-symbols-outlined text-[16px]">verified</span>
-                        <span>
+                        <span className="whitespace-nowrap">
                           {currentUser.role === 'admin' ? 'Direct Approve as Admin' : 'Direct Approve as Officer'}
                         </span>
                       </button>
                       <button
                         onClick={() => updateVerificationStatus(currentMatch.id, 'NEEDS_MORE_EVIDENCE')}
-                        className="px-2.5 py-1.5 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl text-xs cursor-pointer"
+                        className="px-3 py-2 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl text-xs cursor-pointer whitespace-nowrap"
                       >
                         Request Proof
                       </button>
@@ -927,12 +1030,12 @@ export const MatchesScreen: React.FC = () => {
                   )}
 
                   {/* Secondary Actions: Mediation & Dismiss */}
-                  <div className="flex items-center justify-between pt-1 text-xs gap-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-1 text-xs gap-2">
                     <button
                       onClick={() => {
                         triggerToast('Dispatched mediation request to Officer Nair (Gate 1 Safe Hub)', 'support_agent');
                       }}
-                      className="px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="w-full sm:w-auto px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <span className="material-symbols-outlined text-[16px]">support_agent</span>
                       <span>Request Officer Mediation</span>
@@ -940,13 +1043,14 @@ export const MatchesScreen: React.FC = () => {
 
                     <button
                       onClick={() => dismissMatch(currentMatch.id)}
-                      className="px-3 py-2 rounded-xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 font-semibold transition-colors cursor-pointer"
+                      className="w-full sm:w-auto px-3 py-2 rounded-xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 font-semibold transition-colors cursor-pointer text-center"
                     >
                       Not Mine • Dismiss
                     </button>
                   </div>
                 </div>
               </div>
+            </div>
             </div>
           )}
         </>

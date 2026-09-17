@@ -10,6 +10,7 @@ import { CampusMapScreen } from './components/CampusMapScreen';
 import { NotificationsScreen } from './components/NotificationsScreen';
 import { CampusHeroesScreen } from './components/CampusHeroesScreen';
 import { AdminSecurityDashboard } from './components/AdminSecurityDashboard';
+import { StudentFacultyDashboard } from './components/StudentFacultyDashboard';
 import { ProfileScreen } from './components/ProfileScreen';
 import { ReportModal } from './components/ReportModal';
 import { HandoverChatModal } from './components/HandoverChatModal';
@@ -55,7 +56,13 @@ const MainAppContent: React.FC = () => {
       case 'heroes':
         return <CampusHeroesScreen />;
       case 'admin':
-        return <AdminSecurityDashboard />;
+        return currentUser.role === 'admin' || currentUser.role === 'security' ? (
+          <AdminSecurityDashboard />
+        ) : (
+          <StudentFacultyDashboard />
+        );
+      case 'dashboard':
+        return <StudentFacultyDashboard />;
       case 'profile':
         return <ProfileScreen />;
       default:
@@ -69,7 +76,7 @@ const MainAppContent: React.FC = () => {
       <Header />
 
       {/* Main Screen Content */}
-      <main className="flex-1 w-full max-w-4xl mx-auto">
+      <main className="flex-1 w-full max-w-[1600px] mx-auto px-2.5 sm:px-4 lg:px-6 xl:px-8">
         {renderActiveScreen()}
       </main>
 

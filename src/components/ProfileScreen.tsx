@@ -22,7 +22,7 @@ export const ProfileScreen: React.FC = () => {
   if (!currentUser) return null;
 
   return (
-    <div className="pb-24 pt-20 px-4 max-w-2xl mx-auto space-y-5">
+    <div className="pb-24 lg:pb-12 pt-20 px-3 sm:px-6 max-w-7xl mx-auto space-y-6">
       {/* Title Header with Back Button */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -45,7 +45,11 @@ export const ProfileScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Profile Header Card */}
+      {/* Responsive Two-Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Column: Identity & Session Management */}
+        <div className="lg:col-span-5 space-y-6">
+          {/* Profile Header Card */}
       <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -199,8 +203,11 @@ export const ProfileScreen: React.FC = () => {
           <span>Sign Out of Campus Pick</span>
         </button>
       </div>
+      </div>
 
-      {/* Draft Recovery Card (if user has an unsaved draft) */}
+      {/* Right Column: Preferences, System Tour, & Draft Recovery */}
+      <div className="lg:col-span-7 space-y-6">
+        {/* Draft Recovery Card (if user has an unsaved draft) */}
       {draftReport && (
         <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl space-y-2 text-xs text-amber-950">
           <div className="flex items-center justify-between">
@@ -304,6 +311,8 @@ export const ProfileScreen: React.FC = () => {
           <span>Launch 8-Act Walkthrough Simulator</span>
           <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
         </button>
+      </div>
+      </div>
       </div>
 
       {/* Institutional Footer Notice */}

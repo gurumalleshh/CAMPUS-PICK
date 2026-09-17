@@ -144,7 +144,7 @@ export const LoginScreen: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#eef6f1] via-[#f5f9f6] to-[#e7f1ea] text-[#0b241c] flex flex-col justify-between py-8 px-4 font-body selection:bg-emerald-100 selection:text-emerald-900">
-      <div className="max-w-md w-full mx-auto space-y-5">
+      <div className="max-w-lg sm:max-w-xl w-full mx-auto space-y-5">
         {/* Institutional Branding Header */}
         <div className="text-center space-y-2 pt-2">
           <div className="flex justify-center">
@@ -270,13 +270,13 @@ export const LoginScreen: React.FC = () => {
                         user: DEMO_USERS.security_nair,
                         tag: 'Security & Custody Desk',
                         badgeColor: 'bg-amber-100 text-amber-900',
-                        desc: 'Badge: #CS-409 · Gate 1 Central Security Desk',
+                        desc: 'Badge: #CS-409 · Direct to Custody Dashboard (Found, Lost, Return & Categories)',
                       },
                       {
                         user: DEMO_USERS.admin_shivakumar,
                         tag: 'Institutional Admin',
                         badgeColor: 'bg-indigo-100 text-indigo-900',
-                        desc: 'Dean of Student Welfare · Student Affairs Command',
+                        desc: 'Dean of Student Welfare · Command Dashboard & Category-Wise Registry',
                       },
                       {
                         user: DEMO_USERS.faculty_divya,

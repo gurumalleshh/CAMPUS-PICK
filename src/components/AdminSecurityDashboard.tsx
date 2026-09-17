@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { VerificationRecord } from '../types';
+import { VerificationRecord, ItemCategory } from '../types';
 import { MessagingWindow } from './MessagingWindow';
+import { CategoryWiseBreakdown } from './CategoryWiseBreakdown';
+import { ItemsInventoryTable } from './ItemsInventoryTable';
+import { DEMO_USERS } from '../mockData';
 
 export const AdminSecurityDashboard: React.FC = () => {
   const {
     currentUser,
+    login,
     verifications,
     updateVerificationStatus,
     reports,
@@ -18,17 +22,26 @@ export const AdminSecurityDashboard: React.FC = () => {
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<
-    'verifications' | 'chats' | 'lockers' | 'rewards' | 'audit'
-  >('verifications');
+    'overview' | 'inventory' | 'verifications' | 'chats' | 'lockers' | 'rewards' | 'audit'
+  >('overview');
+
+  const [selectedCategory, setSelectedCategory] = useState<ItemCategory | 'ALL'>('ALL');
+  const [selectedStatusFilter, setSelectedStatusFilter] = useState<'ALL' | 'FOUND' | 'LOST' | 'RETURNED'>('ALL');
 
   if (!currentUser) return null;
 
   const pendingVerifications = Object.values(verifications) as VerificationRecord[];
 
+  const foundCount = reports.filter((r) => r.status === 'FOUND').length;
+  const lostCount = reports.filter(
+    (r) => r.status === 'LOST' || r.status === 'POTENTIAL_MATCH' || r.status === 'UNDER_REVIEW'
+  ).length;
+  const returnedCount = reports.filter((r) => r.status === 'RETURNED').length;
+
   return (
-    <div className="pb-24 pt-20 px-4 max-w-3xl mx-auto space-y-5">
-      {/* Title Header with Back Button */}
-      <div className="flex items-start justify-between">
+    <div className="pb-24 md:pb-12 pt-20 px-3 sm:px-6 max-w-[1600px] mx-auto space-y-6">
+      {/* Title Header with Back Button and Role Switcher */}
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
         <div className="flex items-start gap-3">
           <button
             onClick={goBack}
@@ -39,62 +52,103 @@ export const AdminSecurityDashboard: React.FC = () => {
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center flex-wrap gap-2">
               <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
-                {currentUser.role === 'admin' ? 'Administrator Command Center' : 'Campus Security Custody Desk'}
+                {currentUser.role === 'admin'
+                  ? 'Administrator Command Center'
+                  : 'Campus Security Custody Desk'}
               </h1>
-              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
+              <span
+                className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${
+                  currentUser.role === 'admin'
+                    ? 'bg-indigo-100 text-indigo-900'
+                    : 'bg-amber-100 text-amber-900'
+                }`}
+              >
                 {currentUser.identifier}
               </span>
             </div>
             <p className="text-xs text-[#3d4a42]">
-              PES College of Engineering, Mandya • Trust & Custody Authority
+              PES College of Engineering, Mandya • Institutional Custody & Governance
             </p>
           </div>
         </div>
 
-        {/* Verified Custody Session Badge */}
-        <div className="hidden sm:flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-900 shadow-xs">
-          <span className="material-symbols-outlined text-emerald-700 text-[16px]">verified_user</span>
-          <span>Verified Authority: {currentUser.displayName.split(' ')[0]}</span>
-        </div>
-      </div>
-
-      {/* Metrics Row */}
-      <div className="grid grid-cols-4 gap-2 text-center text-xs">
-        <div className="p-3 bg-white border border-slate-200 rounded-2xl">
-          <span className="text-[10px] font-bold text-slate-400">EVIDENCE AUDITS</span>
-          <p className="text-lg font-bold text-emerald-800 mt-0.5">{pendingVerifications.length}</p>
-        </div>
-        <div className="p-3 bg-white border border-slate-200 rounded-2xl">
-          <span className="text-[10px] font-bold text-slate-400">SAFE LOCKERS</span>
-          <p className="text-lg font-bold text-blue-800 mt-0.5">16 Active</p>
-        </div>
-        <div className="p-3 bg-white border border-slate-200 rounded-2xl">
-          <span className="text-[10px] font-bold text-slate-400">OPEN REPORTS</span>
-          <p className="text-lg font-bold text-slate-800 mt-0.5">{reports.length}</p>
-        </div>
-        <div className="p-3 bg-white border border-slate-200 rounded-2xl">
-          <span className="text-[10px] font-bold text-slate-400">DISPUTES</span>
-          <p className="text-lg font-bold text-emerald-600 mt-0.5">0 Active</p>
+        {/* Role Perspective Quick Switcher */}
+        <div className="flex items-center gap-1.5 self-start sm:self-auto bg-white p-1 rounded-2xl border border-slate-200 shadow-xs text-xs">
+          <span className="text-[10px] font-bold text-slate-400 px-2 uppercase tracking-wider">
+            Perspective:
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              login(DEMO_USERS.admin_shivakumar);
+              triggerToast('Active perspective switched to Admin: Dr. N. Shivakumar', 'shield', 'info');
+            }}
+            className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
+              currentUser.role === 'admin'
+                ? 'bg-indigo-700 text-white shadow-xs'
+                : 'text-slate-600 hover:text-indigo-900'
+            }`}
+          >
+            <span className="material-symbols-outlined text-[14px]">shield_person</span>
+            <span>Admin</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              login(DEMO_USERS.security_nair);
+              triggerToast('Active perspective switched to Security: Officer R. Nair', 'badge', 'info');
+            }}
+            className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
+              currentUser.role === 'security'
+                ? 'bg-amber-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-amber-900'
+            }`}
+          >
+            <span className="material-symbols-outlined text-[14px]">local_police</span>
+            <span>Security</span>
+          </button>
         </div>
       </div>
 
       {/* Navigation Tabs */}
       <div className="flex bg-slate-100 p-1 rounded-2xl text-xs font-bold gap-1 overflow-x-auto no-scrollbar">
         <button
-          onClick={() => setActiveTab('verifications')}
-          className={`flex-1 min-w-[130px] py-2 rounded-xl transition-all cursor-pointer ${
-            activeTab === 'verifications'
-              ? 'bg-white text-slate-900 shadow-xs'
-              : 'text-slate-500 hover:text-slate-900'
+          onClick={() => setActiveTab('overview')}
+          className={`flex-1 min-w-[130px] py-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+            activeTab === 'overview'
+              ? 'bg-emerald-800 text-white shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          Ownership Claims ({pendingVerifications.length})
+          <span className="material-symbols-outlined text-[16px]">pie_chart</span>
+          <span>Analytics Dashboard</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('inventory')}
+          className={`flex-1 min-w-[130px] py-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+            activeTab === 'inventory'
+              ? 'bg-slate-900 text-white shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <span className="material-symbols-outlined text-[16px]">inventory_2</span>
+          <span>Items Registry ({reports.length})</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('verifications')}
+          className={`flex-1 min-w-[125px] py-2 rounded-xl transition-all cursor-pointer ${
+            activeTab === 'verifications'
+              ? 'bg-white text-slate-900 shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          Claims ({pendingVerifications.length})
         </button>
         <button
           onClick={() => setActiveTab('chats')}
-          className={`flex-1 min-w-[140px] py-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[135px] py-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
             activeTab === 'chats'
               ? 'bg-[#008069] text-white shadow-xs'
               : 'text-emerald-800 hover:text-emerald-950 bg-emerald-50/70 border border-emerald-200'
@@ -105,37 +159,98 @@ export const AdminSecurityDashboard: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('lockers')}
-          className={`flex-1 min-w-[120px] py-2 rounded-xl transition-all cursor-pointer ${
+          className={`flex-1 min-w-[105px] py-2 rounded-xl transition-all cursor-pointer ${
             activeTab === 'lockers'
               ? 'bg-white text-slate-900 shadow-xs'
-              : 'text-slate-500 hover:text-slate-900'
+              : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          Safe Lockers
+          Lockers
         </button>
         <button
           onClick={() => setActiveTab('rewards')}
-          className={`flex-1 min-w-[110px] py-2 rounded-xl transition-all cursor-pointer ${
+          className={`flex-1 min-w-[100px] py-2 rounded-xl transition-all cursor-pointer ${
             activeTab === 'rewards'
               ? 'bg-white text-slate-900 shadow-xs'
-              : 'text-slate-500 hover:text-slate-900'
+              : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          Rewards
+          Honors
         </button>
         <button
           onClick={() => setActiveTab('audit')}
           className={`flex-1 min-w-[100px] py-2 rounded-xl transition-all cursor-pointer ${
             activeTab === 'audit'
               ? 'bg-white text-slate-900 shadow-xs'
-              : 'text-slate-500 hover:text-slate-900'
+              : 'text-slate-600 hover:text-slate-900'
           }`}
         >
           Audit Ledger
         </button>
       </div>
 
-      {/* TAB: WHATSAPP STUDENT CHATS MONITOR */}
+      {/* TAB 1: OVERVIEW DASHBOARD (ITEMS FOUND, LOST, RETURNED & CATEGORY WISE) */}
+      {activeTab === 'overview' && (
+        <div className="space-y-4">
+          <CategoryWiseBreakdown
+            reports={reports}
+            selectedCategory={selectedCategory}
+            onSelectCategory={(cat) => {
+              setSelectedCategory(cat);
+              if (cat !== 'ALL') {
+                setActiveTab('inventory');
+              }
+            }}
+            selectedStatusFilter={selectedStatusFilter}
+            onSelectStatusFilter={(st) => {
+              setSelectedStatusFilter(st);
+              if (st !== 'ALL') {
+                setActiveTab('inventory');
+              }
+            }}
+          />
+
+          {/* Quick Registry CTA Banner */}
+          <div className="bg-gradient-to-r from-emerald-900 to-[#0b241c] text-white p-4 rounded-3xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-[22px] text-emerald-300">
+                  table_view
+                </span>
+              </div>
+              <div>
+                <h4 className="font-heading font-bold text-sm">
+                  Complete Custodial Items Directory
+                </h4>
+                <p className="text-xs text-emerald-200/80">
+                  Search, inspect confidential marks, update handover status, or export to CSV.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setActiveTab('inventory')}
+              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-sm transition-all cursor-pointer shrink-0 flex items-center gap-1.5 active:scale-95"
+            >
+              <span>View All Items ({reports.length})</span>
+              <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 2: INVENTORY & ITEMS REGISTRY */}
+      {activeTab === 'inventory' && (
+        <ItemsInventoryTable
+          reports={reports}
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+          selectedStatusFilter={selectedStatusFilter}
+          onSelectStatusFilter={setSelectedStatusFilter}
+        />
+      )}
+
+      {/* TAB 3: WHATSAPP STUDENT CHATS MONITOR */}
       {activeTab === 'chats' && (
         <div className="space-y-3">
           <div className="p-3 bg-[#0b241c] border border-emerald-800/40 rounded-2xl text-xs text-emerald-300 flex items-center justify-between">
@@ -154,7 +269,7 @@ export const AdminSecurityDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* TAB 1: VERIFICATIONS */}
+      {/* TAB 4: VERIFICATIONS */}
       {activeTab === 'verifications' && (
         <div className="space-y-4">
           {pendingVerifications.length === 0 ? (
@@ -162,7 +277,8 @@ export const AdminSecurityDashboard: React.FC = () => {
               No pending claims requiring review.
             </div>
           ) : (
-            pendingVerifications.map((v) => (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {pendingVerifications.map((v) => (
               <div
                 key={v.id}
                 className="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 text-xs"
@@ -256,12 +372,13 @@ export const AdminSecurityDashboard: React.FC = () => {
                   </button>
                 </div>
               </div>
-            ))
+            ))}
+            </div>
           )}
         </div>
       )}
 
-      {/* TAB 2: LOCKERS */}
+      {/* TAB 5: LOCKERS */}
       {activeTab === 'lockers' && (
         <div className="space-y-3">
           <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-600">
@@ -304,40 +421,42 @@ export const AdminSecurityDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* TAB 3: REWARDS */}
+      {/* TAB 6: REWARDS */}
       {activeTab === 'rewards' && (
         <div className="space-y-3">
           <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-2xl text-xs text-indigo-950">
             Administrative honors management. Review and authorize Dean commendation certificates for top student finders.
           </div>
 
-          {rewards.map((r) => (
-            <div
-              key={r.id}
-              className="bg-white p-4 rounded-2xl border border-slate-200 flex items-center justify-between text-xs"
-            >
-              <div>
-                <h4 className="font-bold text-slate-900">{r.name}</h4>
-                <p className="text-slate-500">{r.description}</p>
-                <p className="text-[10px] text-emerald-800 font-semibold mt-1">
-                  Threshold: {r.requiredReturns} Returns ({r.requiredPoints} Points)
-                </p>
-              </div>
-
-              <button
-                onClick={() =>
-                  triggerToast(`Honor quota updated for ${r.name}`, 'verified')
-                }
-                className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl font-bold text-slate-700"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5">
+            {rewards.map((r) => (
+              <div
+                key={r.id}
+                className="bg-white p-4 rounded-2xl border border-slate-200 flex items-center justify-between text-xs"
               >
-                Configure Quota
-              </button>
-            </div>
-          ))}
+                <div>
+                  <h4 className="font-bold text-slate-900">{r.name}</h4>
+                  <p className="text-slate-500">{r.description}</p>
+                  <p className="text-[10px] text-emerald-800 font-semibold mt-1">
+                    Threshold: {r.requiredReturns} Returns ({r.requiredPoints} Points)
+                  </p>
+                </div>
+
+                <button
+                  onClick={() =>
+                    triggerToast(`Honor quota updated for ${r.name}`, 'verified')
+                  }
+                  className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl font-bold text-slate-700 cursor-pointer"
+                >
+                  Configure Quota
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* TAB 4: AUDIT LEDGER */}
+      {/* TAB 7: AUDIT LEDGER */}
       {activeTab === 'audit' && (
         <div className="space-y-2">
           <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-600">

@@ -115,8 +115,8 @@ export const LifecycleWalkthroughModal: React.FC = () => {
   const currentAct = acts[walkthroughStep - 1];
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95">
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-white rounded-3xl max-w-lg md:max-w-xl w-full p-4 sm:p-6 space-y-4 shadow-2xl animate-in zoom-in-95">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2">

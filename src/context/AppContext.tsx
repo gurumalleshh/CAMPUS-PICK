@@ -24,6 +24,7 @@ import {
   DEMO_CERTIFICATE,
   DEMO_REWARDS,
 } from '../mockData';
+import { extractBrand, evaluateReportCorrelation, findBestCandidateMatch } from '../utils/matchingEngine';
 
 interface ToastData {
   id: string;
@@ -159,11 +160,73 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
   const [reports, setReports] = useState<Report[]>(() => {
     const saved = localStorage.getItem('cp_reports');
-    return saved ? JSON.parse(saved) : INITIAL_REPORTS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const existingIds = new Set(parsed.map((r: any) => r.id));
+          const missingSeeds = INITIAL_REPORTS.filter((r) => !existingIds.has(r.id));
+          return [...parsed, ...missingSeeds];
+        }
+      } catch {
+        // ignore
+      }
+    }
+    return INITIAL_REPORTS;
   });
   const [matches, setMatches] = useState<PotentialMatch[]>(() => {
     const saved = localStorage.getItem('cp_matches');
-    return saved ? JSON.parse(saved) : INITIAL_MATCHES;
+    let rawList: PotentialMatch[] = INITIAL_MATCHES;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          rawList = parsed;
+        }
+      } catch {
+        rawList = INITIAL_MATCHES;
+      }
+    }
+
+    // Filter out invalid/corrupted matches (e.g. where brands have a hard conflict like Dell vs Lenovo)
+    // and dynamically recompute factors for any valid match
+    const validMatches: PotentialMatch[] = [];
+
+    for (const m of rawList) {
+      if (!m.lostReport || !m.foundReport) continue;
+
+      const brand1 = extractBrand(m.lostReport);
+      const brand2 = extractBrand(m.foundReport);
+
+      // If there is an impossible brand conflict (e.g. Dell vs Lenovo)
+      if (brand1 && brand2 && brand1 !== brand2) {
+        // Discard this false match
+        continue;
+      }
+
+      // Re-evaluate correlation to ensure completely accurate factors, statuses, and score
+      const evalResult = evaluateReportCorrelation(m.lostReport, m.foundReport);
+      if (evalResult.confidenceScore < 40) {
+        continue;
+      }
+
+      validMatches.push({
+        ...m,
+        confidenceScore: evalResult.confidenceScore,
+        confidenceLevel: evalResult.confidenceLevel,
+        matchingFactors: evalResult.matchingFactors,
+        hasSignificantDiscrepancies: evalResult.hasSignificantDiscrepancies,
+        discrepancies: evalResult.discrepancies,
+      });
+    }
+
+    const finalMatches = validMatches.length > 0 ? validMatches : INITIAL_MATCHES;
+    try {
+      localStorage.setItem('cp_matches', JSON.stringify(finalMatches));
+    } catch {
+      // ignore
+    }
+    return finalMatches;
   });
   const [selectedMatch, setSelectedMatch] = useState<PotentialMatch | null>(matches[0] || null);
   const [verifications, setVerifications] = useState<Record<string, VerificationRecord>>(() => {
@@ -465,6 +528,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const login = (user: User) => {
     setCurrentUser(user);
     localStorage.setItem('cp_auth_user', JSON.stringify(user));
+    if (user.role === 'admin' || user.role === 'security') {
+      setActiveTab('admin');
+    } else {
+      setActiveTab('home');
+    }
     triggerToast(`Welcome, ${user.displayName}! Verified session active.`, 'verified_user', 'success');
   };
 
@@ -615,19 +683,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       ...prev.filter((n) => n.id !== priorityNotifId && n.id !== generalNotifId),
     ]);
 
-    // 3. Matching Engine Trigger
-    // Look for opposite type reports with matching category or keywords
-    const oppositeType = newReport.type === 'LOST' ? 'FOUND' : 'LOST';
-    const candidate = reports.find(
-      (r) =>
-        r.type === oppositeType &&
-        (r.category === newReport.category ||
-          r.itemName.toLowerCase().includes(newReport.itemName.toLowerCase()) ||
-          newReport.itemName.toLowerCase().includes(r.itemName.toLowerCase()))
-    );
+    // 3. Algorithmic Correlation Trigger
+    const bestMatchResult = findBestCandidateMatch(newReport, reports);
 
-    if (candidate) {
+    if (bestMatchResult) {
       const matchId = `match_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      const { candidate, evaluation } = bestMatchResult;
       const lostRep = newReport.type === 'LOST' ? newReport : candidate;
       const foundRep = newReport.type === 'FOUND' ? newReport : candidate;
 
@@ -637,15 +698,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         foundReportId: foundRep.id,
         lostReport: lostRep,
         foundReport: foundRep,
-        confidenceScore: 89,
-        confidenceLevel: 'High',
-        matchingFactors: [
-          { name: 'Item Classification', match: true, description: `${lostRep.itemName} vs ${foundRep.itemName}`, strength: 'STRONG' },
-          { name: 'Category & Type', match: true, description: `Category: ${lostRep.category.replace('_', ' ')}`, strength: 'STRONG' },
-          { name: 'Location Proximity', match: true, description: `${lostRep.location.building} → ${foundRep.location.building}`, strength: 'STRONG' },
-          { name: 'Time Proximity', match: true, description: 'Reports logged within immediate campus window', strength: 'STRONG' },
-          { name: 'Hardware Serial Number', match: false, description: 'Confidential • Protected until Officer authorization', strength: 'STRONG' },
-        ],
+        confidenceScore: evaluation.confidenceScore,
+        confidenceLevel: evaluation.confidenceLevel,
+        matchingFactors: evaluation.matchingFactors,
+        hasSignificantDiscrepancies: evaluation.hasSignificantDiscrepancies,
+        discrepancies: evaluation.discrepancies,
         status: 'PENDING',
         createdAt: 'Just now',
       };
@@ -659,7 +716,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         id: matchNotifId,
         type: 'POTENTIAL_MATCH',
         priority: false,
-        title: '🎯 Potential Match Detected (89% Similarity)',
+        title: `🎯 Potential Match Detected (${evaluation.confidenceScore}% Similarity)`,
         message: `A found report correlates with your ${lostRep.itemName}. Compare attributes and verify ownership.`,
         relatedMatchId: matchId,
         deepLinkTarget: 'matches',
@@ -667,7 +724,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         read: false,
       };
       setNotifications((prev) => [matchNotif, ...prev.filter((n) => n.id !== matchNotifId)]);
-      triggerToast('Matching Engine: High-confidence potential match detected!', 'auto_awesome', 'info');
+      triggerToast(`Matching Engine: ${evaluation.confidenceLevel}-confidence correlation detected (${evaluation.confidenceScore}%).`, 'auto_awesome', 'info');
     }
 
     clearDraft();

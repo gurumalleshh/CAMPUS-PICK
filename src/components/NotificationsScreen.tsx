@@ -363,7 +363,7 @@ export const NotificationsScreen: React.FC = () => {
   };
 
   return (
-    <div className="pb-24 pt-20 px-4 max-w-2xl mx-auto space-y-4">
+    <div className="pb-24 lg:pb-12 pt-20 px-3 sm:px-6 max-w-7xl mx-auto space-y-5">
       {/* Title Header with Back Button */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">

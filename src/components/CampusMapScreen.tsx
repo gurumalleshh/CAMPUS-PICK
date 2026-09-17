@@ -18,7 +18,7 @@ export const CampusMapScreen: React.FC = () => {
   };
 
   return (
-    <div className="pb-24 pt-20 px-4 max-w-2xl mx-auto space-y-4">
+    <div className="pb-24 lg:pb-12 pt-20 px-3 sm:px-6 max-w-7xl mx-auto space-y-4">
       {/* Title Header with Back Button */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -50,8 +50,12 @@ export const CampusMapScreen: React.FC = () => {
         </button>
       </div>
 
-      {/* Filter Chips Bar */}
-      <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1 text-xs">
+      {/* Desktop Two-Column Layout (Map on Left, Building Inspector & Kiosks on Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Column: Interactive Map Canvas */}
+        <div className="lg:col-span-7 xl:col-span-7 space-y-4">
+          {/* Filter Chips Bar */}
+          <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1 text-xs">
         <div className="flex items-center gap-1.5">
           {(['all', 'lost', 'found', 'safe_hubs'] as const).map((type) => (
             <button
@@ -287,90 +291,129 @@ export const CampusMapScreen: React.FC = () => {
             <span className="material-symbols-outlined text-[16px]">account_balance_wallet</span>
           </button>
         )}
+        </div>
       </div>
 
-      {/* Building Inspector Sheet */}
-      {selectedBuilding && (
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3 shadow-xs animate-in fade-in">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
-                SELECTED SECTOR
-              </span>
-              <h3 className="font-heading font-bold text-base text-[#0b241c] mt-1">
-                {selectedBuilding.name}
-              </h3>
-              <p className="text-xs text-slate-500">
-                Rooms: {selectedBuilding.rooms.join(', ')}
-              </p>
-            </div>
+      {/* Right Column: Building Inspector Sheet & Safe Hubs */}
+      <div className="lg:col-span-5 xl:col-span-5 space-y-4 lg:sticky lg:top-20">
+          {/* Building Inspector Sheet */}
+          {selectedBuilding ? (
+            <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3 shadow-xs animate-in fade-in">
+              <div className="flex items-start justify-between">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
+                    SELECTED SECTOR
+                  </span>
+                  <h3 className="font-heading font-bold text-base text-[#0b241c] mt-1">
+                    {selectedBuilding.name}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Rooms: {selectedBuilding.rooms.join(', ')}
+                  </p>
+                </div>
 
-            <button
-              onClick={() => {
-                openReportModal('LOST');
-              }}
-              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-[14px]">pin_drop</span>
-              <span>Pin Report Here</span>
-            </button>
-          </div>
-
-          {/* Sector reports */}
-          <div className="border-t border-slate-100 pt-2 space-y-2">
-            <span className="text-xs font-bold text-slate-700">
-              Active Reports in this Sector ({getReportsInBuilding(selectedBuilding.name).length}):
-            </span>
-
-            {getReportsInBuilding(selectedBuilding.name).length === 0 ? (
-              <p className="text-xs text-slate-400 italic">
-                No active reports currently logged in this sector.
-              </p>
-            ) : (
-              <div className="space-y-2">
-                {getReportsInBuilding(selectedBuilding.name).map((r) => (
-                  <div
-                    key={r.id}
-                    onClick={() => setSelectedPinReport(r)}
-                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-100 flex items-center justify-between cursor-pointer transition-colors"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`w-2 h-2 rounded-full ${
-                          r.type === 'LOST' ? 'bg-rose-500' : 'bg-emerald-500'
-                        }`}
-                      />
-                      <span className="text-xs font-bold text-slate-900">{r.itemName}</span>
-                      <span className="text-[10px] text-slate-500 font-mono">({r.location.room})</span>
-                    </div>
-                    <span className="text-xs text-emerald-700 font-bold hover:underline">
-                      Inspect →
-                    </span>
-                  </div>
-                ))}
+                <button
+                  onClick={() => {
+                    openReportModal('LOST');
+                  }}
+                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[14px]">pin_drop</span>
+                  <span>Pin Report Here</span>
+                </button>
               </div>
-            )}
-          </div>
 
-          {/* Safe Hub Route CTA */}
-          <div className="p-2.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-emerald-400 text-[18px]">
-                directions_walk
-              </span>
-              <span>Need custody exchange? Route to <strong>Gate 1 Safe Kiosk</strong> (3 min walk)</span>
+              {/* Sector reports */}
+              <div className="border-t border-slate-100 pt-2 space-y-2">
+                <span className="text-xs font-bold text-slate-700">
+                  Active Reports in this Sector ({getReportsInBuilding(selectedBuilding.name).length}):
+                </span>
+
+                {getReportsInBuilding(selectedBuilding.name).length === 0 ? (
+                  <p className="text-xs text-slate-400 italic">
+                    No active reports currently logged in this sector.
+                  </p>
+                ) : (
+                  <div className="space-y-2">
+                    {getReportsInBuilding(selectedBuilding.name).map((r) => (
+                      <div
+                        key={r.id}
+                        onClick={() => setSelectedPinReport(r)}
+                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-100 flex items-center justify-between cursor-pointer transition-colors"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`w-2 h-2 rounded-full ${
+                              r.type === 'LOST' ? 'bg-rose-500' : 'bg-emerald-500'
+                            }`}
+                          />
+                          <span className="text-xs font-bold text-slate-900">{r.itemName}</span>
+                          <span className="text-[10px] text-slate-500 font-mono">({r.location.room})</span>
+                        </div>
+                        <span className="text-xs text-emerald-700 font-bold hover:underline">
+                          Inspect →
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Safe Hub Route CTA */}
+              <div className="p-2.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-emerald-400 text-[18px]">
+                    directions_walk
+                  </span>
+                  <span>Need custody exchange? Route to <strong>Gate 1 Safe Kiosk</strong> (3 min walk)</span>
+                </div>
+                <button
+                  onClick={() => {
+                    triggerToast('Navigating route to Gate 1 Campus Security Kiosk...', 'directions');
+                  }}
+                  className="px-2.5 py-1 bg-emerald-500 text-slate-950 font-bold rounded-lg text-[11px] hover:bg-emerald-400 cursor-pointer"
+                >
+                  Start Walk
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => {
-                triggerToast('Navigating route to Gate 1 Campus Security Kiosk...', 'directions');
-              }}
-              className="px-2.5 py-1 bg-emerald-500 text-slate-950 font-bold rounded-lg text-[11px] hover:bg-emerald-400 cursor-pointer"
-            >
-              Start Walk
-            </button>
+          ) : (
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3 shadow-xs text-center">
+              <span className="material-symbols-outlined text-[36px] text-emerald-600">domain</span>
+              <h3 className="font-heading font-bold text-base text-[#0b241c]">Select a Campus Zone</h3>
+              <p className="text-xs text-slate-500">
+                Click any building or marker on the interactive campus map to inspect rooms, active reports, and nearby safe exchange kiosks.
+              </p>
+            </div>
+          )}
+
+          {/* Quick Safe Hubs Reference Card */}
+          <div className="bg-emerald-950 text-white rounded-2xl p-4 space-y-3 border border-emerald-900 shadow-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
+                OFFICIAL SAFE EXCHANGE HUBS
+              </span>
+              <span className="material-symbols-outlined text-[16px] text-emerald-400">lock</span>
+            </div>
+            <div className="space-y-2 text-xs">
+              <div className="p-2 rounded-xl bg-emerald-900/60 border border-emerald-800/80 flex items-center justify-between">
+                <div>
+                  <p className="font-bold text-white">Gate 1 Security Desk</p>
+                  <p className="text-[10px] text-emerald-300/80">Officer Nair • 16 Smart Lockers</p>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-800 text-emerald-200 text-[10px] font-bold">Open 24/7</span>
+              </div>
+              <div className="p-2 rounded-xl bg-emerald-900/60 border border-emerald-800/80 flex items-center justify-between">
+                <div>
+                  <p className="font-bold text-white">Library Main Desk</p>
+                  <p className="text-[10px] text-emerald-300/80">Dean Shivakumar Wing • 8 Lockers</p>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-800 text-emerald-200 text-[10px] font-bold">8AM - 8PM</span>
+              </div>
+            </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* Pin Report Detail Popup */}
       {selectedPinReport && (
