@@ -32,7 +32,7 @@ export const DEMO_CREDENTIALS_LIST = [
     dept: 'Computer Science (Year 3)',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     threadId: 'chat_sarah',
-    badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+    badgeColor: 'bg-[#C3D809]/20 text-[#222022] border-[#C3D809]',
   },
   {
     roleKey: 'student_rahul' as const,
@@ -94,7 +94,7 @@ export const THREADS: ThreadInfo[] = [
     itemTitle: 'Lenovo ThinkPad X1 Carbon',
     itemPhoto: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&auto=format&fit=crop&q=80',
     ticket: '#CP-2026-00142',
-    location: 'Gate 1 Safe Exchange Kiosk (Locker B-12)',
+    location: 'Gate 1 Campus Security Post',
     statusBadge: 'Match Correlated',
     isOnline: true,
     unreadCount: 1,
@@ -460,15 +460,15 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
 
       {/* Admin Observer Banner */}
       {isAdminOrSecurity && (
-        <div className="bg-[#0b241c] text-emerald-300 px-3.5 py-2 text-[11px] flex items-center justify-between border-b border-emerald-800/40">
+        <div className="bg-[#222022] text-[#C3D809] px-3.5 py-2 text-[11px] flex items-center justify-between border-b border-[#222022]">
           <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[16px] text-emerald-400">
+            <span className="material-symbols-outlined text-[16px] text-[#C3D809]">
               admin_panel_settings
             </span>
             <span className="font-semibold text-white">Admin POV:</span>
             <span>Observing all student chats</span>
           </div>
-          <span className="text-[9.5px] bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold px-1.5 py-0.5 rounded">
+          <span className="text-[9.5px] bg-[#C3D809]/20 border border-[#C3D809]/40 text-[#C3D809] font-bold px-1.5 py-0.5 rounded">
             Live Stream
           </span>
         </div>
@@ -639,7 +639,7 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
 
                   {/* Subtitle / Department & Item */}
                   <div className="flex items-center gap-1.5 text-[11px] text-[#54656f] truncate mt-0.5">
-                    <span className="font-semibold text-emerald-800 shrink-0">
+                    <span className="font-semibold text-[#222022] shrink-0">
                       [{thread.itemTitle.split(' ')[0]}]
                     </span>
                     <span className="truncate">{thread.itemTitle}</span>
@@ -667,7 +667,7 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
                               ? 'bg-indigo-100 text-indigo-800'
                               : threadApprovedByAdmin
                               ? 'bg-indigo-100 text-indigo-800'
-                              : 'bg-emerald-100 text-emerald-800'
+                              : 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]'
                           }`}
                         >
                           {thread.id === 'chat_security'
@@ -718,8 +718,8 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
   const renderConversation = () => {
     if (!activeThread) {
       return (
-        <div className="flex-1 flex flex-col items-center justify-center bg-[#f0f2f5] p-8 text-center select-none border-b-8 border-[#008069]">
-          <div className="w-20 h-20 rounded-full bg-emerald-100 text-[#008069] flex items-center justify-center mb-4 shadow-sm">
+        <div className="flex-1 flex flex-col items-center justify-center bg-[#f0f2f5] p-8 text-center select-none border-b-8 border-[#222022]">
+          <div className="w-20 h-20 rounded-full bg-[#C3D809]/20 text-[#222022] flex items-center justify-center mb-4 shadow-sm border border-[#C3D809]/50">
             <span className="material-symbols-outlined text-[42px]">chat</span>
           </div>
           <h3 className="font-heading text-xl font-bold text-[#111b21]">
@@ -866,7 +866,7 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
                 isBothConfirmed
                   ? 'bg-[#25d366] text-[#111b21] shadow-xs'
                   : currentHandover.ownerConfirmed
-                  ? 'bg-emerald-600 text-white'
+                  ? 'bg-[#222022] text-[#C3D809]'
                   : 'bg-white/20 hover:bg-white/30 text-white border border-white/20'
               }`}
             >
@@ -893,7 +893,7 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
             <span className="text-slate-500 font-medium">Chatting with:</span>
             <span className="font-bold text-slate-800 flex items-center gap-1">
               <span>{activeThread.name}</span>
-              <span className="font-mono text-[9.5px] bg-emerald-50 border border-emerald-300 px-1 py-0.2 rounded text-emerald-800 font-bold">
+              <span className="font-mono text-[9.5px] bg-[#C3D809]/20 border border-[#C3D809] px-1 py-0.2 rounded text-[#222022] font-bold">
                 {activeThread.credentialIdentifier}
               </span>
             </span>
@@ -1083,11 +1083,11 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
             className={`px-3 py-1.5 border-b flex items-center justify-between text-[11px] shrink-0 ${
               isApprovedByAdmin
                 ? 'bg-indigo-50 border-indigo-200 text-indigo-950'
-                : 'bg-emerald-50 border-emerald-200 text-emerald-950'
+                : 'bg-[#C3D809]/15 border-[#C3D809]/50 text-[#222022]'
             }`}
           >
             <div className="flex items-center gap-1.5 font-semibold">
-              <span className="material-symbols-outlined text-[15px] text-[#008069]">verified</span>
+              <span className="material-symbols-outlined text-[15px] text-[#222022]">verified</span>
               <span>
                 {isOfficerDirectThread
                   ? 'Official Campus Security Direct Line (Officer R. Nair, Badge #CS-409)'
@@ -1225,7 +1225,7 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
               <button
                 key={idx}
                 onClick={() => handleQuickChip(chip)}
-                className="px-2.5 py-1 rounded-full bg-white hover:bg-emerald-50 hover:text-[#008069] border border-slate-200 text-[#54656f] text-[11px] whitespace-nowrap transition-colors cursor-pointer shadow-xs"
+                className="px-2.5 py-1 rounded-full bg-white hover:bg-[#C3D809]/20 hover:text-[#222022] border border-slate-200 text-[#54656f] text-[11px] whitespace-nowrap transition-colors cursor-pointer shadow-xs"
               >
                 {chip}
               </button>
@@ -1281,7 +1281,7 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
                       }}
                       className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-slate-100 text-[#111b21] font-medium text-left cursor-pointer"
                     >
-                      <span className="material-symbols-outlined text-[18px] text-emerald-600">
+                      <span className="material-symbols-outlined text-[18px] text-[#222022]">
                         badge
                       </span>
                       <span>College Smart ID</span>
@@ -1503,8 +1503,8 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
             </div>
 
             <div className="p-4 space-y-3 overflow-y-auto flex-1">
-              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 text-xs text-emerald-900 flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-emerald-700 shrink-0">info</span>
+              <div className="bg-[#C3D809]/15 border border-[#C3D809]/40 rounded-xl p-2.5 text-xs text-[#222022] flex items-center gap-2">
+                <span className="material-symbols-outlined text-[18px] text-[#222022] shrink-0">info</span>
                 <span>
                   All demo credentials are listed here. Click <strong>Switch Account</strong> to instantly log in as that person, or <strong>Open Chat</strong> to message them directly.
                 </span>
@@ -1518,7 +1518,7 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
                       key={cred.roleKey}
                       className={`p-3 rounded-xl border transition-all ${
                         isCurrent
-                          ? 'bg-emerald-50/60 border-emerald-400 ring-1 ring-emerald-300'
+                          ? 'bg-[#C3D809]/20 border-[#C3D809] ring-1 ring-[#C3D809]'
                           : 'bg-slate-50/80 border-slate-200 hover:bg-white'
                       }`}
                     >
@@ -1536,7 +1536,7 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
                                 {cred.role}
                               </span>
                               {isCurrent && (
-                                <span className="text-[9px] font-bold bg-[#008069] text-white px-1.5 py-0.2 rounded-full">
+                                <span className="text-[9px] font-bold bg-[#222022] text-[#C3D809] px-1.5 py-0.2 rounded-full">
                                   Current User
                                 </span>
                               )}
@@ -1566,8 +1566,8 @@ export const MessagingWindow: React.FC<MessagingWindowProps> = ({
                             }}
                             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
                               isCurrent
-                                ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                                : 'bg-[#008069] hover:bg-[#006e59] text-white shadow-xs'
+                                ? 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]'
+                                : 'bg-[#222022] hover:bg-black text-[#C3D809] shadow-xs'
                             }`}
                           >
                             <span className="material-symbols-outlined text-[14px]">

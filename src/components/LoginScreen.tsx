@@ -143,7 +143,7 @@ export const LoginScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#eef6f1] via-[#f5f9f6] to-[#e7f1ea] text-[#0b241c] flex flex-col justify-between py-8 px-4 font-body selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-[#f7f8f5] text-[#222022] flex flex-col justify-between py-8 px-4 font-body selection:bg-[#C3D809] selection:text-[#222022]">
       <div className="max-w-lg sm:max-w-xl w-full mx-auto space-y-5">
         {/* Institutional Branding Header */}
         <div className="text-center space-y-2 pt-2">
@@ -152,13 +152,13 @@ export const LoginScreen: React.FC = () => {
           </div>
 
           <div>
-            <span className="text-[11px] font-black uppercase tracking-widest text-emerald-800 bg-emerald-100/90 px-3 py-0.5 rounded-full border border-emerald-200/60 shadow-xs">
+            <span className="text-[11px] font-black uppercase tracking-widest text-[#222022] bg-[#C3D809]/40 px-3 py-0.5 rounded-full border border-[#C3D809] shadow-xs">
               PESCE MANDYA • EST. 1962
             </span>
-            <h1 className="font-heading text-3xl font-extrabold text-[#0b241c] tracking-tight mt-1.5">
-              CAMPUS PICK
+            <h1 className="font-heading text-3xl font-black text-[#222022] tracking-tight mt-1.5">
+              CAMPUS <span className="text-[#96a604]">PICK</span>
             </h1>
-            <p className="text-sm font-semibold text-emerald-900/90 italic">
+            <p className="text-sm font-semibold text-[#222022]/80 italic">
               “{INSTITUTION_INFO.tagline}”
             </p>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -168,14 +168,14 @@ export const LoginScreen: React.FC = () => {
         </div>
 
         {/* Primary Toggle: Sign In vs. Create an Account */}
-        <div className="flex bg-slate-200/70 p-1 rounded-2xl text-xs font-bold border border-emerald-900/10 shadow-xs">
+        <div className="flex bg-slate-200/70 p-1 rounded-2xl text-xs font-bold border border-slate-300 shadow-xs">
           <button
             type="button"
             onClick={() => setAuthMode('login')}
             className={`flex-1 py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               authMode === 'login'
-                ? 'bg-white text-emerald-950 shadow-xs font-extrabold'
-                : 'text-slate-600 hover:text-emerald-900'
+                ? 'bg-[#222022] text-[#C3D809] shadow-sm font-black'
+                : 'text-slate-600 hover:text-[#222022]'
             }`}
           >
             <span className="material-symbols-outlined text-[16px]">login</span>
@@ -187,8 +187,8 @@ export const LoginScreen: React.FC = () => {
             onClick={() => setAuthMode('register')}
             className={`flex-1 py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               authMode === 'register'
-                ? 'bg-emerald-700 text-white shadow-xs font-extrabold'
-                : 'text-slate-600 hover:text-emerald-900'
+                ? 'bg-[#222022] text-[#C3D809] shadow-sm font-black'
+                : 'text-slate-600 hover:text-[#222022]'
             }`}
           >
             <span className="material-symbols-outlined text-[16px]">person_add</span>
@@ -210,7 +210,7 @@ export const LoginScreen: React.FC = () => {
                   onClick={() => setAuthMethod('quick')}
                   className={`flex-1 py-2 rounded-xl transition-all cursor-pointer ${
                     authMethod === 'quick'
-                      ? 'bg-white text-slate-900 shadow-xs'
+                      ? 'bg-[#222022] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900'
                   }`}
                 >
@@ -221,7 +221,7 @@ export const LoginScreen: React.FC = () => {
                   onClick={() => setAuthMethod('creds')}
                   className={`flex-1 py-2 rounded-xl transition-all cursor-pointer ${
                     authMethod === 'creds'
-                      ? 'bg-white text-slate-900 shadow-xs'
+                      ? 'bg-[#222022] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900'
                   }`}
                 >
@@ -232,7 +232,7 @@ export const LoginScreen: React.FC = () => {
                   onClick={() => setAuthMethod('sso')}
                   className={`flex-1 py-2 rounded-xl transition-all cursor-pointer ${
                     authMethod === 'sso'
-                      ? 'bg-white text-slate-900 shadow-xs'
+                      ? 'bg-[#222022] text-white shadow-xs'
                       : 'text-slate-500 hover:text-slate-900'
                   }`}
                 >
@@ -247,7 +247,7 @@ export const LoginScreen: React.FC = () => {
                     <span className="font-bold text-slate-600 uppercase text-[11px] tracking-wider">
                       Choose Your Verified Campus Profile
                     </span>
-                    <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] text-[#222022] font-black bg-[#C3D809]/40 border border-[#C3D809] px-2 py-0.5 rounded-full">
                       PESCE Directory
                     </span>
                   </div>
@@ -257,13 +257,13 @@ export const LoginScreen: React.FC = () => {
                       {
                         user: DEMO_USERS.student_sarah,
                         tag: 'Student • CS Dept',
-                        badgeColor: 'bg-emerald-100 text-emerald-800',
+                        badgeColor: 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]/60',
                         desc: 'USN: 4PS23CS084 · 8 Returns Verified · Rank #7',
                       },
                       {
                         user: DEMO_USERS.student_rahul,
                         tag: 'Student / Proven Finder',
-                        badgeColor: 'bg-teal-100 text-teal-800',
+                        badgeColor: 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]/60',
                         desc: 'USN: 4PS22ME049 · 15 Returns Verified · Rank #2',
                       },
                       {
@@ -275,7 +275,7 @@ export const LoginScreen: React.FC = () => {
                       {
                         user: DEMO_USERS.admin_shivakumar,
                         tag: 'Institutional Admin',
-                        badgeColor: 'bg-indigo-100 text-indigo-900',
+                        badgeColor: 'bg-[#222022] text-white',
                         desc: 'Dean of Student Welfare · Command Dashboard & Category-Wise Registry',
                       },
                       {
@@ -289,7 +289,7 @@ export const LoginScreen: React.FC = () => {
                         key={user.id}
                         type="button"
                         onClick={() => login(user)}
-                        className="w-full p-3 rounded-2xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/40 text-left flex items-center justify-between group transition-all cursor-pointer shadow-xs active:scale-[0.99]"
+                        className="w-full p-3 rounded-2xl border border-slate-200 hover:border-[#C3D809] hover:bg-[#C3D809]/5 text-left flex items-center justify-between group transition-all cursor-pointer shadow-xs active:scale-[0.99]"
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div className="relative shrink-0">
@@ -297,27 +297,27 @@ export const LoginScreen: React.FC = () => {
                               <img
                                 src={user.avatarUrl}
                                 alt={user.displayName}
-                                className="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-200 group-hover:ring-emerald-400"
+                                className="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-200 group-hover:ring-[#C3D809]"
                               />
                             ) : (
-                              <div className="w-10 h-10 rounded-xl bg-emerald-800 text-white font-bold flex items-center justify-center text-sm">
+                              <div className="w-10 h-10 rounded-xl bg-[#222022] text-[#C3D809] font-black flex items-center justify-center text-sm">
                                 {user.displayName.slice(0, 2).toUpperCase()}
                               </div>
                             )}
                             <span
                               className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-white ${
                                 user.role === 'admin'
-                                  ? 'bg-indigo-600'
+                                  ? 'bg-[#222022]'
                                   : user.role === 'security'
                                   ? 'bg-amber-500'
-                                  : 'bg-emerald-500'
+                                  : 'bg-[#C3D809]'
                               }`}
                             />
                           </div>
 
                           <div className="min-w-0">
                             <div className="flex items-center gap-2">
-                              <span className="font-heading font-bold text-sm text-[#0b241c] truncate group-hover:text-emerald-900">
+                              <span className="font-heading font-bold text-sm text-[#222022] truncate group-hover:text-black">
                                 {user.displayName}
                               </span>
                               <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded ${badgeColor}`}>
@@ -330,7 +330,7 @@ export const LoginScreen: React.FC = () => {
                           </div>
                         </div>
 
-                        <span className="material-symbols-outlined text-slate-400 group-hover:text-emerald-700 text-[20px] transition-transform group-hover:translate-x-0.5 shrink-0 ml-2">
+                        <span className="material-symbols-outlined text-slate-400 group-hover:text-[#222022] text-[20px] transition-transform group-hover:translate-x-0.5 shrink-0 ml-2">
                           arrow_forward
                         </span>
                       </button>
@@ -351,7 +351,7 @@ export const LoginScreen: React.FC = () => {
                         onClick={() => handleRoleTabChange(r)}
                         className={`flex-1 py-1.5 rounded-lg capitalize transition-all cursor-pointer ${
                           roleTab === r
-                            ? 'bg-white text-slate-900 shadow-xs font-bold'
+                            ? 'bg-[#222022] text-white shadow-xs font-bold'
                             : 'text-slate-500 hover:text-slate-800'
                         }`}
                       >
@@ -376,7 +376,7 @@ export const LoginScreen: React.FC = () => {
                         required
                         value={identifierInput}
                         onChange={(e) => setIdentifierInput(e.target.value)}
-                        className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white font-mono font-medium outline-none transition-all"
+                        className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white font-mono font-medium outline-none transition-all"
                       />
                       <span className="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 text-[18px]">
                         badge
@@ -394,7 +394,7 @@ export const LoginScreen: React.FC = () => {
                         required
                         value={passwordInput}
                         onChange={(e) => setPasswordInput(e.target.value)}
-                        className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white outline-none transition-all"
+                        className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white outline-none transition-all"
                       />
                       <span className="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 text-[18px]">
                         lock
@@ -405,7 +405,7 @@ export const LoginScreen: React.FC = () => {
                   <div className="pt-1">
                     <button
                       type="submit"
-                      className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                      className="w-full py-3 bg-[#222022] hover:bg-[#2c292c] text-[#C3D809] font-bold rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
                     >
                       <span>Authenticate & Enter Campus Pick</span>
                       <span className="material-symbols-outlined text-[18px]">login</span>
@@ -426,7 +426,7 @@ export const LoginScreen: React.FC = () => {
                       value={ssoEmail}
                       onChange={(e) => setSsoEmail(e.target.value)}
                       placeholder="your.name@pesce.ac.in"
-                      className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white font-medium outline-none transition-all"
+                      className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white font-medium outline-none transition-all"
                     />
                     <p className="text-[11px] text-slate-400 mt-1">
                       Must end with official domain <strong className="text-slate-600">@pesce.ac.in</strong>
@@ -468,7 +468,7 @@ export const LoginScreen: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setAuthMode('register')}
-                    className="font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer"
+                    className="font-bold text-[#222022] hover:text-black hover:underline cursor-pointer"
                   >
                     Create an Account
                   </button>
@@ -491,7 +491,7 @@ export const LoginScreen: React.FC = () => {
                     Get your verified PESCE Mandya recovery profile
                   </p>
                 </div>
-                <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-black text-[#222022] bg-[#C3D809] px-2.5 py-0.5 rounded-full">
                   +50 Karma Bonus
                 </span>
               </div>
@@ -509,7 +509,7 @@ export const LoginScreen: React.FC = () => {
                       onClick={() => setRegRole(r)}
                       className={`py-1.5 rounded-lg capitalize transition-all cursor-pointer ${
                         regRole === r
-                          ? 'bg-emerald-700 text-white font-bold shadow-xs'
+                          ? 'bg-[#222022] text-[#C3D809] font-bold shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
@@ -531,7 +531,7 @@ export const LoginScreen: React.FC = () => {
                     placeholder="e.g. Arun Kumar Gowda"
                     value={regName}
                     onChange={(e) => setRegName(e.target.value)}
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white font-medium outline-none transition-all"
+                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white font-medium outline-none transition-all"
                   />
                   <span className="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 text-[18px]">
                     person
@@ -562,7 +562,7 @@ export const LoginScreen: React.FC = () => {
                     }
                     value={regIdentifier}
                     onChange={(e) => setRegIdentifier(e.target.value)}
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white font-mono font-medium outline-none uppercase transition-all"
+                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white font-mono font-medium outline-none uppercase transition-all"
                   />
                   <span className="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 text-[18px]">
                     badge
@@ -583,7 +583,7 @@ export const LoginScreen: React.FC = () => {
                 <select
                   value={regDept}
                   onChange={(e) => setRegDept(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white font-medium outline-none transition-all cursor-pointer"
+                  className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white font-medium outline-none transition-all cursor-pointer"
                 >
                   <option value="Computer Science & Engineering">Computer Science & Engineering (CSE)</option>
                   <option value="Information Science & Engineering">Information Science & Engineering (ISE)</option>
@@ -606,7 +606,7 @@ export const LoginScreen: React.FC = () => {
                   <select
                     value={regSemester}
                     onChange={(e) => setRegSemester(e.target.value)}
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white font-medium outline-none transition-all cursor-pointer"
+                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white font-medium outline-none transition-all cursor-pointer"
                   >
                     <option value="1st Semester (1st Year)">1st Semester (1st Year)</option>
                     <option value="2nd Semester (1st Year)">2nd Semester (1st Year)</option>
@@ -632,7 +632,7 @@ export const LoginScreen: React.FC = () => {
                     placeholder="name@pesce.ac.in"
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white font-medium outline-none transition-all"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white font-medium outline-none transition-all"
                   />
                 </div>
 
@@ -645,7 +645,7 @@ export const LoginScreen: React.FC = () => {
                     placeholder="+91 98450 12345"
                     value={regPhone}
                     onChange={(e) => setRegPhone(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white font-medium outline-none transition-all"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white font-medium outline-none transition-all"
                   />
                 </div>
               </div>
@@ -662,7 +662,7 @@ export const LoginScreen: React.FC = () => {
                     placeholder="Min 4 characters"
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white outline-none transition-all"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white outline-none transition-all"
                   />
                 </div>
 
@@ -676,7 +676,7 @@ export const LoginScreen: React.FC = () => {
                     placeholder="Repeat password"
                     value={regConfirmPassword}
                     onChange={(e) => setRegConfirmPassword(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-600 focus:bg-white outline-none transition-all"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#222022] focus:bg-white outline-none transition-all"
                   />
                 </div>
               </div>
@@ -687,10 +687,10 @@ export const LoginScreen: React.FC = () => {
                   type="checkbox"
                   checked={regAgreed}
                   onChange={(e) => setRegAgreed(e.target.checked)}
-                  className="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                  className="mt-0.5 rounded text-[#222022] focus:ring-[#C3D809] cursor-pointer accent-[#222022]"
                 />
                 <span className="text-[11px] text-slate-600 leading-snug">
-                  I agree to the <strong className="text-emerald-800">PESCE Campus Pick Honor Code</strong>, confirming all reports and claims are truthful and verified.
+                  I agree to the <strong className="text-[#222022]">PESCE Campus Pick Honor Code</strong>, confirming all reports and claims are truthful and verified.
                 </span>
               </label>
 
@@ -698,7 +698,7 @@ export const LoginScreen: React.FC = () => {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-700 hover:from-emerald-600 hover:to-teal-600 text-white font-heading font-extrabold rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.99]"
+                  className="w-full py-3.5 bg-[#222022] hover:bg-[#2c292c] text-[#C3D809] font-heading font-black rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.99]"
                 >
                   <span className="material-symbols-outlined text-[18px]">verified_user</span>
                   <span>Create Account & Enter Campus Pick</span>
@@ -712,7 +712,7 @@ export const LoginScreen: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setAuthMode('login')}
-                    className="font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer"
+                    className="font-bold text-[#222022] hover:text-black hover:underline cursor-pointer"
                   >
                     Sign In here
                   </button>
@@ -730,7 +730,7 @@ export const LoginScreen: React.FC = () => {
           <button
             type="button"
             onClick={() => setShowIntro(true)}
-            className="inline-flex items-center gap-1 text-[11px] text-emerald-700 hover:text-emerald-800 font-semibold transition-all cursor-pointer pt-0.5"
+            className="inline-flex items-center gap-1 text-[11px] text-[#222022] hover:text-black font-bold transition-all cursor-pointer pt-0.5"
           >
             <span className="material-symbols-outlined text-[14px]">play_circle</span>
             <span>Watch App Intro</span>

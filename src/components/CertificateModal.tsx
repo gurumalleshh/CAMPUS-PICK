@@ -27,7 +27,7 @@ export const CertificateModal: React.FC = () => {
             <span className="material-symbols-outlined text-amber-600 text-[20px]">
               workspace_premium
             </span>
-            <span className="font-heading font-bold text-sm text-[#0b241c]">
+            <span className="font-heading font-bold text-sm text-[#222022]">
               Official PESCE Civic Credential
             </span>
           </div>
@@ -41,10 +41,10 @@ export const CertificateModal: React.FC = () => {
 
         {/* Certificate Display Canvas */}
         <div className="p-6 overflow-y-auto bg-slate-50 flex-1 flex justify-center">
-          <div className="w-full bg-[#fffefc] border-8 border-double border-[#0c3123]/30 rounded-2xl p-6 sm:p-8 text-center relative shadow-md flex flex-col justify-between space-y-4">
+          <div className="w-full bg-[#fffefc] border-8 border-double border-[#222022]/30 rounded-2xl p-6 sm:p-8 text-center relative shadow-md flex flex-col justify-between space-y-4">
             {/* Top Ornamental College Crest */}
             <div>
-              <div className="w-14 h-14 mx-auto mb-2 rounded-full border-2 border-emerald-800/30 p-1 flex items-center justify-center bg-emerald-50">
+              <div className="w-14 h-14 mx-auto mb-2 rounded-full border-2 border-[#222022]/30 p-1 flex items-center justify-center bg-[#C3D809]/15">
                 <img
                   alt="PESCE Crest"
                   className="w-full h-full object-contain"
@@ -52,7 +52,7 @@ export const CertificateModal: React.FC = () => {
                 />
               </div>
 
-              <h2 className="font-heading font-extrabold text-sm sm:text-base tracking-wider text-[#0c3123] uppercase">
+              <h2 className="font-heading font-extrabold text-sm sm:text-base tracking-wider text-[#222022] uppercase">
                 {INSTITUTION_INFO.fullName}
               </h2>
               <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono">
@@ -61,11 +61,11 @@ export const CertificateModal: React.FC = () => {
             </div>
 
             {/* Achievement Text */}
-            <div className="space-y-1.5 py-2 border-y border-emerald-900/10">
+            <div className="space-y-1.5 py-2 border-y border-[#222022]/10">
               <span className="text-[10px] font-bold text-amber-800 uppercase tracking-widest">
                 CIVIC RECOGNITION OF INTEGRITY
               </span>
-              <h3 className="font-heading text-lg sm:text-xl font-bold text-[#0b241c]">
+              <h3 className="font-heading text-lg sm:text-xl font-bold text-[#222022]">
                 {userCertificate.achievement}
               </h3>
               <p className="text-xs text-slate-600 max-w-md mx-auto pt-1 leading-relaxed">
@@ -74,7 +74,7 @@ export const CertificateModal: React.FC = () => {
                   {userCertificate.userName}
                 </strong>{' '}
                 ({userCertificate.userDepartment}) has demonstrated extraordinary civic honesty by successfully returning{' '}
-                <strong className="text-emerald-800 font-bold">
+                <strong className="text-[#222022] font-bold">
                   {userCertificate.returnCountMilestone} verified lost items
                 </strong>{' '}
                 to fellow students under the Campus Pick Trust Protocol.
@@ -105,7 +105,7 @@ export const CertificateModal: React.FC = () => {
             {/* Certificate ID & Verification Stamp */}
             <div className="pt-2 flex items-center justify-between text-[10px] text-slate-400 font-mono border-t border-slate-100">
               <span>CERT ID: {userCertificate.certificateNumber}</span>
-              <span className="text-emerald-800 font-bold">SHA-256: {userCertificate.hash.slice(0, 10)}...</span>
+              <span className="text-[#222022] font-bold">SHA-256: {userCertificate.hash.slice(0, 10)}...</span>
               <span>{userCertificate.issueDate}</span>
             </div>
           </div>
@@ -123,7 +123,7 @@ export const CertificateModal: React.FC = () => {
 
           <button
             onClick={handleDownload}
-            className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs cursor-pointer"
+            className="px-5 py-2.5 bg-[#222022] hover:bg-[#1a191a] text-[#C3D809] border border-[#222022] rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs cursor-pointer"
           >
             <span className="material-symbols-outlined text-[16px]">download</span>
             <span>Download Official PDF</span>

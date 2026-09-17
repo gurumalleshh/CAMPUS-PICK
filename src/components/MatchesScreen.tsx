@@ -94,22 +94,22 @@ export const MatchesScreen: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={goBack}
-            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-emerald-700 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-[#222022] active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
             aria-label="Back"
             title="Back to Previous Screen"
           >
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#222022] tracking-tight">
               Potential Matches
             </h1>
-            <p className="text-xs text-[#3d4a42]">
+            <p className="text-xs text-slate-500">
               Telemetry-driven item correlation across PESCE Mandya
             </p>
           </div>
         </div>
-        <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs">
+        <span className="px-2.5 py-1 rounded-full bg-[#C3D809]/40 text-[#222022] border border-[#C3D809] font-black text-xs">
           {matches.length} Detected
         </span>
       </div>
@@ -119,10 +119,10 @@ export const MatchesScreen: React.FC = () => {
           <span className="material-symbols-outlined text-[48px] text-slate-300">
             handshake
           </span>
-          <h3 className="font-heading font-bold text-base text-[#0b241c]">
+          <h3 className="font-heading font-bold text-base text-[#222022]">
             No Pending Matches Found
           </h3>
-          <p className="text-xs text-[#3d4a42] max-w-sm mx-auto">
+          <p className="text-xs text-slate-500 max-w-sm mx-auto">
             When a deposited found item correlates with your lost report, the AI Telemetry matching engine will list it here for ownership verification.
           </p>
         </div>
@@ -137,8 +137,8 @@ export const MatchesScreen: React.FC = () => {
                   onClick={() => setSelectedMatch(m)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap border transition-all cursor-pointer ${
                     currentMatch?.id === m.id
-                      ? 'bg-[#0b241c] text-white border-[#0b241c]'
-                      : 'bg-white text-[#3d4a42] border-slate-200 hover:bg-slate-50'
+                      ? 'bg-[#222022] text-[#C3D809] border-[#222022]'
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
                   }`}
                 >
                   {m.lostReport.itemName} ({m.confidenceScore}% Match)
@@ -152,22 +152,22 @@ export const MatchesScreen: React.FC = () => {
               {/* Left Column: Correlation Telemetry & Item Matrix */}
               <div className="lg:col-span-7 space-y-5">
               {/* Match Header Alert Banner */}
-              <div className="p-4 rounded-3xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white border border-emerald-800/60 shadow-sm space-y-3">
+              <div className="p-4 rounded-3xl bg-[#222022] text-white border border-white/10 shadow-sm space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#C3D809] animate-pulse" />
+                    <span className="text-xs font-black uppercase tracking-wider text-[#C3D809]">
                       TELEMETRY CORRELATION • {currentEvaluation?.confidenceScore ?? currentMatch.confidenceScore}% SIMILARITY
                     </span>
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-amber-400 text-amber-950">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[#C3D809] text-[#222022]">
                     MATCH ≠ OWNERSHIP
                   </span>
                 </div>
 
                 <p className="text-xs text-slate-300 leading-relaxed">
                   A machine correlation has evaluated physical and temporal proximity. Physical custody remains protected at{' '}
-                  <strong className="text-white font-semibold">
+                  <strong className="text-[#C3D809] font-semibold">
                     {currentMatch.foundReport.location.building}
                   </strong>{' '}
                   pending official verification.
@@ -177,21 +177,21 @@ export const MatchesScreen: React.FC = () => {
                 <div className="pt-2 border-t border-white/10">
                   <div className="flex items-center justify-between text-[11px] font-medium text-slate-300 mb-2">
                     <span>1. Report</span>
-                    <span className={isUnderReview || isVerified ? 'text-emerald-400 font-bold' : ''}>
+                    <span className={isUnderReview || isVerified ? 'text-[#C3D809] font-bold' : ''}>
                       2. Evidence
                     </span>
-                    <span className={isVerified ? 'text-emerald-400 font-bold' : ''}>
+                    <span className={isVerified ? 'text-[#C3D809] font-bold' : ''}>
                       3. Officer / Admin Auth
                     </span>
-                    <span className={isVerified ? 'text-emerald-400 font-bold' : ''}>
+                    <span className={isVerified ? 'text-[#C3D809] font-bold' : ''}>
                       4. Release
                     </span>
                   </div>
                   <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden flex">
-                    <div className="w-1/4 bg-emerald-400 h-full" />
-                    <div className={`w-1/4 h-full ${isUnderReview || isVerified ? 'bg-emerald-400' : 'bg-white/10'}`} />
-                    <div className={`w-1/4 h-full ${isVerified ? 'bg-emerald-400' : 'bg-white/10'}`} />
-                    <div className={`w-1/4 h-full ${isVerified ? 'bg-emerald-400' : 'bg-white/10'}`} />
+                    <div className="w-1/4 bg-[#C3D809] h-full" />
+                    <div className={`w-1/4 h-full ${isUnderReview || isVerified ? 'bg-[#C3D809]' : 'bg-white/10'}`} />
+                    <div className={`w-1/4 h-full ${isVerified ? 'bg-[#C3D809]' : 'bg-white/10'}`} />
+                    <div className={`w-1/4 h-full ${isVerified ? 'bg-[#C3D809]' : 'bg-white/10'}`} />
                   </div>
                 </div>
               </div>
@@ -219,7 +219,7 @@ export const MatchesScreen: React.FC = () => {
 
               {/* Side-by-Side Telemetry Comparison Card */}
               <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-3">
-                <h3 className="font-heading font-bold text-sm text-[#0b241c] flex items-center justify-between">
+                <h3 className="font-heading font-bold text-sm text-[#222022] flex items-center justify-between">
                   <span>Side-by-Side Report Matrix</span>
                   <span className="text-xs font-mono font-normal text-slate-500">
                     Case #{currentMatch.lostReport.ticketNumber} vs #{currentMatch.foundReport.ticketNumber}
@@ -265,7 +265,7 @@ export const MatchesScreen: React.FC = () => {
                   {/* Right: Turned In Found Report */}
                   <div className="space-y-2 sm:pl-1 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#222022] bg-[#C3D809]/20 px-1.5 py-0.5 rounded border border-[#C3D809]/60">
                         TURNED IN ITEM
                       </span>
                       <span className="text-[10px] font-mono text-slate-400">
@@ -322,7 +322,7 @@ export const MatchesScreen: React.FC = () => {
                             isMismatch
                               ? 'bg-rose-50/60 border-rose-200'
                               : isMatch
-                              ? 'bg-emerald-50/50 border-emerald-200'
+                              ? 'bg-[#C3D809]/20 border-[#C3D809]/60'
                               : isPartial
                               ? 'bg-amber-50/50 border-amber-200'
                               : 'bg-slate-50 border-slate-200'
@@ -334,7 +334,7 @@ export const MatchesScreen: React.FC = () => {
                                 isMismatch
                                   ? 'text-rose-600'
                                   : isMatch
-                                  ? 'text-emerald-600'
+                                  ? 'text-[#222022]'
                                   : isPartial
                                   ? 'text-amber-500'
                                   : 'text-slate-400'
@@ -356,7 +356,7 @@ export const MatchesScreen: React.FC = () => {
                                 isMismatch
                                   ? 'bg-rose-100 text-rose-800'
                                   : isMatch
-                                  ? 'bg-emerald-100 text-emerald-800'
+                                  ? 'bg-[#C3D809] text-[#222022]'
                                   : isPartial
                                   ? 'bg-amber-100 text-amber-800'
                                   : 'bg-slate-200 text-slate-700'
@@ -394,7 +394,7 @@ export const MatchesScreen: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      <span className="material-symbols-outlined text-emerald-400 text-[18px]">
+                      <span className="material-symbols-outlined text-[#C3D809] text-[18px]">
                         lock_open
                       </span>
                     </div>
@@ -404,7 +404,7 @@ export const MatchesScreen: React.FC = () => {
                         <span className="text-[10px] text-slate-400 font-semibold block uppercase">
                           Hardware Serial / IMEI
                         </span>
-                        <span className="font-mono text-emerald-400 font-bold text-xs block">
+                        <span className="font-mono text-[#C3D809] font-bold text-xs block">
                           {currentVerification?.submittedEvidence.serialNumberProvided ||
                             currentMatch.lostReport.privateEvidence?.serialNumber ||
                             'PF-284920-X1'}
@@ -459,10 +459,10 @@ export const MatchesScreen: React.FC = () => {
                 {/* Ownership Verification & Authority Approval Card Header */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-emerald-700 text-[22px]">
+                    <span className="material-symbols-outlined text-[#222022] text-[22px]">
                       security
                     </span>
-                    <h3 className="font-heading font-bold text-sm text-[#0b241c]">
+                    <h3 className="font-heading font-bold text-sm text-[#222022]">
                       Ownership Verification & Authority Approval
                     </h3>
                   </div>
@@ -472,7 +472,7 @@ export const MatchesScreen: React.FC = () => {
                       isApprovedByAdmin
                         ? 'bg-indigo-100 text-indigo-900 border border-indigo-200'
                         : isApprovedByOfficer
-                        ? 'bg-emerald-100 text-emerald-900 border border-emerald-200'
+                        ? 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]'
                         : isUnderReview
                         ? 'bg-amber-100 text-amber-800'
                         : needsMore
@@ -506,17 +506,17 @@ export const MatchesScreen: React.FC = () => {
                     </p>
                   </div>
                 ) : isApprovedByOfficer ? (
-                  <div className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-2xl space-y-1.5 text-xs text-emerald-950">
+                  <div className="p-3.5 bg-[#C3D809]/15 border border-[#C3D809]/40 rounded-2xl space-y-1.5 text-xs text-[#222022]">
                     <div className="flex items-center justify-between">
-                      <p className="font-bold flex items-center gap-1.5 text-emerald-950">
-                        <span className="material-symbols-outlined text-[18px] text-emerald-700">verified</span>
+                      <p className="font-bold flex items-center gap-1.5 text-[#222022]">
+                        <span className="material-symbols-outlined text-[18px] text-[#222022]">verified</span>
                         <span>Certified & Approved by Officer ({currentVerification?.reviewedBy || 'Officer R. Nair, Badge #CS-409'})</span>
                       </p>
-                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900">
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#C3D809] text-[#222022]">
                         STATUS: APPROVED
                       </span>
                     </div>
-                    <p className="text-emerald-900 leading-relaxed">
+                    <p className="text-[#222022] leading-relaxed">
                       Physical security verification completed at Gate 1 post. Hardware markings, serial number, and student credentials verified by on-duty officer. Direct messaging access is unlocked.
                     </p>
                   </div>
@@ -585,10 +585,10 @@ export const MatchesScreen: React.FC = () => {
 
                 {/* TAKE APPROVAL FROM ADMIN OR VERIFICATION OFFICER ACTION PANEL */}
                 {!isVerified ? (
-                  <div className="p-4 bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white rounded-2xl space-y-3.5 shadow-md border border-emerald-800/40">
+                  <div className="p-4 bg-[#222022] text-white rounded-2xl space-y-3.5 shadow-md border border-white/10">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-amber-400 text-[20px]">
+                        <span className="material-symbols-outlined text-[#C3D809] text-[20px]">
                           how_to_reg
                         </span>
                         <div>
@@ -608,7 +608,7 @@ export const MatchesScreen: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      <span className="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded whitespace-nowrap">
+                      <span className="text-[10px] font-bold bg-[#C3D809]/20 text-[#C3D809] border border-[#C3D809]/30 px-2 py-0.5 rounded whitespace-nowrap">
                         {isUnderReview ? 'Review Pending' : isRejected ? 'Rejected' : 'Action Required'}
                       </span>
                     </div>
@@ -682,20 +682,20 @@ export const MatchesScreen: React.FC = () => {
                       </div>
                     ) : currentUser.role === 'security' ? (
                       /* Officer Only Card */
-                      <div className="p-3.5 rounded-xl border bg-emerald-950/70 border-emerald-500/60 ring-1 ring-emerald-500/40 transition-all flex flex-col justify-between">
+                      <div className="p-3.5 rounded-xl border bg-black/40 border-[#C3D809]/40 ring-1 ring-[#C3D809]/20 transition-all flex flex-col justify-between">
                         <div>
                           <div className="flex items-start gap-2.5">
                             <img
                               src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80"
                               alt="Officer R. Nair"
-                              className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-400 shrink-0"
+                              className="w-10 h-10 rounded-full object-cover ring-2 ring-[#C3D809] shrink-0"
                             />
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center justify-between gap-1">
-                                <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400">
+                                <span className="text-[10px] uppercase font-bold tracking-wider text-[#C3D809]">
                                   Campus Security Custody Post
                                 </span>
-                                <span className="text-[9px] bg-emerald-500 text-white font-black px-1.5 py-0.2 rounded">
+                                <span className="text-[9px] bg-[#C3D809] text-[#222022] font-black px-1.5 py-0.2 rounded">
                                   YOUR AUTHORITY
                                 </span>
                               </div>
@@ -723,7 +723,7 @@ export const MatchesScreen: React.FC = () => {
                                 'OFFICER'
                               );
                             }}
-                            className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1 shadow-sm transition-all cursor-pointer"
+                            className="flex-1 py-2 bg-[#C3D809] hover:bg-[#b0c306] text-[#222022] font-bold text-xs rounded-lg flex items-center justify-center gap-1 shadow-sm transition-all cursor-pointer"
                           >
                             <span className="material-symbols-outlined text-[16px]">verified</span>
                             <span>Approve as Officer</span>
@@ -781,7 +781,7 @@ export const MatchesScreen: React.FC = () => {
                                 requestChatApproval(currentMatch.id);
                                 triggerToast('Verification review request dispatched to Campus Security & Admin.', 'send');
                               }}
-                              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs flex items-center gap-1 cursor-pointer"
+                              className="px-3 py-1.5 bg-[#222022] hover:bg-black text-[#C3D809] rounded-lg font-bold text-xs flex items-center gap-1 cursor-pointer"
                             >
                               <span className="material-symbols-outlined text-[14px]">send</span>
                               <span>Send Request to Officers</span>
@@ -795,12 +795,12 @@ export const MatchesScreen: React.FC = () => {
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-1 border-t border-slate-100">
                     <span
                       className={`text-[11px] font-semibold flex items-center gap-1 ${
-                        isApprovedByAdmin ? 'text-indigo-900' : 'text-emerald-900'
+                        isApprovedByAdmin ? 'text-indigo-900' : 'text-[#222022]'
                       }`}
                     >
                       <span
                         className={`material-symbols-outlined text-[16px] ${
-                          isApprovedByAdmin ? 'text-indigo-700' : 'text-emerald-600'
+                          isApprovedByAdmin ? 'text-indigo-700' : 'text-[#222022]'
                         }`}
                       >
                         verified
@@ -833,13 +833,13 @@ export const MatchesScreen: React.FC = () => {
                     className={`p-3 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs border ${
                       currentUser.role === 'admin'
                         ? 'bg-indigo-50 border-indigo-300'
-                        : 'bg-emerald-50 border-emerald-300'
+                        : 'bg-[#C3D809]/20 border-[#C3D809]/60'
                     }`}
                   >
                     <div>
                       <p
                         className={`font-bold flex items-center gap-1.5 ${
-                          currentUser.role === 'admin' ? 'text-indigo-950' : 'text-emerald-950'
+                          currentUser.role === 'admin' ? 'text-indigo-950' : 'text-[#222022]'
                         }`}
                       >
                         <span className="material-symbols-outlined text-[18px]">
@@ -853,7 +853,7 @@ export const MatchesScreen: React.FC = () => {
                       </p>
                       <p
                         className={`text-[11px] mt-0.5 ${
-                          currentUser.role === 'admin' ? 'text-indigo-900' : 'text-emerald-900'
+                          currentUser.role === 'admin' ? 'text-indigo-900' : 'text-[#222022]'
                         }`}
                       >
                         {currentUser.role === 'admin'
@@ -879,7 +879,7 @@ export const MatchesScreen: React.FC = () => {
                         className={`flex-1 sm:flex-initial px-3 py-2 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer ${
                           currentUser.role === 'admin'
                             ? 'bg-indigo-700 hover:bg-indigo-800'
-                            : 'bg-emerald-700 hover:bg-emerald-800'
+                            : 'bg-[#222022] hover:bg-black text-[#C3D809]'
                         }`}
                       >
                         <span className="material-symbols-outlined text-[16px]">verified</span>
@@ -901,28 +901,28 @@ export const MatchesScreen: React.FC = () => {
                 <div className="space-y-3 pt-2">
                   {/* Proof Submission: strictly visible to Finder and Loser (Owner) */}
                   {canSubmitProof && !isVerified && (
-                    <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-3.5 space-y-2">
+                    <div className="bg-[#C3D809]/15 border border-[#C3D809]/40 rounded-2xl p-3.5 space-y-2">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-950">
-                          <span className="material-symbols-outlined text-emerald-700 text-[18px]">verified_user</span>
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#222022]">
+                          <span className="material-symbols-outlined text-[#222022] text-[18px]">verified_user</span>
                           <span>
                             {isOwner
                               ? 'Owner Evidence Verification'
                               : 'Finder Custody & Turn-In Proof'}
                           </span>
                         </div>
-                        <span className="text-[10px] font-semibold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                        <span className="text-[10px] font-semibold text-[#222022] bg-[#C3D809] px-2 py-0.5 rounded-full">
                           {isOwner ? 'Owner Proof' : 'Finder Proof'}
                         </span>
                       </div>
-                      <p className="text-[11px] text-emerald-900 leading-relaxed">
+                      <p className="text-[11px] text-[#222022] leading-relaxed">
                         {isOwner
                           ? `As the owner of this lost item, submit private proof (serial number, purchase receipt, or unique stickers) to authenticate ownership.`
                           : `As the finder, verify physical custody, condition notes, or handover location at Campus Security.`}
                       </p>
                       <button
                         onClick={() => setIsEvidenceModalOpen(true)}
-                        className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+                        className="w-full py-2.5 bg-[#222022] hover:bg-black text-[#C3D809] rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
                       >
                         <span className="material-symbols-outlined text-[16px]">upload_file</span>
                         <span>
@@ -1033,7 +1033,7 @@ export const MatchesScreen: React.FC = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-1 text-xs gap-2">
                     <button
                       onClick={() => {
-                        triggerToast('Dispatched mediation request to Officer Nair (Gate 1 Safe Hub)', 'support_agent');
+                        triggerToast('Dispatched mediation request to Officer Nair (Gate 1 Security Desk)', 'support_agent');
                       }}
                       className="w-full sm:w-auto px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
@@ -1062,10 +1062,10 @@ export const MatchesScreen: React.FC = () => {
           <div className="bg-white rounded-3xl max-w-md w-full p-5 space-y-4 max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-emerald-700 text-[24px]">
+                <span className="material-symbols-outlined text-[#222022] text-[24px]">
                   encrypted
                 </span>
-                <h2 className="font-heading font-bold text-base text-[#0b241c]">
+                <h2 className="font-heading font-bold text-base text-[#222022]">
                   {isOwner ? 'Owner Proof of Loss & Ownership' : 'Finder Custody & Turn-In Verification'}
                 </h2>
               </div>
@@ -1093,7 +1093,7 @@ export const MatchesScreen: React.FC = () => {
                   value={evidenceSerial}
                   onChange={(e) => setEvidenceSerial(e.target.value)}
                   placeholder="e.g. PF-284920-X1"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500 font-mono"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809] font-mono"
                 />
               </div>
 
@@ -1106,7 +1106,7 @@ export const MatchesScreen: React.FC = () => {
                   value={evidenceHint}
                   onChange={(e) => setEvidenceHint(e.target.value)}
                   placeholder="e.g. Linux Tux decal, scratch on left corner, lockscreen photo description"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809]"
                 />
               </div>
 
@@ -1114,16 +1114,16 @@ export const MatchesScreen: React.FC = () => {
                 <label className="block font-bold text-slate-700 mb-1">
                   Procurement Invoice or Box Photo
                 </label>
-                <div className="p-3 border-2 border-dashed border-emerald-200 rounded-xl bg-emerald-50/50 flex items-center justify-between">
+                <div className="p-3 border-2 border-dashed border-[#C3D809]/70 rounded-xl bg-[#C3D809]/10 flex items-center justify-between">
                   <div className="flex items-center gap-2 truncate">
-                    <span className="material-symbols-outlined text-emerald-700 text-[20px]">
+                    <span className="material-symbols-outlined text-[#222022] text-[20px]">
                       description
                     </span>
-                    <span className="font-mono text-emerald-950 truncate max-w-[200px]">
+                    <span className="font-mono text-[#222022] font-semibold truncate max-w-[200px]">
                       {evidenceFile}
                     </span>
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-bold text-[#222022] bg-[#C3D809] px-2 py-0.5 rounded">
                     Attached
                   </span>
                 </div>
@@ -1132,7 +1132,7 @@ export const MatchesScreen: React.FC = () => {
               <div className="pt-2 flex items-center gap-2">
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold cursor-pointer transition-all"
+                  className="flex-1 py-2.5 bg-[#222022] hover:bg-black text-[#C3D809] rounded-xl font-bold cursor-pointer transition-all"
                 >
                   Submit for Officer Review
                 </button>

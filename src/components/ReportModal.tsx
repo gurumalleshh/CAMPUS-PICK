@@ -179,14 +179,14 @@ export const ReportModal: React.FC = () => {
         <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between shrink-0 bg-slate-50/70">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-heading font-bold text-base text-[#0b241c]">
+              <span className="font-heading font-bold text-base text-[#222022]">
                 {intent === 'LOST' ? 'Report Lost Item' : 'Report Found Item'}
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
+              <span className="text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]">
                 Step {step} of {complexity === 'DETAILED' ? 4 : 3}
               </span>
             </div>
-            <p className="text-xs text-[#3d4a42]">PES College of Engineering, Mandya</p>
+            <p className="text-xs text-slate-500">PES College of Engineering, Mandya</p>
           </div>
           <button
             onClick={handleClose}
@@ -220,7 +220,7 @@ export const ReportModal: React.FC = () => {
               }}
               className={`py-2 rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                 intent === 'FOUND'
-                  ? 'bg-emerald-600 text-white shadow-xs'
+                  ? 'bg-[#222022] text-[#C3D809] shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -231,8 +231,8 @@ export const ReportModal: React.FC = () => {
 
           {/* Notice for Found Items: No Document Attachment Required */}
           {intent === 'FOUND' && (
-            <div className="p-2.5 bg-emerald-50/80 border border-emerald-200 rounded-xl flex items-center gap-2 text-emerald-950">
-              <span className="material-symbols-outlined text-emerald-700 text-[18px] shrink-0">
+            <div className="p-2.5 bg-[#C3D809]/15 border border-[#C3D809]/40 rounded-xl flex items-center gap-2 text-[#222022]">
+              <span className="material-symbols-outlined text-[#222022] text-[18px] shrink-0">
                 check_circle
               </span>
               <p className="text-[11px] leading-snug">
@@ -286,7 +286,7 @@ export const ReportModal: React.FC = () => {
                     onClick={() => setComplexity('SIMPLE')}
                     className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
                       complexity === 'SIMPLE'
-                        ? 'border-emerald-500 bg-emerald-50/50'
+                        ? 'border-[#222022] bg-[#C3D809]/15'
                         : 'border-slate-200 bg-slate-50 hover:bg-white'
                     }`}
                   >
@@ -299,13 +299,13 @@ export const ReportModal: React.FC = () => {
                     onClick={() => setComplexity('DETAILED')}
                     className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
                       complexity === 'DETAILED'
-                        ? 'border-emerald-500 bg-emerald-50/50'
+                        ? 'border-[#222022] bg-[#C3D809]/15'
                         : 'border-slate-200 bg-slate-50 hover:bg-white'
                     }`}
                   >
                     <div className="font-bold text-slate-900 flex items-center gap-1">
                       <span>Detailed & Vault</span>
-                      <span className="material-symbols-outlined text-[14px] text-emerald-700">lock</span>
+                      <span className="material-symbols-outlined text-[14px] text-[#222022]">lock</span>
                     </div>
                     <div className="text-[11px] text-slate-500 mt-0.5">
                       Laptops, phones, calculators, wallets, jewelry
@@ -333,7 +333,7 @@ export const ReportModal: React.FC = () => {
                       onClick={() => handleCategoryChange(cat.id as ItemCategory)}
                       className={`px-2.5 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 border transition-all cursor-pointer ${
                         category === cat.id
-                          ? 'bg-[#0b241c] text-white border-[#0b241c]'
+                          ? 'bg-[#222022] text-[#C3D809] border-[#222022]'
                           : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                       }`}
                     >
@@ -354,7 +354,7 @@ export const ReportModal: React.FC = () => {
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
                   placeholder="e.g. Lenovo ThinkPad X1 Carbon or Blue Casio FX-991CW"
-                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-900 font-medium"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-[#C3D809] focus:ring-1 focus:ring-[#C3D809] text-slate-900 font-medium"
                 />
               </div>
 
@@ -367,7 +367,7 @@ export const ReportModal: React.FC = () => {
                     value={color}
                     onChange={(e) => setColor(e.target.value)}
                     placeholder="e.g. Matte Black / Silver"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809]"
                   />
                 </div>
                 <div>
@@ -377,7 +377,7 @@ export const ReportModal: React.FC = () => {
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
                     placeholder="e.g. Lenovo, Casio, Dell"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809]"
                   />
                 </div>
               </div>
@@ -392,7 +392,7 @@ export const ReportModal: React.FC = () => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Where you last saw it, notable context or condition..."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809]"
                 />
               </div>
 
@@ -406,7 +406,7 @@ export const ReportModal: React.FC = () => {
                     <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
                       <div className="flex items-center gap-2">
                         <img src={photoUrl} alt="Preview" className="w-10 h-10 object-cover rounded" />
-                        <span className="font-semibold text-emerald-800">Photo attached</span>
+                        <span className="font-semibold text-[#222022]">Photo attached</span>
                       </div>
                       <button
                         type="button"
@@ -426,21 +426,21 @@ export const ReportModal: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handlePhotoUploadSim('laptop')}
-                          className="px-2.5 py-1 bg-white border border-slate-200 hover:border-emerald-400 rounded text-[11px] font-semibold text-slate-700"
+                          className="px-2.5 py-1 bg-white border border-slate-200 hover:border-[#C3D809] rounded text-[11px] font-semibold text-slate-700"
                         >
                           + ThinkPad
                         </button>
                         <button
                           type="button"
                           onClick={() => handlePhotoUploadSim('id')}
-                          className="px-2.5 py-1 bg-white border border-slate-200 hover:border-emerald-400 rounded text-[11px] font-semibold text-slate-700"
+                          className="px-2.5 py-1 bg-white border border-slate-200 hover:border-[#C3D809] rounded text-[11px] font-semibold text-slate-700"
                         >
                           + ID Card
                         </button>
                         <button
                           type="button"
                           onClick={() => handlePhotoUploadSim('calc')}
-                          className="px-2.5 py-1 bg-white border border-slate-200 hover:border-emerald-400 rounded text-[11px] font-semibold text-slate-700"
+                          className="px-2.5 py-1 bg-white border border-slate-200 hover:border-[#C3D809] rounded text-[11px] font-semibold text-slate-700"
                         >
                           + Calculator
                         </button>
@@ -466,7 +466,7 @@ export const ReportModal: React.FC = () => {
                     const b = CAMPUS_BUILDINGS.find((bldg) => bldg.name === e.target.value);
                     if (b && b.rooms[0]) setRoom(b.rooms[0]);
                   }}
-                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:border-emerald-500 font-medium"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:border-[#C3D809] font-medium"
                 >
                   {CAMPUS_BUILDINGS.map((bldg) => (
                     <option key={bldg.id} value={bldg.name}>
@@ -485,7 +485,7 @@ export const ReportModal: React.FC = () => {
                     value={room}
                     onChange={(e) => setRoom(e.target.value)}
                     placeholder="e.g. CS-204 (AI Lab)"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809]"
                   />
                 </div>
                 <div>
@@ -493,7 +493,7 @@ export const ReportModal: React.FC = () => {
                   <select
                     value={floor}
                     onChange={(e) => setFloor(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809]"
                   >
                     <option value="Floor 3">Floor 3 (F3)</option>
                     <option value="Floor 2">Floor 2 (F2)</option>
@@ -513,31 +513,31 @@ export const ReportModal: React.FC = () => {
                   type="text"
                   value={areaDescription}
                   onChange={(e) => setAreaDescription(e.target.value)}
-                  placeholder="e.g. Row 3 Bench near window, or Turned in at Smart Locker B-12"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
+                  placeholder="e.g. Row 3 Bench near window, or turned into Department Office"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809]"
                 />
               </div>
 
               {/* Interactive Mini Map Schematic */}
-              <div className="p-3 bg-slate-900 text-white rounded-2xl space-y-2 border border-slate-800">
+              <div className="p-3 bg-[#222022] text-white rounded-2xl space-y-2 border border-white/10">
                 <div className="flex items-center justify-between text-[11px] text-slate-300">
-                  <span className="flex items-center gap-1 font-bold text-emerald-400">
+                  <span className="flex items-center gap-1 font-bold text-[#C3D809]">
                     <span className="material-symbols-outlined text-[15px]">pin_drop</span>
                     Campus Location Pinpoint
                   </span>
                   <span>PESCE Mandya GPS Grid</span>
                 </div>
 
-                <div className="relative h-28 w-full bg-slate-950 rounded-xl border border-slate-800 overflow-hidden flex items-center justify-center">
-                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:12px_12px]" />
+                <div className="relative h-28 w-full bg-black/60 rounded-xl border border-white/10 overflow-hidden flex items-center justify-center">
+                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#C3D809_1px,transparent_1px)] [background-size:12px_12px]" />
                   {/* Building blocks representation */}
-                  <div className="absolute top-3 left-4 px-2 py-1 bg-emerald-900/60 border border-emerald-500/40 rounded text-[9px] font-bold text-emerald-300">
+                  <div className="absolute top-3 left-4 px-2 py-1 bg-white/10 border border-[#C3D809]/40 rounded text-[9px] font-bold text-[#C3D809]">
                     Main Block (A)
                   </div>
-                  <div className="absolute bottom-3 left-10 px-2 py-1 bg-blue-900/60 border border-blue-500/40 rounded text-[9px] font-bold text-blue-300">
+                  <div className="absolute bottom-3 left-10 px-2 py-1 bg-white/10 border border-white/20 rounded text-[9px] font-bold text-slate-300">
                     Gate 1 Kiosk
                   </div>
-                  <div className="absolute top-6 right-6 px-2 py-1 bg-emerald-600/80 border border-emerald-400 rounded text-[9px] font-bold text-white shadow-xs animate-bounce">
+                  <div className="absolute top-6 right-6 px-2 py-1 bg-[#C3D809] border border-[#C3D809] rounded text-[9px] font-black text-[#222022] shadow-xs animate-bounce">
                     📍 {room.split(' ')[0] || 'Selected Spot'}
                   </div>
                 </div>
@@ -547,7 +547,7 @@ export const ReportModal: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setPrecision(precision === 'EXACT' ? 'APPROXIMATE' : 'EXACT')}
-                    className="text-emerald-400 hover:underline"
+                    className="text-[#C3D809] hover:underline"
                   >
                     Toggle Precision
                   </button>
@@ -586,7 +586,7 @@ export const ReportModal: React.FC = () => {
                   value={serialNumber}
                   onChange={(e) => setSerialNumber(e.target.value)}
                   placeholder="e.g. PF-284920-X1 or S/N under barcode"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500 font-mono"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809] font-mono"
                 />
                 <span className="text-[10px] text-slate-400">
                   Visible on device base, barcode sticker, or casing.
@@ -605,7 +605,7 @@ export const ReportModal: React.FC = () => {
                       value={invoiceFileName}
                       onChange={(e) => setInvoiceFileName(e.target.value)}
                       placeholder="e.g. PESCE_Receipt_2026.pdf"
-                      className="flex-1 px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500 font-mono text-[11px]"
+                      className="flex-1 px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809] font-mono text-[11px]"
                     />
                     <button
                       type="button"
@@ -631,9 +631,9 @@ export const ReportModal: React.FC = () => {
                   placeholder={
                     intent === 'LOST'
                       ? 'e.g. Sticker pattern, engraving on base, screen lock hint...'
-                      : 'e.g. Turned into Gate 1 Smart Locker B-12, or minor scratch on top lid...'
+                      : 'e.g. Turned into Gate 1 Security Desk, or minor scratch on top lid...'
                   }
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:border-[#C3D809]"
                 />
               </div>
             </div>
@@ -647,7 +647,7 @@ export const ReportModal: React.FC = () => {
                   <span className="font-bold text-slate-700">Public Item Summary</span>
                   <span
                     className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase ${
-                      intent === 'LOST' ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'
+                      intent === 'LOST' ? 'bg-rose-600 text-white' : 'bg-[#222022] text-[#C3D809]'
                     }`}
                   >
                     {intent} • {complexity}
@@ -689,11 +689,11 @@ export const ReportModal: React.FC = () => {
                 </div>
               )}
 
-              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950 flex items-center gap-2">
-                <span className="material-symbols-outlined text-emerald-700 text-[20px]">
+              <div className="p-3 bg-[#C3D809]/15 border border-[#C3D809]/40 rounded-xl text-[#222022] flex items-center gap-2">
+                <span className="material-symbols-outlined text-[#222022] text-[20px]">
                   auto_awesome
                 </span>
-                <span className="text-[11px] leading-snug">
+                <span className="text-[11px] leading-snug font-medium">
                   On submission, Campus Pick will immediately broadcast priority alerts and activate telemetry matching against active logs.
                 </span>
               </div>
@@ -740,7 +740,7 @@ export const ReportModal: React.FC = () => {
               type="button"
               disabled={isSubmitting || !itemName.trim()}
               onClick={handleSubmit}
-              className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-5 py-2.5 bg-[#C3D809] hover:bg-[#b0c306] active:scale-95 text-[#222022] font-black rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
                 <span>Registering on Ledger...</span>
@@ -761,7 +761,7 @@ export const ReportModal: React.FC = () => {
                 }
                 setStep(step + 1);
               }}
-              className="px-5 py-2.5 bg-[#0b241c] hover:bg-emerald-950 text-white font-bold rounded-xl shadow-xs flex items-center gap-1 cursor-pointer"
+              className="px-5 py-2.5 bg-[#222022] hover:bg-[#1a191a] text-[#C3D809] font-bold rounded-xl shadow-xs flex items-center gap-1 cursor-pointer border border-[#222022]"
             >
               <span>Continue</span>
               <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -774,7 +774,7 @@ export const ReportModal: React.FC = () => {
       {showExitConfirm && (
         <div className="fixed inset-0 z-60 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-xs w-full p-4 space-y-3 text-center shadow-xl">
-            <h3 className="font-heading font-bold text-sm text-[#0b241c]">
+            <h3 className="font-heading font-bold text-sm text-[#222022]">
               Save Report Draft?
             </h3>
             <p className="text-xs text-slate-500">
@@ -783,7 +783,7 @@ export const ReportModal: React.FC = () => {
             <div className="space-y-2 pt-1">
               <button
                 onClick={handleSaveAndExit}
-                className="w-full py-2 bg-emerald-600 text-white font-bold rounded-xl text-xs"
+                className="w-full py-2 bg-[#222022] hover:bg-black text-[#C3D809] font-bold rounded-xl text-xs cursor-pointer"
               >
                 Save Draft & Exit
               </button>

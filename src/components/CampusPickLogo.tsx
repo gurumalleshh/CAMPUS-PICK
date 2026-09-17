@@ -41,36 +41,36 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
           className="w-full h-full drop-shadow-sm overflow-visible"
         >
           <defs>
-            {/* Background Shield Gradient: Deep Forest Emerald */}
+            {/* Background Shield Gradient: Deep Obsidian #222022 */}
             <linearGradient id="cpBgGrad" x1="10" y1="5" x2="90" y2="95" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#059669" />
-              <stop offset="50%" stopColor="#047857" />
-              <stop offset="100%" stopColor="#064e3b" />
+              <stop offset="0%" stopColor="#353235" />
+              <stop offset="50%" stopColor="#222022" />
+              <stop offset="100%" stopColor="#181718" />
             </linearGradient>
 
             {/* Inner Ring Glow */}
             <linearGradient id="cpRingGrad" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#34d399" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#10b981" stopOpacity="0.1" />
+              <stop offset="0%" stopColor="#C3D809" stopOpacity="0.85" />
+              <stop offset="100%" stopColor="#C3D809" stopOpacity="0.1" />
             </linearGradient>
 
-            {/* 'C' Letter Gradient: Luminous Mint to Vibrant Emerald */}
+            {/* 'C' Letter Gradient: Luminous Lime to Electric Chartreuse #C3D809 */}
             <linearGradient id="cpCGrad" x1="16" y1="26" x2="44" y2="74" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#a7f3d0" />
-              <stop offset="50%" stopColor="#34d399" />
-              <stop offset="100%" stopColor="#10b981" />
+              <stop offset="0%" stopColor="#f4fac4" />
+              <stop offset="50%" stopColor="#d5ea1b" />
+              <stop offset="100%" stopColor="#C3D809" />
             </linearGradient>
 
-            {/* 'P' Letter Gradient: Pure Crystal White to Ice Emerald */}
+            {/* 'P' Letter Gradient: Pure Crystal White to Electric Lime Tint */}
             <linearGradient id="cpPGrad" x1="48" y1="24" x2="82" y2="78" gradientUnits="userSpaceOnUse">
               <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="60%" stopColor="#f0fdf4" />
-              <stop offset="100%" stopColor="#d1fae5" />
+              <stop offset="60%" stopColor="#fbfde8" />
+              <stop offset="100%" stopColor="#e2f068" />
             </linearGradient>
 
             {/* Drop Shadow for Monogram Elements */}
             <filter id="cpShadow" x="-15%" y="-15%" width="130%" height="130%">
-              <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#022c22" floodOpacity="0.45" />
+              <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#000000" floodOpacity="0.6" />
             </filter>
           </defs>
 
@@ -82,9 +82,9 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
             height="88"
             rx="24"
             fill="url(#cpBgGrad)"
-            stroke="#10b981"
-            strokeWidth="1.5"
-            strokeOpacity="0.6"
+            stroke="#C3D809"
+            strokeWidth="1.75"
+            strokeOpacity="0.8"
           />
 
           {/* Radar / Telemetry Pulse Concentric Rings */}
@@ -92,7 +92,7 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
           <circle cx="50" cy="50" r="25" stroke="#ffffff" strokeWidth="0.75" opacity="0.18" />
 
           {/* Micro Corner Crosshairs */}
-          <g stroke="#34d399" strokeWidth="0.8" opacity="0.25">
+          <g stroke="#C3D809" strokeWidth="0.8" opacity="0.4">
             <line x1="12" y1="14" x2="16" y2="14" />
             <line x1="14" y1="12" x2="14" y2="16" />
             <line x1="84" y1="14" x2="88" y2="14" />
@@ -105,13 +105,6 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
 
           {/* Monogram Group (C + P) */}
           <g filter="url(#cpShadow)">
-            {/*
-              LETTER 'C' (for "Campus"):
-              Distinct open crescent curve on the left facing right.
-              - Uniform 8px stroke weight
-              - Perfectly balanced radius
-              - Clear open gap ensuring it never looks closed like a 'D'
-            */}
             <path
               d="
                 M 43 26
@@ -127,19 +120,12 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
                 Z
               "
               fill="url(#cpCGrad)"
-              stroke="#a7f3d0"
+              stroke="#e4f454"
               strokeWidth="0.6"
               strokeOpacity="0.8"
             />
 
-            {/*
-              LETTER 'P' (for "Pick" & Map Pin):
-              - Straight vertical stem with 8px width
-              - Rounded upper loop (from y=24 to 56)
-              - Sharp pick needle / location pin point extending downward to (52, 78)
-            */}
             <g>
-              {/* Outer Boundary of 'P' with integrated Pin Point */}
               <path
                 d="
                   M 48 24
@@ -158,7 +144,6 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
                 strokeLinejoin="round"
               />
 
-              {/* Inner Cutout defining the Eye of 'P' */}
               <path
                 d="
                   M 56 32
@@ -172,13 +157,13 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
               />
 
               {/* Central Target / Precision Node inside 'P' counter */}
-              <circle cx="63" cy="40" r="3.2" fill="#10b981" />
-              <circle cx="63" cy="40" r="1.2" fill="#ffffff" />
+              <circle cx="63" cy="40" r="3.2" fill="#C3D809" />
+              <circle cx="63" cy="40" r="1.2" fill="#222022" />
             </g>
           </g>
 
           {/* Modern Accent Diagonal Telemetry Hash */}
-          <line x1="20" y1="81" x2="28" y2="73" stroke="#6ee7b7" strokeWidth="1.8" strokeLinecap="round" opacity="0.7" />
+          <line x1="20" y1="81" x2="28" y2="73" stroke="#C3D809" strokeWidth="1.8" strokeLinecap="round" opacity="0.9" />
         </svg>
       </div>
 
@@ -188,14 +173,14 @@ export const CampusPickLogo: React.FC<CampusPickLogoProps> = ({
           <div className="flex items-center gap-1.5">
             <span
               className={`font-heading font-extrabold tracking-tight ${currentSize.text} ${
-                theme === 'dark' ? 'text-white' : 'text-[#0b241c]'
+                theme === 'dark' ? 'text-white' : 'text-[#222022]'
               }`}
             >
-              Campus <span className="text-emerald-700">Pick</span>
+              Campus <span className="text-[#C3D809] bg-[#222022] px-1.5 py-0.2 rounded-md">Pick</span>
             </span>
           </div>
           <span
-            className={`font-bold tracking-widest uppercase text-emerald-800/80 ${currentSize.sub}`}
+            className={`font-bold tracking-widest uppercase ${theme === 'dark' ? 'text-[#C3D809]' : 'text-[#222022]/70'} ${currentSize.sub}`}
           >
             PESCE MANDYA
           </span>

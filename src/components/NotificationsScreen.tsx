@@ -45,10 +45,10 @@ const CATEGORIES: CategoryConfig[] = [
     icon: 'join_inner',
     badgeEmoji: '🎯',
     description: 'AI telemetry correlations, confidence scores & claim comparisons',
-    badgeColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
-    headerBorder: 'border-emerald-300',
-    accentBg: 'bg-emerald-50/70',
-    accentText: 'text-emerald-800',
+    badgeColor: 'bg-[#C3D809]/30 text-[#222022] border-[#C3D809]',
+    headerBorder: 'border-[#C3D809]',
+    accentBg: 'bg-[#C3D809]/10',
+    accentText: 'text-[#222022]',
   },
   {
     id: 'action',
@@ -68,7 +68,7 @@ const CATEGORIES: CategoryConfig[] = [
     shortLabel: 'Handover & Return',
     icon: 'handshake',
     badgeEmoji: '🤝',
-    description: 'Safe Gate 1 physical exchanges, Locker B-12 pickup & dual sign-offs',
+    description: 'Gate 1 physical exchanges, security duty desk pickup & dual sign-offs',
     badgeColor: 'bg-teal-100 text-teal-900 border-teal-300',
     headerBorder: 'border-teal-300',
     accentBg: 'bg-teal-50/70',
@@ -171,8 +171,8 @@ export const NotificationsScreen: React.FC = () => {
         return {
           categoryLabel: 'POTENTIAL MATCH',
           icon: 'join_inner',
-          badgeClass: 'bg-emerald-100 text-emerald-900 border-emerald-300',
-          iconClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+          badgeClass: 'bg-[#C3D809]/30 text-[#222022] border-[#C3D809]',
+          iconClass: 'bg-[#C3D809]/15 text-[#222022] border-[#C3D809]/40',
           actionText: 'View Match Telemetry',
         };
       case 'VERIFICATION_APPROVED':
@@ -276,13 +276,13 @@ export const NotificationsScreen: React.FC = () => {
         className={`p-4 rounded-2xl border transition-all cursor-pointer relative group ${
           notif.read
             ? 'bg-white/95 border-slate-200 hover:border-slate-300 hover:shadow-xs'
-            : 'bg-white border-emerald-300 shadow-xs ring-1 ring-emerald-500/20'
+            : 'bg-white border-[#C3D809] shadow-xs ring-2 ring-[#C3D809]/30'
         }`}
       >
         {/* Unread indicator dot */}
         {!notif.read && (
           <span
-            className="absolute top-4 right-4 w-2.5 h-2.5 rounded-full bg-emerald-600 ring-2 ring-emerald-100"
+            className="absolute top-4 right-4 w-2.5 h-2.5 rounded-full bg-[#C3D809] ring-2 ring-[#222022]"
             title="Unread alert"
           />
         )}
@@ -319,12 +319,12 @@ export const NotificationsScreen: React.FC = () => {
             </div>
 
             {/* Title */}
-            <h3 className="font-heading font-bold text-sm text-[#0b241c] mt-1.5 group-hover:text-emerald-700 transition-colors">
+            <h3 className="font-heading font-bold text-sm text-[#222022] mt-1.5 group-hover:text-black transition-colors">
               {notif.title}
             </h3>
 
             {/* Message Body */}
-            <p className="text-xs text-[#3d4a42] mt-0.5 leading-relaxed">
+            <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
               {notif.message}
             </p>
 
@@ -340,7 +340,7 @@ export const NotificationsScreen: React.FC = () => {
 
             {/* Action Bar */}
             <div className="mt-2.5 flex items-center justify-between pt-1 border-t border-slate-100">
-              <span className="text-[11px] font-bold text-emerald-700 flex items-center gap-1">
+              <span className="text-[11px] font-bold text-[#222022] flex items-center gap-1">
                 <span>{details.actionText}</span>
                 <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </span>
@@ -369,17 +369,17 @@ export const NotificationsScreen: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={goBack}
-            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-emerald-700 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-[#222022] active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
             aria-label="Back"
             title="Back to Previous Screen"
           >
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#222022] tracking-tight">
               Notifications & Alerts
             </h1>
-            <p className="text-xs text-[#3d4a42]">
+            <p className="text-xs text-slate-500">
               Organized strictly under verified campus categories
             </p>
           </div>
@@ -387,7 +387,7 @@ export const NotificationsScreen: React.FC = () => {
 
         <button
           onClick={markAllNotificationsAsRead}
-          className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer bg-emerald-50 px-2.5 py-1.5 rounded-xl border border-emerald-200 transition-colors"
+          className="text-xs font-bold text-[#222022] hover:text-black flex items-center gap-1 cursor-pointer bg-[#C3D809]/30 px-2.5 py-1.5 rounded-xl border border-[#C3D809] transition-colors"
         >
           <span className="material-symbols-outlined text-[16px]">done_all</span>
           <span className="hidden sm:inline">Mark All Read</span>
@@ -402,14 +402,14 @@ export const NotificationsScreen: React.FC = () => {
             onClick={() => setActiveCategory('all')}
             className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
               activeCategory === 'all'
-                ? 'bg-[#0b241c] text-white shadow-xs'
+                ? 'bg-[#222022] text-[#C3D809] shadow-xs'
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
             }`}
           >
             <span>All Alerts</span>
             <span
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
-                activeCategory === 'all' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+                activeCategory === 'all' ? 'bg-[#C3D809]/20 text-[#C3D809]' : 'bg-slate-100 text-slate-600'
               }`}
             >
               {categoryCounts.all}
@@ -427,7 +427,7 @@ export const NotificationsScreen: React.FC = () => {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                   isSelected
-                    ? 'bg-[#0b241c] text-white shadow-xs'
+                    ? 'bg-[#222022] text-[#C3D809] shadow-xs'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                 }`}
               >
@@ -458,7 +458,7 @@ export const NotificationsScreen: React.FC = () => {
                 onClick={() => setViewMode('grouped')}
                 className={`px-2.5 py-1 rounded-md text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer ${
                   viewMode === 'grouped'
-                    ? 'bg-white text-[#0b241c] shadow-xs'
+                    ? 'bg-white text-[#222022] shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -469,7 +469,7 @@ export const NotificationsScreen: React.FC = () => {
                 onClick={() => setViewMode('timeline')}
                 className={`px-2.5 py-1 rounded-md text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer ${
                   viewMode === 'timeline'
-                    ? 'bg-white text-[#0b241c] shadow-xs'
+                    ? 'bg-white text-[#222022] shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -487,7 +487,7 @@ export const NotificationsScreen: React.FC = () => {
           <span className="material-symbols-outlined text-[36px] text-slate-300">
             notifications_off
           </span>
-          <p className="font-bold text-sm text-[#0b241c]">No notifications available</p>
+          <p className="font-bold text-sm text-[#222022]">No notifications available</p>
           <p className="text-xs text-slate-400">You are all caught up with campus alerts.</p>
         </div>
       ) : activeCategory === 'all' && viewMode === 'grouped' ? (
@@ -511,7 +511,7 @@ export const NotificationsScreen: React.FC = () => {
                     <span className="text-lg">{category.badgeEmoji}</span>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h2 className="font-heading font-bold text-sm text-[#0b241c]">
+                        <h2 className="font-heading font-bold text-sm text-[#222022]">
                           {category.title}
                         </h2>
                         <span
@@ -526,7 +526,7 @@ export const NotificationsScreen: React.FC = () => {
 
                   <button
                     onClick={() => setActiveCategory(category.id)}
-                    className="text-[11px] text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-0.5 cursor-pointer shrink-0"
+                    className="text-[11px] text-[#222022] hover:underline font-bold flex items-center gap-0.5 cursor-pointer shrink-0"
                   >
                     <span>View only</span>
                     <span className="material-symbols-outlined text-[14px]">chevron_right</span>
@@ -554,7 +554,7 @@ export const NotificationsScreen: React.FC = () => {
                   {CATEGORIES.find((c) => c.id === activeCategory)?.badgeEmoji}
                 </span>
                 <div>
-                  <h2 className="font-heading font-bold text-sm text-[#0b241c]">
+                  <h2 className="font-heading font-bold text-sm text-[#222022]">
                     {CATEGORIES.find((c) => c.id === activeCategory)?.title}
                   </h2>
                   <p className="text-[11px] text-slate-500">
@@ -577,7 +577,7 @@ export const NotificationsScreen: React.FC = () => {
               <span className="material-symbols-outlined text-[36px] text-slate-300">
                 filter_list_off
               </span>
-              <p className="font-bold text-sm text-[#0b241c]">
+              <p className="font-bold text-sm text-[#222022]">
                 No notifications in this category
               </p>
               <p className="text-xs text-slate-400">
@@ -585,7 +585,7 @@ export const NotificationsScreen: React.FC = () => {
               </p>
               <button
                 onClick={() => setActiveCategory('all')}
-                className="mt-2 px-3 py-1.5 bg-[#0b241c] text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs"
+                className="mt-2 px-3 py-1.5 bg-[#222022] text-[#C3D809] text-xs font-bold rounded-xl cursor-pointer shadow-xs border border-[#222022]"
               >
                 View All Alerts
               </button>

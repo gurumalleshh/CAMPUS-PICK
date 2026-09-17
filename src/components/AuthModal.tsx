@@ -53,20 +53,20 @@ export const AuthModal: React.FC = () => {
       <div className="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95">
         {/* Crest & Title */}
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 mx-auto rounded-2xl bg-emerald-50 border border-emerald-200 p-1.5 flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto rounded-2xl bg-[#C3D809]/20 border border-[#C3D809] p-1.5 flex items-center justify-center">
             <img
               alt="PESCE Crest"
               className="w-full h-full object-contain"
               src="https://lh3.googleusercontent.com/aida/AEtjO1UTb0Cfq_rqJaqIAUxgqqhhYLGaQGeyfYXpf1yEBHrdHL-gcAG5AC5ZdrCsRf_lKdyL7lM_OYH6kyKOqVKWbyO6INHedHnUQWXDxyHMJo67LY6LxoBBlo6OMX2qHXcyOU4KzehBwZbhn1euC5eN8TpDdmIsJ6dnb--HIqB65vXT42IZMt6_jzq0beXrwN7Mkxfd20xArxPe3Q_Fdq_jVvcdAMa6KPAcF94lCi8eE9P5Hff8fwHIBC4NYg"
             />
           </div>
-          <h2 className="font-heading font-extrabold text-lg text-[#0b241c]">
+          <h2 className="font-heading font-extrabold text-lg text-[#222022]">
             Campus-Verified Sign In
           </h2>
           <p className="text-xs text-slate-500">
             {INSTITUTION_INFO.fullName} ({INSTITUTION_INFO.shortName})
           </p>
-          <p className="text-[10px] text-emerald-800 font-bold uppercase tracking-wider">
+          <p className="text-[10px] text-[#222022] font-bold uppercase tracking-wider">
             “{INSTITUTION_INFO.tagline}”
           </p>
         </div>
@@ -99,7 +99,7 @@ export const AuthModal: React.FC = () => {
             onClick={() => setAuthMethod('creds')}
             className={`cursor-pointer ${
               authMethod === 'creds'
-                ? 'text-emerald-800 border-b-2 border-emerald-600 font-bold'
+                ? 'text-[#222022] border-b-2 border-[#C3D809] font-bold'
                 : 'text-slate-400'
             }`}
           >
@@ -109,7 +109,7 @@ export const AuthModal: React.FC = () => {
             onClick={() => setAuthMethod('sso')}
             className={`cursor-pointer ${
               authMethod === 'sso'
-                ? 'text-emerald-800 border-b-2 border-emerald-600 font-bold'
+                ? 'text-[#222022] border-b-2 border-[#C3D809] font-bold'
                 : 'text-slate-400'
             }`}
           >
@@ -140,7 +140,7 @@ export const AuthModal: React.FC = () => {
                     : 'FAC-BS-104'
                 }
                 onChange={(e) => setUsnInput(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 font-mono font-medium"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#C3D809] font-mono font-medium"
               />
             </div>
 
@@ -152,13 +152,13 @@ export const AuthModal: React.FC = () => {
                 type="password"
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#C3D809]"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
+              className="w-full py-2.5 bg-[#222022] hover:bg-black text-[#C3D809] font-bold rounded-xl shadow-xs transition-colors cursor-pointer border border-[#222022]"
             >
               Sign In as {roleTab.toUpperCase()}
             </button>
@@ -174,7 +174,7 @@ export const AuthModal: React.FC = () => {
                 value={ssoEmail}
                 onChange={(e) => setSsoEmail(e.target.value)}
                 placeholder="username@pesce.ac.in"
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 font-medium"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#C3D809] font-medium"
               />
             </div>
 

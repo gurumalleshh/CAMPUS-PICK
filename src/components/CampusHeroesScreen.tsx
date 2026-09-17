@@ -24,24 +24,24 @@ export const CampusHeroesScreen: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={goBack}
-            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-emerald-700 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-[#222022] active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
             aria-label="Back"
             title="Back to Previous Screen"
           >
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#222022] tracking-tight">
               Campus Heroes Leaderboard
             </h1>
-            <p className="text-xs text-[#3d4a42]">
+            <p className="text-xs text-slate-500">
               Civic integrity & verified returns recognition • {INSTITUTION_INFO.shortName}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold shadow-xs">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#C3D809]/30 border border-[#C3D809] text-[#222022] text-xs font-black shadow-xs">
+          <span className="w-2 h-2 rounded-full bg-[#222022] animate-pulse" />
           <span className="hidden sm:inline">Live Rankings</span>
         </div>
       </div>
@@ -108,7 +108,7 @@ export const CampusHeroesScreen: React.FC = () => {
                   onClick={() => setTimeFilter(period.id as any)}
                   className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all cursor-pointer ${
                     timeFilter === period.id
-                      ? 'bg-[#0b241c] text-white shadow-xs'
+                      ? 'bg-[#222022] text-[#C3D809] shadow-xs'
                       : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                   }`}
                 >
@@ -131,7 +131,7 @@ export const CampusHeroesScreen: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="font-heading font-bold text-xs text-[#0b241c] truncate w-full">
+                <h3 className="font-heading font-bold text-xs text-[#222022] truncate w-full">
                   {leaderboard[1].name}
                 </h3>
                 <p className="text-[10px] text-slate-500">{leaderboard[1].dept}</p>
@@ -152,7 +152,7 @@ export const CampusHeroesScreen: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="font-heading font-bold text-sm text-[#0b241c] truncate w-full">
+                <h3 className="font-heading font-bold text-sm text-[#222022] truncate w-full">
                   {leaderboard[0].name}
                 </h3>
                 <p className="text-[10px] text-amber-800 font-semibold">{leaderboard[0].dept}</p>
@@ -173,7 +173,7 @@ export const CampusHeroesScreen: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="font-heading font-bold text-xs text-[#0b241c] truncate w-full">
+                <h3 className="font-heading font-bold text-xs text-[#222022] truncate w-full">
                   {leaderboard[2].name}
                 </h3>
                 <p className="text-[10px] text-slate-500">{leaderboard[2].dept}</p>
@@ -184,9 +184,9 @@ export const CampusHeroesScreen: React.FC = () => {
             </div>
 
             {/* Current User Sticky Ranking Card */}
-            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-800 to-teal-950 text-white border border-emerald-600/40 shadow-sm flex items-center justify-between">
+            <div className="p-3.5 rounded-2xl bg-[#222022] text-white border border-white/10 shadow-sm flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-700/80 font-black text-base flex items-center justify-center border border-emerald-500 shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-white/10 font-black text-base flex items-center justify-center border border-[#C3D809]/40 text-[#C3D809] shadow-xs">
                   #{currentUser.rank || 7}
                 </div>
                 <div>
@@ -194,21 +194,21 @@ export const CampusHeroesScreen: React.FC = () => {
                     <span className="font-bold text-sm text-slate-100">
                       {currentUser.displayName} (You)
                     </span>
-                    <span className="text-[10px] bg-emerald-400 text-slate-950 font-black px-1.5 py-0.2 rounded">
+                    <span className="text-[10px] bg-[#C3D809] text-[#222022] font-black px-1.5 py-0.2 rounded">
                       {currentUser.role.toUpperCase()}
                     </span>
                   </div>
-                  <p className="text-xs text-emerald-200">
+                  <p className="text-xs text-slate-300">
                     {currentUser.successfullyReturnedItems} verified returns • {currentUser.points} civic points
                   </p>
                 </div>
               </div>
 
               <div className="text-right px-3 py-1.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-xs">
-                <span className="text-sm font-black text-emerald-300 block leading-tight">
+                <span className="text-sm font-black text-[#C3D809] block leading-tight">
                   {currentUser.points} Pts
                 </span>
-                <span className="text-[9px] text-emerald-100 uppercase font-bold tracking-wider block">
+                <span className="text-[9px] text-slate-300 uppercase font-bold tracking-wider block">
                   Rank #{currentUser.rank || 7}
                 </span>
               </div>
@@ -218,7 +218,7 @@ export const CampusHeroesScreen: React.FC = () => {
           {/* Right Column: Complete Rankings List */}
           <div className="lg:col-span-7 space-y-3">
             <div className="flex items-center justify-between px-1">
-              <h3 className="font-heading font-bold text-sm text-[#0b241c]">
+              <h3 className="font-heading font-bold text-sm text-[#222022]">
                 Institution Standings
               </h3>
               <span className="text-xs text-slate-500">
@@ -231,7 +231,7 @@ export const CampusHeroesScreen: React.FC = () => {
                 <div
                   key={user.rank}
                   className={`p-3.5 flex items-center justify-between text-xs transition-colors ${
-                    user.isUser ? 'bg-emerald-50/50' : 'hover:bg-slate-50'
+                    user.isUser ? 'bg-[#C3D809]/15' : 'hover:bg-slate-50'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
@@ -255,7 +255,7 @@ export const CampusHeroesScreen: React.FC = () => {
                       <span className="font-bold text-slate-900 flex items-center gap-1.5 truncate">
                         {user.name}
                         {user.isUser && (
-                          <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1 rounded font-bold shrink-0">
+                          <span className="text-[10px] bg-[#C3D809]/30 text-[#222022] border border-[#C3D809] px-1 rounded font-bold shrink-0">
                             YOU
                           </span>
                         )}
@@ -265,7 +265,7 @@ export const CampusHeroesScreen: React.FC = () => {
                   </div>
 
                   <div className="text-right">
-                    <span className="font-bold text-emerald-800 text-xs">
+                    <span className="font-bold text-[#222022] text-xs">
                       {user.returns} returns
                     </span>
                     <p className="text-[10px] text-slate-400">{user.points} pts</p>
@@ -325,7 +325,7 @@ export const CampusHeroesScreen: React.FC = () => {
               >
                 <div className="flex items-center justify-between">
                   <h4 className="font-bold text-slate-900 text-sm">{act.item}</h4>
-                  <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded text-[10px]">
+                  <span className="px-2 py-0.5 bg-[#C3D809]/30 text-[#222022] font-bold rounded text-[10px]">
                     {act.points}
                   </span>
                 </div>
@@ -353,7 +353,7 @@ export const CampusHeroesScreen: React.FC = () => {
       {/* TAB 3: HONORS & REWARDS */}
       {activeTab === 'rewards' && (
         <div className="space-y-4">
-          <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs text-emerald-950">
+          <div className="p-3 bg-[#C3D809]/15 border border-[#C3D809]/40 rounded-2xl text-xs text-[#222022]">
             Civic incentives authorized by the <strong>Dean of Student Affairs</strong>. Redeemable upon meeting verified return milestones.
           </div>
 
@@ -365,7 +365,7 @@ export const CampusHeroesScreen: React.FC = () => {
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <h4 className="font-heading font-bold text-sm text-[#0b241c]">
+                    <h4 className="font-heading font-bold text-sm text-[#222022]">
                       {reward.name}
                     </h4>
                     <p className="text-xs text-slate-600 mt-0.5">
@@ -376,7 +376,7 @@ export const CampusHeroesScreen: React.FC = () => {
                   <span
                     className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded ${
                       reward.status === 'READY_FOR_COLLECTION'
-                        ? 'bg-emerald-100 text-emerald-800'
+                        ? 'bg-[#C3D809] text-[#222022]'
                         : reward.status === 'PENDING_APPROVAL'
                         ? 'bg-amber-100 text-amber-800'
                         : 'bg-slate-100 text-slate-500'
@@ -396,7 +396,7 @@ export const CampusHeroesScreen: React.FC = () => {
                       onClick={() =>
                         triggerToast('Collection slip generated. Present your ID at Dean Welfare Office.', 'description', 'success')
                       }
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl cursor-pointer"
+                      className="px-3 py-1.5 bg-[#C3D809] hover:bg-[#b0c306] text-[#222022] font-black rounded-xl cursor-pointer"
                     >
                       Collect at Dean Office
                     </button>

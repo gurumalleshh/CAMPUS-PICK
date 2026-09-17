@@ -22,8 +22,8 @@ const CATEGORY_META: Record<
   wallet_bag: {
     label: 'Wallets & Money',
     icon: 'account_balance_wallet',
-    color: 'text-emerald-700',
-    bg: 'bg-emerald-50 border-emerald-200',
+    color: 'text-[#222022]',
+    bg: 'bg-[#C3D809]/20 border-[#C3D809]',
   },
   books_notes: {
     label: 'Books & Notes',
@@ -197,7 +197,7 @@ export const StudentFacultyDashboard: React.FC = () => {
         <div className="flex items-start gap-3">
           <button
             onClick={goBack}
-            className="w-9 h-9 mt-0.5 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-emerald-700 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
+            className="w-9 h-9 mt-0.5 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-[#222022] active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
             aria-label="Back"
             title="Back to Previous Screen"
           >
@@ -205,18 +205,18 @@ export const StudentFacultyDashboard: React.FC = () => {
           </button>
           <div>
             <div className="flex items-center flex-wrap gap-2">
-              <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
+              <h1 className="font-heading text-2xl font-bold text-[#222022] tracking-tight">
                 {isFaculty ? 'Faculty Departmental Dashboard' : 'Student Campus Dashboard'}
               </h1>
               <span
                 className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${
-                  isFaculty ? 'bg-purple-100 text-purple-900' : 'bg-emerald-100 text-emerald-900'
+                  isFaculty ? 'bg-purple-100 text-purple-900' : 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]'
                 }`}
               >
                 {currentUser.identifier}
               </span>
             </div>
-            <p className="text-xs text-[#3d4a42]">
+            <p className="text-xs text-slate-500">
               {INSTITUTION_INFO.fullName} • {isFaculty ? 'Classroom & Academic Block Monitoring' : 'Live Campus Item Tracking'}
             </p>
           </div>
@@ -235,8 +235,8 @@ export const StudentFacultyDashboard: React.FC = () => {
             }}
             className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
               currentUser.id === DEMO_USERS.student_sarah.id
-                ? 'bg-emerald-700 text-white shadow-xs'
-                : 'text-slate-600 hover:text-emerald-900'
+                ? 'bg-[#222022] text-[#C3D809] shadow-xs'
+                : 'text-slate-600 hover:text-[#222022]'
             }`}
           >
             <span>Sarah (Student)</span>
@@ -279,28 +279,28 @@ export const StudentFacultyDashboard: React.FC = () => {
           onClick={() => setStatusFilter(statusFilter === 'FOUND' ? 'ALL' : 'FOUND')}
           className={`p-4 rounded-3xl border transition-all cursor-pointer shadow-xs ${
             statusFilter === 'FOUND'
-              ? 'bg-emerald-50 border-emerald-500 ring-2 ring-emerald-400/40'
-              : 'bg-white border-slate-200 hover:border-emerald-300'
+              ? 'bg-[#C3D809]/20 border-[#C3D809] ring-2 ring-[#C3D809]/40'
+              : 'bg-white border-slate-200 hover:border-[#C3D809]'
           }`}
         >
           <div className="flex items-center justify-between text-xs mb-1">
             <span className="font-heading font-bold text-slate-500 uppercase tracking-wider text-[11px]">
               Items Found
             </span>
-            <span className="material-symbols-outlined text-[18px] text-emerald-600">
+            <span className="material-symbols-outlined text-[18px] text-[#222022]">
               check_circle
             </span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="font-heading text-3xl font-extrabold text-emerald-800">
+            <span className="font-heading text-3xl font-extrabold text-[#222022]">
               {stats.found}
             </span>
-            <span className="text-[11px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
+            <span className="text-[11px] font-bold text-[#222022] bg-[#C3D809]/30 border border-[#C3D809] px-1.5 py-0.5 rounded">
               In Custody
             </span>
           </div>
           <p className="text-[11px] text-slate-500 mt-1">
-            Awaiting owner verification at Safe Hub
+            Awaiting owner verification on campus
           </p>
         </div>
 
@@ -363,12 +363,12 @@ export const StudentFacultyDashboard: React.FC = () => {
         </div>
 
         {/* Campus Recovery Rate */}
-        <div className="p-4 rounded-3xl border bg-gradient-to-br from-[#0b241c] to-[#043e2e] text-white shadow-xs">
+        <div className="p-4 rounded-3xl border bg-[#222022] text-white shadow-xs border-white/10">
           <div className="flex items-center justify-between text-xs mb-1">
-            <span className="font-heading font-bold text-emerald-300 uppercase tracking-wider text-[11px]">
+            <span className="font-heading font-bold text-[#C3D809] uppercase tracking-wider text-[11px]">
               Recovery Rate
             </span>
-            <span className="material-symbols-outlined text-[18px] text-emerald-400">
+            <span className="material-symbols-outlined text-[18px] text-[#C3D809]">
               trending_up
             </span>
           </div>
@@ -376,14 +376,14 @@ export const StudentFacultyDashboard: React.FC = () => {
             <span className="font-heading text-3xl font-extrabold text-white">
               {stats.recoveryRateDecimal}%
             </span>
-            <span className="text-[11px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-600 px-1.5 py-0.5 rounded">
+            <span className="text-[11px] font-bold text-[#222022] bg-[#C3D809] px-1.5 py-0.5 rounded">
               {stats.recoveryRate >= 60 ? 'High' : stats.recoveryRate >= 40 ? 'Moderate' : 'Developing'}
             </span>
           </div>
-          <p className="text-[11px] text-emerald-200/90 mt-1">
+          <p className="text-[11px] text-slate-300 mt-1">
             {stats.recovered} of {stats.total} items recovered ({stats.found} in custody + {stats.returned} reunited)
           </p>
-          <div className="mt-2 pt-1.5 border-t border-emerald-800/60 flex items-center justify-between text-[10px] text-emerald-300/80">
+          <div className="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between text-[10px] text-slate-400">
             <span>Reunited to owner:</span>
             <span className="font-bold text-white">{stats.lostResolutionRate}% ({stats.returned}/{stats.totalLostCases} lost)</span>
           </div>
@@ -394,8 +394,8 @@ export const StudentFacultyDashboard: React.FC = () => {
       <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h2 className="font-heading text-base font-bold text-[#0b241c] flex items-center gap-2">
-              <span className="material-symbols-outlined text-emerald-700 text-[20px]">category</span>
+            <h2 className="font-heading text-base font-bold text-[#222022] flex items-center gap-2">
+              <span className="material-symbols-outlined text-[#222022] text-[20px]">category</span>
               <span>Category-Wise Item Distribution</span>
             </h2>
             <p className="text-xs text-slate-500">
@@ -406,7 +406,7 @@ export const StudentFacultyDashboard: React.FC = () => {
           {categoryFilter !== 'ALL' && (
             <button
               onClick={() => setCategoryFilter('ALL')}
-              className="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-200 hover:bg-emerald-100 cursor-pointer self-start sm:self-auto flex items-center gap-1"
+              className="text-xs font-bold text-[#222022] bg-[#C3D809]/30 px-3 py-1 rounded-xl border border-[#C3D809] hover:bg-[#C3D809]/40 cursor-pointer self-start sm:self-auto flex items-center gap-1"
             >
               <span>Reset to All Categories</span>
               <span className="material-symbols-outlined text-[14px]">close</span>
@@ -424,14 +424,14 @@ export const StudentFacultyDashboard: React.FC = () => {
                 onClick={() => setCategoryFilter(isSelected ? 'ALL' : c.key)}
                 className={`p-3 rounded-2xl border text-left transition-all cursor-pointer relative ${
                   isSelected
-                    ? 'bg-emerald-800 text-white border-emerald-900 shadow-md ring-2 ring-emerald-500/30'
-                    : 'bg-slate-50/70 border-slate-200 hover:border-emerald-300 hover:bg-white'
+                    ? 'bg-[#222022] text-white border-[#222022] shadow-md ring-2 ring-[#C3D809]/50'
+                    : 'bg-slate-50/70 border-slate-200 hover:border-[#C3D809] hover:bg-white'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <span
                     className={`material-symbols-outlined text-[20px] ${
-                      isSelected ? 'text-emerald-300' : c.meta.color
+                      isSelected ? 'text-[#C3D809]' : c.meta.color
                     }`}
                   >
                     {c.meta.icon}
@@ -439,7 +439,7 @@ export const StudentFacultyDashboard: React.FC = () => {
                   <span
                     className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
                       isSelected
-                        ? 'bg-emerald-700 text-emerald-100'
+                        ? 'bg-[#C3D809] text-[#222022]'
                         : 'bg-white border border-slate-200 text-slate-700'
                     }`}
                   >
@@ -453,7 +453,7 @@ export const StudentFacultyDashboard: React.FC = () => {
 
                 <div
                   className={`flex items-center justify-between text-[10px] mt-1.5 ${
-                    isSelected ? 'text-emerald-200' : 'text-slate-500'
+                    isSelected ? 'text-slate-300' : 'text-slate-500'
                   }`}
                 >
                   <span>{c.found} in custody • {c.lost} lost</span>
@@ -463,12 +463,12 @@ export const StudentFacultyDashboard: React.FC = () => {
                 {/* Progress bar */}
                 <div
                   className={`w-full h-1.5 rounded-full overflow-hidden mt-2 ${
-                    isSelected ? 'bg-emerald-950' : 'bg-slate-200'
+                    isSelected ? 'bg-black/50' : 'bg-slate-200'
                   }`}
                 >
                   <div
                     className={`h-full rounded-full ${
-                      isSelected ? 'bg-emerald-300' : 'bg-emerald-600'
+                      isSelected ? 'bg-[#C3D809]' : 'bg-[#222022]'
                     }`}
                     style={{ width: `${Math.min(100, Math.max(8, c.recoveryPct))}%` }}
                   />
@@ -483,7 +483,7 @@ export const StudentFacultyDashboard: React.FC = () => {
       <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden space-y-4 p-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 className="font-heading text-base font-bold text-[#0b241c] flex items-center gap-2">
+            <h3 className="font-heading text-base font-bold text-[#222022] flex items-center gap-2">
               <span className="material-symbols-outlined text-slate-700 text-[20px]">list_alt</span>
               <span>Live Campus Directory ({filteredReports.length} Items)</span>
             </h3>
@@ -503,7 +503,7 @@ export const StudentFacultyDashboard: React.FC = () => {
             </button>
             <button
               onClick={() => openReportModal('FOUND')}
-              className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-heading font-bold text-xs cursor-pointer flex items-center gap-1 shadow-xs transition-all"
+              className="px-3 py-1.5 rounded-xl bg-[#222022] hover:bg-black text-[#C3D809] font-heading font-bold text-xs cursor-pointer flex items-center gap-1 shadow-xs transition-all border border-[#222022]"
             >
               <span className="material-symbols-outlined text-[16px]">add_circle</span>
               <span>I Found an Item</span>
@@ -523,7 +523,7 @@ export const StudentFacultyDashboard: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by item name, location, ticket #..."
-              className="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white"
+              className="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#C3D809] focus:bg-white"
             />
             {searchQuery && (
               <button
@@ -553,12 +553,12 @@ export const StudentFacultyDashboard: React.FC = () => {
               onClick={() => setViewScope('MY_REPORTS')}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${
                 viewScope === 'MY_REPORTS'
-                  ? 'bg-emerald-800 text-white shadow-2xs'
+                  ? 'bg-[#222022] text-[#C3D809] shadow-2xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <span>My Items</span>
-              <span className="text-[10px] bg-emerald-950/60 px-1 rounded-full">
+              <span className="text-[10px] bg-white/20 text-[#C3D809] px-1 rounded-full">
                 {myReportsCount}
               </span>
             </button>
@@ -576,12 +576,12 @@ export const StudentFacultyDashboard: React.FC = () => {
                 className={`px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer ${
                   statusFilter === st
                     ? st === 'FOUND'
-                      ? 'bg-emerald-600 text-white'
+                      ? 'bg-[#222022] text-[#C3D809]'
                       : st === 'LOST'
                       ? 'bg-amber-600 text-white'
                       : st === 'RETURNED'
                       ? 'bg-blue-600 text-white'
-                      : 'bg-slate-900 text-white'
+                      : 'bg-[#222022] text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -605,7 +605,7 @@ export const StudentFacultyDashboard: React.FC = () => {
               <option value="Library">Central Library</option>
               <option value="Mechanical">Mechanical Bay</option>
               <option value="Cafeteria">Cafeteria / Food Court</option>
-              <option value="Gate 1">Gate 1 Safe Hub</option>
+              <option value="Gate 1">Gate 1 Security Post</option>
               <option value="Basic Sciences">Science Block</option>
             </select>
           </div>
@@ -629,7 +629,7 @@ export const StudentFacultyDashboard: React.FC = () => {
                 setSearchQuery('');
                 setViewScope('ALL');
               }}
-              className="mt-2 px-3 py-1 bg-white border border-slate-200 rounded-xl text-emerald-800 font-bold hover:bg-slate-100 cursor-pointer"
+              className="mt-2 px-3 py-1 bg-white border border-slate-200 rounded-xl text-[#222022] font-bold hover:bg-slate-100 cursor-pointer"
             >
               Reset Filters
             </button>
@@ -648,7 +648,7 @@ export const StudentFacultyDashboard: React.FC = () => {
                     item.status === 'RETURNED'
                       ? 'bg-blue-50/40 border-blue-200/80'
                       : item.type === 'FOUND'
-                      ? 'bg-white border-slate-200 hover:border-emerald-300 hover:shadow-xs'
+                      ? 'bg-white border-slate-200 hover:border-[#C3D809] hover:shadow-xs'
                       : 'bg-white border-slate-200 hover:border-amber-300 hover:shadow-xs'
                   }`}
                 >
@@ -662,7 +662,7 @@ export const StudentFacultyDashboard: React.FC = () => {
                         </span>
                       </span>
                       <div>
-                        <h4 className="font-heading font-bold text-sm text-[#0b241c] line-clamp-1">
+                        <h4 className="font-heading font-bold text-sm text-[#222022] line-clamp-1">
                           {item.itemName}
                         </h4>
                         <span className="text-[10px] font-mono text-slate-400">
@@ -677,7 +677,7 @@ export const StudentFacultyDashboard: React.FC = () => {
                         item.status === 'RETURNED'
                           ? 'bg-blue-100 text-blue-900 border border-blue-200'
                           : item.type === 'FOUND'
-                          ? 'bg-emerald-100 text-emerald-900 border border-emerald-200'
+                          ? 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]'
                           : 'bg-amber-100 text-amber-900 border border-amber-200'
                       }`}
                     >
@@ -710,7 +710,7 @@ export const StudentFacultyDashboard: React.FC = () => {
                       </span>
                       <span>Serial & Invoices Protected</span>
                     </span>
-                    <span className="text-[9px] text-emerald-800 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                    <span className="text-[9px] text-[#222022] font-bold bg-[#C3D809]/30 px-1.5 py-0.5 rounded border border-[#C3D809]">
                       Gate 1 Verified
                     </span>
                   </div>
@@ -723,7 +723,7 @@ export const StudentFacultyDashboard: React.FC = () => {
                           setActiveTab('matches');
                           triggerToast(`Checking potential matches for ${item.itemName}`, 'join_inner', 'info');
                         }}
-                        className="flex-1 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 rounded-xl font-heading font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer transition-all"
+                        className="flex-1 py-1.5 bg-[#C3D809]/20 hover:bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]/40 rounded-xl font-heading font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer transition-all"
                       >
                         <span className="material-symbols-outlined text-[14px]">join_inner</span>
                         <span>{isMine ? 'View Matches' : 'Claim or Match'}</span>
@@ -742,25 +742,25 @@ export const StudentFacultyDashboard: React.FC = () => {
       </div>
 
       {/* 5. Institutional Handover & Custody Notice */}
-      <div className="p-4 rounded-3xl bg-emerald-50 border border-emerald-200 text-emerald-950 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+      <div className="p-4 rounded-3xl bg-[#222022] border border-white/10 text-white flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-200/70 text-emerald-900 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-white/10 text-[#C3D809] flex items-center justify-center shrink-0 border border-white/10">
             <span className="material-symbols-outlined text-[20px]">local_police</span>
           </div>
           <div>
-            <h4 className="font-heading font-bold text-sm">Gate 1 Central Custody Hub</h4>
-            <p className="text-[11px] text-emerald-800 mt-0.5">
-              Items can be deposited or claimed with verified ID at Gate 1 Safe Exchange Kiosk (Mon–Sat, 8:30 AM – 6:00 PM).
+            <h4 className="font-heading font-bold text-sm text-white">Gate 1 Campus Security Post</h4>
+            <p className="text-[11px] text-slate-300 mt-0.5">
+              Items can be deposited or claimed with verified ID at Gate 1 Campus Security (Mon–Sat, 8:30 AM – 6:00 PM).
             </p>
           </div>
         </div>
 
         <button
           onClick={() => setActiveTab('map')}
-          className="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-heading font-bold text-xs rounded-xl shadow-xs cursor-pointer shrink-0 transition-all flex items-center gap-1"
+          className="px-3.5 py-2 bg-[#C3D809] hover:bg-[#b0c408] text-[#222022] font-heading font-bold text-xs rounded-xl shadow-xs cursor-pointer shrink-0 transition-all flex items-center gap-1"
         >
           <span className="material-symbols-outlined text-[16px]">near_me</span>
-          <span>View Campus Lockers</span>
+          <span>View Campus Map</span>
         </button>
       </div>
     </div>

@@ -1,1 +1,42 @@
 @import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #C3D809;
+  --color-brand-dark: #222022;
+  --color-brand-dark-light: #2c292c;
+  --color-brand-dark-surface: #1a181a;
+  --color-brand-lime: #C3D809;
+  --color-brand-lime-hover: #b0c306;
+  --color-brand-lime-light: #f7fbe6;
+  --color-brand-lime-subtle: #fbfde8;
+
+  /* Theme overrides to unify system with user's #C3D809 and #222022 palette */
+  --color-emerald-50: #fbfde8;
+  --color-emerald-100: #f4f9cc;
+  --color-emerald-200: #e2f07d;
+  --color-emerald-300: #d3e73b;
+  --color-emerald-400: #C3D809;
+  --color-emerald-500: #C3D809;
+  --color-emerald-600: #222022;
+  --color-emerald-700: #222022;
+  --color-emerald-800: #1a181a;
+  --color-emerald-900: #131213;
+  --color-emerald-950: #0a090a;
+}
+
+:root {
+  --brand-lime: #C3D809;
+  --brand-dark: #222022;
+  --brand-dark-accent: #2c292c;
+}
+
+body {
+  background-color: #f7f8f6;
+  color: #222022;
+}
+
+::selection {
+  background-color: #C3D809;
+  color: #222022;
+}
+

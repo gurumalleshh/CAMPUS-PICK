@@ -26,10 +26,10 @@ const CATEGORIES: CategoryMeta[] = [
     name: 'Electronics & Gadgets',
     icon: 'laptop_chromebook',
     color: 'emerald',
-    bgColor: 'bg-emerald-50',
-    borderColor: 'border-emerald-200',
-    textColor: 'text-emerald-900',
-    barColor: 'bg-emerald-600',
+    bgColor: 'bg-[#C3D809]/20',
+    borderColor: 'border-[#C3D809]',
+    textColor: 'text-[#222022]',
+    barColor: 'bg-[#C3D809]',
   },
   {
     id: 'id_card',
@@ -177,15 +177,15 @@ export const CategoryWiseBreakdown: React.FC<CategoryWiseBreakdownProps> = ({
           onClick={() => onSelectStatusFilter(selectedStatusFilter === 'FOUND' ? 'ALL' : 'FOUND')}
           className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
             selectedStatusFilter === 'FOUND'
-              ? 'bg-emerald-700 text-white border-emerald-700 shadow-md ring-2 ring-emerald-600/40'
-              : 'bg-emerald-50/70 text-emerald-950 border-emerald-200 hover:border-emerald-300 shadow-xs'
+              ? 'bg-[#222022] text-[#C3D809] border-[#222022] shadow-md ring-2 ring-[#C3D809]/40'
+              : 'bg-[#C3D809]/20 text-[#222022] border-[#C3D809] hover:border-[#222022] shadow-xs'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-[10.5px] font-bold uppercase tracking-wider text-emerald-800/90 dark:text-white/90">
+            <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#222022]/90 dark:text-white/90">
               Items Found
             </span>
-            <span className="material-symbols-outlined text-[18px] text-emerald-600 dark:text-white">
+            <span className="material-symbols-outlined text-[18px] text-[#222022] dark:text-white">
               verified
             </span>
           </div>
@@ -195,7 +195,7 @@ export const CategoryWiseBreakdown: React.FC<CategoryWiseBreakdownProps> = ({
               {totalCount > 0 ? `${Math.round((foundReports.length / totalCount) * 100)}%` : '0%'}
             </span>
           </div>
-          <div className="text-[10px] font-medium opacity-80 mt-1">In locker or custody</div>
+          <div className="text-[10px] font-medium opacity-80 mt-1">In campus custody</div>
         </div>
 
         {/* LOST */}
@@ -258,7 +258,7 @@ export const CategoryWiseBreakdown: React.FC<CategoryWiseBreakdownProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[20px] text-emerald-700">
+              <span className="material-symbols-outlined text-[20px] text-[#222022]">
                 pie_chart
               </span>
               <h3 className="font-heading font-bold text-base text-slate-900">
@@ -275,7 +275,7 @@ export const CategoryWiseBreakdown: React.FC<CategoryWiseBreakdownProps> = ({
               onClick={() => onSelectCategory('ALL')}
               className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedCategory === 'ALL'
-                  ? 'bg-[#008069] text-white shadow-xs'
+                  ? 'bg-[#222022] text-[#C3D809] shadow-xs'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
               }`}
             >
@@ -283,7 +283,7 @@ export const CategoryWiseBreakdown: React.FC<CategoryWiseBreakdownProps> = ({
             </button>
             {selectedCategory !== 'ALL' && (
               <span className="text-[11px] font-medium text-slate-500">
-                Filtered: <strong className="text-emerald-800 capitalize">{selectedCategory.replace('_', ' ')}</strong>
+                Filtered: <strong className="text-[#222022] capitalize">{selectedCategory.replace('_', ' ')}</strong>
               </span>
             )}
           </div>
@@ -300,8 +300,8 @@ export const CategoryWiseBreakdown: React.FC<CategoryWiseBreakdownProps> = ({
                 onClick={() => onSelectCategory(isSelected ? 'ALL' : cat.id)}
                 className={`p-3.5 rounded-2xl border transition-all cursor-pointer group text-left ${
                   isSelected
-                    ? 'border-emerald-600 ring-2 ring-emerald-500/20 shadow-md bg-emerald-50/40'
-                    : 'border-slate-200 hover:border-emerald-300 hover:bg-slate-50/70 shadow-2xs'
+                    ? 'border-[#222022] ring-2 ring-[#C3D809]/40 shadow-md bg-[#C3D809]/20'
+                    : 'border-slate-200 hover:border-[#C3D809] hover:bg-slate-50/70 shadow-2xs'
                 }`}
               >
                 {/* Header: Icon & Category Name */}
@@ -327,7 +327,7 @@ export const CategoryWiseBreakdown: React.FC<CategoryWiseBreakdownProps> = ({
                   <span
                     className={`text-[9px] font-black uppercase px-1.5 py-0.2 rounded shrink-0 ${
                       cat.recoveryRate >= 60
-                        ? 'bg-emerald-100 text-emerald-800'
+                        ? 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]'
                         : cat.recoveryRate >= 40
                         ? 'bg-amber-100 text-amber-800'
                         : 'bg-slate-100 text-slate-700'
@@ -339,9 +339,9 @@ export const CategoryWiseBreakdown: React.FC<CategoryWiseBreakdownProps> = ({
 
                 {/* Sub-counts: Found, Lost, Returned */}
                 <div className="grid grid-cols-3 gap-1 mt-3 pt-2.5 border-t border-slate-100 text-center">
-                  <div className="bg-emerald-50/70 rounded-lg p-1">
-                    <span className="block text-[9px] font-bold text-emerald-700 uppercase">Found</span>
-                    <span className="text-xs font-black text-emerald-900">{cat.found}</span>
+                  <div className="bg-[#C3D809]/20 rounded-lg p-1">
+                    <span className="block text-[9px] font-bold text-[#222022] uppercase">Found</span>
+                    <span className="text-xs font-black text-[#222022]">{cat.found}</span>
                   </div>
                   <div className="bg-amber-50/70 rounded-lg p-1">
                     <span className="block text-[9px] font-bold text-amber-700 uppercase">Lost</span>

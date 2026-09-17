@@ -22,7 +22,7 @@ export const AdminSecurityDashboard: React.FC = () => {
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<
-    'overview' | 'inventory' | 'verifications' | 'chats' | 'lockers' | 'rewards' | 'audit'
+    'overview' | 'inventory' | 'verifications' | 'chats' | 'rewards' | 'audit'
   >('overview');
 
   const [selectedCategory, setSelectedCategory] = useState<ItemCategory | 'ALL'>('ALL');
@@ -45,7 +45,7 @@ export const AdminSecurityDashboard: React.FC = () => {
         <div className="flex items-start gap-3">
           <button
             onClick={goBack}
-            className="w-9 h-9 mt-0.5 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-emerald-700 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
+            className="w-9 h-9 mt-0.5 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-[#222022] active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
             aria-label="Back"
             title="Back to Previous Screen"
           >
@@ -53,7 +53,7 @@ export const AdminSecurityDashboard: React.FC = () => {
           </button>
           <div>
             <div className="flex items-center flex-wrap gap-2">
-              <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
+              <h1 className="font-heading text-2xl font-bold text-[#222022] tracking-tight">
                 {currentUser.role === 'admin'
                   ? 'Administrator Command Center'
                   : 'Campus Security Custody Desk'}
@@ -68,7 +68,7 @@ export const AdminSecurityDashboard: React.FC = () => {
                 {currentUser.identifier}
               </span>
             </div>
-            <p className="text-xs text-[#3d4a42]">
+            <p className="text-xs text-slate-500">
               PES College of Engineering, Mandya • Institutional Custody & Governance
             </p>
           </div>
@@ -118,7 +118,7 @@ export const AdminSecurityDashboard: React.FC = () => {
           onClick={() => setActiveTab('overview')}
           className={`flex-1 min-w-[130px] py-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
             activeTab === 'overview'
-              ? 'bg-emerald-800 text-white shadow-xs'
+              ? 'bg-[#222022] text-[#C3D809] shadow-xs'
               : 'text-slate-600 hover:text-slate-900'
           }`}
         >
@@ -151,21 +151,11 @@ export const AdminSecurityDashboard: React.FC = () => {
           className={`flex-1 min-w-[135px] py-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
             activeTab === 'chats'
               ? 'bg-[#008069] text-white shadow-xs'
-              : 'text-emerald-800 hover:text-emerald-950 bg-emerald-50/70 border border-emerald-200'
+              : 'text-[#222022] hover:text-black bg-[#C3D809]/20 border border-[#C3D809]/40'
           }`}
         >
           <span className="material-symbols-outlined text-[15px]">chat</span>
           <span>WhatsApp Monitor</span>
-        </button>
-        <button
-          onClick={() => setActiveTab('lockers')}
-          className={`flex-1 min-w-[105px] py-2 rounded-xl transition-all cursor-pointer ${
-            activeTab === 'lockers'
-              ? 'bg-white text-slate-900 shadow-xs'
-              : 'text-slate-600 hover:text-slate-900'
-          }`}
-        >
-          Lockers
         </button>
         <button
           onClick={() => setActiveTab('rewards')}
@@ -211,18 +201,18 @@ export const AdminSecurityDashboard: React.FC = () => {
           />
 
           {/* Quick Registry CTA Banner */}
-          <div className="bg-gradient-to-r from-emerald-900 to-[#0b241c] text-white p-4 rounded-3xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="bg-[#222022] border border-white/10 text-white p-4 rounded-3xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[22px] text-emerald-300">
+                <span className="material-symbols-outlined text-[22px] text-[#C3D809]">
                   table_view
                 </span>
               </div>
               <div>
-                <h4 className="font-heading font-bold text-sm">
+                <h4 className="font-heading font-bold text-sm text-white">
                   Complete Custodial Items Directory
                 </h4>
-                <p className="text-xs text-emerald-200/80">
+                <p className="text-xs text-slate-300">
                   Search, inspect confidential marks, update handover status, or export to CSV.
                 </p>
               </div>
@@ -230,7 +220,7 @@ export const AdminSecurityDashboard: React.FC = () => {
 
             <button
               onClick={() => setActiveTab('inventory')}
-              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-sm transition-all cursor-pointer shrink-0 flex items-center gap-1.5 active:scale-95"
+              className="px-4 py-2 bg-[#C3D809] hover:bg-[#b0c408] text-[#222022] font-heading font-bold text-xs rounded-xl shadow-sm transition-all cursor-pointer shrink-0 flex items-center gap-1.5 active:scale-95"
             >
               <span>View All Items ({reports.length})</span>
               <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -253,9 +243,9 @@ export const AdminSecurityDashboard: React.FC = () => {
       {/* TAB 3: WHATSAPP STUDENT CHATS MONITOR */}
       {activeTab === 'chats' && (
         <div className="space-y-3">
-          <div className="p-3 bg-[#0b241c] border border-emerald-800/40 rounded-2xl text-xs text-emerald-300 flex items-center justify-between">
+          <div className="p-3 bg-[#222022] border border-white/10 rounded-2xl text-xs text-[#C3D809] flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[18px] text-emerald-400">
+              <span className="material-symbols-outlined text-[18px] text-[#C3D809]">
                 admin_panel_settings
               </span>
               <span>
@@ -286,13 +276,13 @@ export const AdminSecurityDashboard: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-heading font-bold text-sm text-[#0b241c]">
+                      <span className="font-heading font-bold text-sm text-[#222022]">
                         Claim on Case #{v.matchId}
                       </span>
                       <span
                         className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${
                           v.status === 'VERIFIED'
-                            ? 'bg-emerald-100 text-emerald-800'
+                            ? 'bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]'
                             : v.status === 'UNDER_REVIEW'
                             ? 'bg-blue-100 text-blue-800'
                             : 'bg-amber-100 text-amber-800'
@@ -322,7 +312,7 @@ export const AdminSecurityDashboard: React.FC = () => {
                   <div className="grid grid-cols-2 gap-2 text-slate-700 pt-1">
                     <div>
                       <span className="text-slate-400">Claimed Serial:</span>{' '}
-                      <strong className="font-mono text-emerald-800">
+                      <strong className="font-mono text-[#222022]">
                         {v.submittedEvidence.serialNumberProvided || 'Not specified'}
                       </strong>
                     </div>
@@ -347,7 +337,7 @@ export const AdminSecurityDashboard: React.FC = () => {
                     onClick={() => {
                       updateVerificationStatus(v.matchId, 'VERIFIED', 'Serial matches procurement invoice.');
                     }}
-                    className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl flex items-center justify-center gap-1 cursor-pointer"
+                    className="flex-1 py-2 bg-[#222022] hover:bg-black text-[#C3D809] font-bold rounded-xl flex items-center justify-center gap-1 cursor-pointer transition-all"
                   >
                     <span className="material-symbols-outlined text-[16px]">verified</span>
                     <span>Approve & Unlock Handover</span>
@@ -378,50 +368,7 @@ export const AdminSecurityDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* TAB 5: LOCKERS */}
-      {activeTab === 'lockers' && (
-        <div className="space-y-3">
-          <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-600">
-            Smart safe deposit lockers across Gate 1, CS Block, and Library. Deposit logs are cryptographically sealed.
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-            {[
-              { id: 'B-12', loc: 'CS Block F2', item: 'Lenovo ThinkPad', status: 'Occupied' },
-              { id: 'B-13', loc: 'CS Block F2', item: 'Empty', status: 'Available' },
-              { id: '#04', loc: 'Cafeteria Court', item: 'Leather Wallet', status: 'Occupied' },
-              { id: 'G-01', loc: 'Gate 1 Safe Hub', item: 'Scientific Calc', status: 'Occupied' },
-              { id: 'G-02', loc: 'Gate 1 Safe Hub', item: 'Empty', status: 'Available' },
-              { id: 'L-01', loc: 'Central Library', item: 'PESCE ID Card', status: 'Occupied' },
-              { id: 'L-02', loc: 'Central Library', item: 'Empty', status: 'Available' },
-              { id: 'W-01', loc: 'Workshop Bay', item: 'Empty', status: 'Available' },
-            ].map((locker) => (
-              <div
-                key={locker.id}
-                className={`p-3 rounded-2xl border text-center space-y-1 ${
-                  locker.status === 'Occupied'
-                    ? 'bg-amber-50/70 border-amber-200 text-amber-950'
-                    : 'bg-emerald-50/60 border-emerald-200 text-emerald-950'
-                }`}
-              >
-                <span className="font-mono font-bold text-sm block">Locker {locker.id}</span>
-                <span className="text-[10px] text-slate-500 block">{locker.loc}</span>
-                <span
-                  className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full inline-block ${
-                    locker.status === 'Occupied'
-                      ? 'bg-amber-200 text-amber-900'
-                      : 'bg-emerald-200 text-emerald-900'
-                  }`}
-                >
-                  {locker.status}: {locker.item}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* TAB 6: REWARDS */}
+      {/* TAB 5: REWARDS */}
       {activeTab === 'rewards' && (
         <div className="space-y-3">
           <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-2xl text-xs text-indigo-950">
@@ -437,7 +384,7 @@ export const AdminSecurityDashboard: React.FC = () => {
                 <div>
                   <h4 className="font-bold text-slate-900">{r.name}</h4>
                   <p className="text-slate-500">{r.description}</p>
-                  <p className="text-[10px] text-emerald-800 font-semibold mt-1">
+                  <p className="text-[10px] text-[#222022] font-semibold mt-1">
                     Threshold: {r.requiredReturns} Returns ({r.requiredPoints} Points)
                   </p>
                 </div>
@@ -467,7 +414,7 @@ export const AdminSecurityDashboard: React.FC = () => {
             {auditLogs.map((log) => (
               <div key={log.id} className="p-3.5 space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+                  <span className="font-mono text-[10px] font-bold text-[#222022] bg-[#C3D809]/20 border border-[#C3D809]/30 px-2 py-0.5 rounded">
                     {log.action}
                   </span>
                   <span className="text-[10px] text-slate-400">{log.timestamp}</span>

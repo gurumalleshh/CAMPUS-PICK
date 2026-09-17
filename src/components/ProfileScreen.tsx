@@ -28,17 +28,17 @@ export const ProfileScreen: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={goBack}
-            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-emerald-700 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-50 hover:text-[#222022] active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
             aria-label="Back"
             title="Back to Previous Screen"
           >
             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
           <div>
-            <h1 className="font-heading text-2xl font-bold text-[#0b241c] tracking-tight">
+            <h1 className="font-heading text-2xl font-bold text-[#222022] tracking-tight">
               User Profile & Settings
             </h1>
-            <p className="text-xs text-[#3d4a42]">
+            <p className="text-xs text-slate-500">
               Campus verification credentials & local preferences
             </p>
           </div>
@@ -51,7 +51,7 @@ export const ProfileScreen: React.FC = () => {
         <div className="lg:col-span-5 space-y-6">
           {/* Profile Header Card */}
       <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-[#C3D809]/20 rounded-full blur-2xl pointer-events-none" />
 
         <div className="flex items-start gap-4">
           <div className="relative">
@@ -59,10 +59,10 @@ export const ProfileScreen: React.FC = () => {
               <img
                 src={currentUser.avatarUrl}
                 alt={currentUser.displayName}
-                className="w-16 h-16 rounded-2xl object-cover ring-2 ring-emerald-500/30 shadow-xs"
+                className="w-16 h-16 rounded-2xl object-cover ring-2 ring-[#C3D809] shadow-xs"
               />
             ) : (
-              <div className="w-16 h-16 rounded-2xl bg-emerald-700 text-white font-bold text-xl flex items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-[#222022] text-[#C3D809] font-bold text-xl flex items-center justify-center border border-white/10">
                 {currentUser.displayName.slice(0, 2).toUpperCase()}
               </div>
             )}
@@ -72,17 +72,17 @@ export const ProfileScreen: React.FC = () => {
                   ? 'bg-indigo-600'
                   : currentUser.role === 'security'
                   ? 'bg-amber-500'
-                  : 'bg-emerald-500'
+                  : 'bg-[#C3D809]'
               }`}
             />
           </div>
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h1 className="font-heading font-bold text-lg text-[#0b241c] truncate">
+              <h1 className="font-heading font-bold text-lg text-[#222022] truncate">
                 {currentUser.displayName}
               </h1>
-              <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
+              <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]">
                 {currentUser.role}
               </span>
             </div>
@@ -101,14 +101,14 @@ export const ProfileScreen: React.FC = () => {
         <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-slate-100 text-center">
           <div className="p-2 rounded-xl bg-slate-50">
             <span className="text-[10px] text-slate-400 font-bold uppercase">RETURNS</span>
-            <p className="text-base font-bold text-emerald-800 mt-0.5">
+            <p className="text-base font-bold text-[#222022] mt-0.5">
               {currentUser.successfullyReturnedItems}
             </p>
           </div>
 
           <div className="p-2 rounded-xl bg-slate-50">
             <span className="text-[10px] text-slate-400 font-bold uppercase">POINTS</span>
-            <p className="text-base font-bold text-[#0b241c] mt-0.5">
+            <p className="text-base font-bold text-[#222022] mt-0.5">
               {currentUser.points}
             </p>
           </div>
@@ -124,9 +124,9 @@ export const ProfileScreen: React.FC = () => {
         {/* View Leaderboard CTA */}
         <button
           onClick={() => setActiveTab('heroes')}
-          className="w-full mt-3 py-2.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+          className="w-full mt-3 py-2.5 bg-[#C3D809]/15 hover:bg-[#C3D809]/30 border border-[#C3D809]/40 text-[#222022] rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
         >
-          <span className="material-symbols-outlined text-[16px] text-emerald-700">
+          <span className="material-symbols-outlined text-[16px] text-[#222022]">
             military_tech
           </span>
           <span>View Campus Heroes Leaderboard (Rank #{currentUser.rank || 7})</span>
@@ -150,7 +150,7 @@ export const ProfileScreen: React.FC = () => {
           <p className="text-xs text-indigo-200 leading-relaxed">
             {currentUser.role === 'admin'
               ? 'Manage verification attestations, audit campus logs, review telemetry correlation parameters, and issue civic rewards.'
-              : 'Execute custody handovers, inspect physical lockers at Gate 1 and Library, and mediate student claims.'}
+              : 'Execute custody handovers, inspect reported items at Gate 1 and Library, and mediate student claims.'}
           </p>
           <button
             onClick={() => setActiveTab('admin')}
@@ -170,7 +170,7 @@ export const ProfileScreen: React.FC = () => {
           <h3 className="font-heading font-bold text-xs text-slate-500 uppercase tracking-wider">
             Active Verified Session
           </h3>
-          <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full flex items-center gap-1">
+          <span className="text-[10px] text-[#222022] font-bold bg-[#C3D809]/30 border border-[#C3D809] px-2 py-0.5 rounded-full flex items-center gap-1">
             <span className="material-symbols-outlined text-[12px]">lock</span>
             Identity Protected
           </span>
@@ -253,7 +253,7 @@ export const ProfileScreen: React.FC = () => {
               type="checkbox"
               checked={geofenceEnabled}
               onChange={() => setGeofenceEnabled(!geofenceEnabled)}
-              className="w-4 h-4 accent-emerald-600 rounded"
+              className="w-4 h-4 accent-[#222022] rounded"
             />
           </div>
 
@@ -269,7 +269,7 @@ export const ProfileScreen: React.FC = () => {
               type="checkbox"
               checked={vaultShieldEnabled}
               onChange={() => setVaultShieldEnabled(!vaultShieldEnabled)}
-              className="w-4 h-4 accent-emerald-600 rounded"
+              className="w-4 h-4 accent-[#222022] rounded"
             />
           </div>
 
@@ -296,8 +296,8 @@ export const ProfileScreen: React.FC = () => {
       </div>
 
       {/* Evaluator 8-Act Walkthrough Simulator Button */}
-      <div className="p-4 rounded-2xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white space-y-2 shadow-xs">
-        <div className="flex items-center gap-2 font-bold text-emerald-400 text-sm">
+      <div className="p-4 rounded-2xl bg-[#222022] text-white space-y-2 shadow-xs border border-white/10">
+        <div className="flex items-center gap-2 font-bold text-[#C3D809] text-sm">
           <span className="material-symbols-outlined text-[20px]">play_circle</span>
           <span>Section 75 Interactive Walkthrough</span>
         </div>
@@ -306,7 +306,7 @@ export const ProfileScreen: React.FC = () => {
         </p>
         <button
           onClick={openWalkthrough}
-          className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+          className="w-full py-2.5 bg-[#C3D809] hover:bg-[#b0c408] text-[#222022] font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors"
         >
           <span>Launch 8-Act Walkthrough Simulator</span>
           <span className="material-symbols-outlined text-[16px]">arrow_forward</span>

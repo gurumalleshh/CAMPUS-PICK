@@ -43,8 +43,8 @@ export const LifecycleWalkthroughModal: React.FC = () => {
     },
     {
       act: 3,
-      title: 'Act 3: Discovery & Safe Locker Deposit',
-      desc: 'Student Rahul K. (Mech Dept) spots the laptop, logs a Found report, and deposits it into Smart Locker B-12 supervised by Campus Security.',
+      title: 'Act 3: Discovery & Security Handover',
+      desc: 'Student Rahul K. (Mech Dept) spots the laptop, logs a Found report, and hands it over to Campus Security for safekeeping.',
       role: 'Rahul K. (Finder)',
       actionText: 'View Campus Feed',
       onAction: () => {
@@ -120,10 +120,10 @@ export const LifecycleWalkthroughModal: React.FC = () => {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-emerald-600 text-[22px]">
+            <span className="material-symbols-outlined text-[#222022] text-[22px]">
               route
             </span>
-            <h3 className="font-heading font-bold text-base text-[#0b241c]">
+            <h3 className="font-heading font-bold text-base text-[#222022]">
               Campus Pick End-to-End Walkthrough
             </h3>
           </div>
@@ -138,7 +138,7 @@ export const LifecycleWalkthroughModal: React.FC = () => {
         {/* Step Indicator */}
         <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
           <span>Act {walkthroughStep} of 8</span>
-          <span className="text-emerald-700 font-bold">PESCE Mandya Trust Protocol</span>
+          <span className="text-[#222022] font-bold">PESCE Mandya Trust Protocol</span>
         </div>
 
         {/* Stepper Dots */}
@@ -149,9 +149,9 @@ export const LifecycleWalkthroughModal: React.FC = () => {
               onClick={() => setWalkthroughStep(a.act)}
               className={`h-1.5 flex-1 rounded-full cursor-pointer transition-all ${
                 walkthroughStep === a.act
-                  ? 'bg-emerald-600'
+                  ? 'bg-[#222022]'
                   : walkthroughStep > a.act
-                  ? 'bg-emerald-300'
+                  ? 'bg-[#C3D809]'
                   : 'bg-slate-200'
               }`}
             />
@@ -161,10 +161,10 @@ export const LifecycleWalkthroughModal: React.FC = () => {
         {/* Card Body */}
         <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
           <div className="flex items-center justify-between">
-            <h4 className="font-heading font-bold text-sm text-[#0b241c]">
+            <h4 className="font-heading font-bold text-sm text-[#222022]">
               {currentAct.title}
             </h4>
-            <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
+            <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-[#C3D809]/30 text-[#222022] border border-[#C3D809]">
               {currentAct.role}
             </span>
           </div>
@@ -176,7 +176,7 @@ export const LifecycleWalkthroughModal: React.FC = () => {
           <div className="pt-2">
             <button
               onClick={currentAct.onAction}
-              className="w-full py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer transition-colors shadow-xs"
+              className="w-full py-2 bg-[#222022] hover:bg-black text-[#C3D809] font-bold rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer transition-colors shadow-xs"
             >
               <span>{currentAct.actionText}</span>
               <span className="material-symbols-outlined text-[15px]">open_in_new</span>
@@ -197,7 +197,7 @@ export const LifecycleWalkthroughModal: React.FC = () => {
           <button
             onClick={nextWalkthroughStep}
             disabled={walkthroughStep === 8}
-            className="px-4 py-1.5 bg-[#0b241c] text-white hover:bg-emerald-950 rounded-xl text-xs font-bold disabled:opacity-40 cursor-pointer shadow-xs"
+            className="px-4 py-1.5 bg-[#222022] text-[#C3D809] hover:bg-black rounded-xl text-xs font-bold disabled:opacity-40 cursor-pointer shadow-xs"
           >
             Next Act →
           </button>

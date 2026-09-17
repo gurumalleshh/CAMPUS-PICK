@@ -301,7 +301,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       timestamp: 'Today, 3:52 PM',
       actor: 'Rahul K.',
       action: 'REPORT_CREATED',
-      details: 'Found Report #CP-2026-00148 secured in Smart Locker B-12.',
+      details: 'Found Report #CP-2026-00148 submitted and held for handover.',
     },
     {
       id: 'log_3',
@@ -360,7 +360,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         senderId: 'usr_rahul',
         senderName: 'Rahul K.',
         senderRole: 'Mechanical Dept (Finder)',
-        content: 'Awesome! It is in Locker B-12 with the Linux sticker on the palmrest.',
+        content: 'Awesome! It is safely kept at the desk with the Linux sticker on the palmrest.',
         timestamp: '4:30 PM',
       },
     ],
@@ -1289,7 +1289,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         senderName = "Officer R. Nair";
         senderRole = "Campus Security (Badge #CS-409)";
         senderId = "usr_nair";
-        replyContent = "Officer Nair here. The custody locker is ready. Please present your PESCE USN on arrival.";
+        replyContent = "Officer Nair here. The item is held securely at the duty desk. Please present your PESCE USN on arrival.";
       } else if (matchId === 'chat_sarah') {
         senderName = "Sarah J.";
         senderRole = "Computer Science (Student)";
@@ -1307,14 +1307,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         replyContent = "Prof. Divya here. I am in the Mathematics Tutorial Hall on the 1st floor if you need to meet.";
       } else {
         // Default match_001 (Rahul K. & Lenovo ThinkPad)
-        if (lower.includes('meet') || lower.includes('gate') || lower.includes('kiosk') || lower.includes('time')) {
-          replyContent = "Sounds perfect! Officer Nair is right here at Gate 1 Safe Kiosk. Let's do the handover!";
+        if (lower.includes('meet') || lower.includes('gate') || lower.includes('post') || lower.includes('time')) {
+          replyContent = "Sounds perfect! Officer Nair is right here at Gate 1 Security Post. Let's do the handover!";
         } else if (lower.includes('sticker') || lower.includes('serial') || lower.includes('tux')) {
           replyContent = "Yes, exactly! It has the Linux Tux sticker right on the palmrest, totally intact.";
         } else if (lower.includes('thank') || lower.includes('thanks')) {
           replyContent = "Always glad to help a fellow student at PESCE! Glad you got it back.";
         } else {
-          replyContent = "Received! Let me know when you reach Gate 1 Security Kiosk so we can confirm the return.";
+          replyContent = "Received! Let me know when you reach Gate 1 Security Post so we can confirm the return.";
         }
       }
 

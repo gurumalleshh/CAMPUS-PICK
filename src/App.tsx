@@ -71,7 +71,7 @@ const MainAppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f7f5] text-[#0b241c] flex flex-col font-body selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-[#f8f9fa] text-[#222022] flex flex-col font-body selection:bg-[#C3D809]/40 selection:text-[#222022]">
       {/* Top Fixed Header */}
       <Header />
 

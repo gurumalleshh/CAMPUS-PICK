@@ -53,11 +53,11 @@ export const HomeScreen: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[#0b241c] tracking-tight">
+            <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[#222022] tracking-tight">
               Good afternoon, {currentUser.displayName.split(' ')[0]} 👋
             </h1>
           </div>
-          <p className="text-xs sm:text-sm text-[#3d4a42] font-medium mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-600 font-medium mt-0.5">
             {currentUser.department ? `${currentUser.department} • ` : ''}
             {currentUser.semester || currentUser.role.toUpperCase()} • {INSTITUTION_INFO.shortName}
           </p>
@@ -66,10 +66,10 @@ export const HomeScreen: React.FC = () => {
         {/* Quick Civic Points Badge */}
         <button
           onClick={() => setActiveTab('heroes')}
-          className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold hover:bg-emerald-100 active:scale-95 transition-all cursor-pointer shadow-2xs"
+          className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#222022] border border-[#222022] text-[#C3D809] text-xs font-bold hover:bg-[#333033] active:scale-95 transition-all cursor-pointer shadow-2xs"
           aria-label="View Civic Points and Rank"
         >
-          <span className="material-symbols-outlined text-[16px] text-emerald-600">military_tech</span>
+          <span className="material-symbols-outlined text-[16px] text-[#C3D809]">military_tech</span>
           <span>Rank #{currentUser.rank || 7} • {currentUser.points} pts</span>
         </button>
       </div>
@@ -77,14 +77,14 @@ export const HomeScreen: React.FC = () => {
       {/* 2. Top Grid: Institutional Motto Banner + Dual Quick Action Cards */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         {/* Banner (Full width on mobile, 7 cols on tablet/desktop) */}
-        <div className="md:col-span-7 lg:col-span-8 relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#064e3b] via-[#043e2e] to-[#022c22] text-white p-5 sm:p-6 shadow-sm border border-emerald-800/40 flex flex-col justify-between">
-          <div className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-emerald-400/10 blur-2xl pointer-events-none" />
+        <div className="md:col-span-7 lg:col-span-8 relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#222022] via-[#2c292c] to-[#181618] text-white p-5 sm:p-6 shadow-sm border border-[#3d3a3d] flex flex-col justify-between">
+          <div className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-[#C3D809]/10 blur-2xl pointer-events-none" />
           <div className="relative z-10 flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-700/60">
+              <span className="text-[10px] uppercase font-black tracking-widest text-[#222022] bg-[#C3D809] px-2.5 py-0.5 rounded-full border border-[#C3D809]">
                 CAMPUS RECOVERY GUARANTEE
               </span>
-              <span className="text-[11px] text-emerald-200/80 font-mono">
+              <span className="text-[11px] text-[#C3D809] font-mono font-bold">
                 14 ACADEMIC BLOCKS
               </span>
             </div>
@@ -94,18 +94,18 @@ export const HomeScreen: React.FC = () => {
             </h2>
 
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-xl">
-              Smart multi-factor item correlation and secure custody handovers monitored by Campus Security at Gate 1 Safe Exchange Kiosk.
+              Smart multi-factor item correlation and secure custody handovers monitored by Campus Security at Gate 1 Duty Desk.
             </p>
 
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2 text-[11px] sm:text-xs text-emerald-300/90 font-medium">
-              <span className="flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                16 Safe Smart Lockers Active
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2 text-[11px] sm:text-xs text-slate-300 font-medium">
+              <span className="flex items-center gap-1.5 text-[#C3D809] font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C3D809] animate-pulse" />
+                Live Campus Geofence Active
               </span>
               <span>•</span>
               <span>Avg Return: 42 Mins</span>
               <span>•</span>
-              <span className="text-amber-300 font-semibold">PESCE Mandya Trust Network</span>
+              <span className="text-[#C3D809] font-bold">PESCE Mandya Trust Network</span>
             </div>
           </div>
         </div>
@@ -122,10 +122,10 @@ export const HomeScreen: React.FC = () => {
               <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
                 <span className="material-symbols-outlined text-[22px]">search</span>
               </div>
-              <span className="font-heading font-bold text-[15px] text-[#0b241c] block">
+              <span className="font-heading font-bold text-[15px] text-[#222022] block">
                 Report Lost
               </span>
-              <span className="text-xs text-[#3d4a42] mt-0.5 line-clamp-1 sm:line-clamp-2">
+              <span className="text-xs text-slate-600 mt-0.5 line-clamp-1 sm:line-clamp-2">
                 Misplaced your calculator, ID, or laptop?
               </span>
             </div>
@@ -138,23 +138,23 @@ export const HomeScreen: React.FC = () => {
           {/* Report Found */}
           <button
             onClick={() => openReportModal('FOUND')}
-            className="group relative flex flex-col justify-between p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-emerald-500 hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="group relative flex flex-col justify-between p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-[#222022] hover:shadow-md transition-all text-left active:scale-[0.98] cursor-pointer focus-visible:ring-2 focus-visible:ring-[#C3D809]"
             aria-label="Report Found Item"
           >
             <div>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-[#222022] text-[#C3D809] flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
                 <span className="material-symbols-outlined text-[22px]">front_hand</span>
               </div>
-              <span className="font-heading font-bold text-[15px] text-[#0b241c] block">
+              <span className="font-heading font-bold text-[15px] text-[#222022] block">
                 Report Found
               </span>
-              <span className="text-xs text-[#3d4a42] mt-0.5 line-clamp-1 sm:line-clamp-2">
+              <span className="text-xs text-slate-600 mt-0.5 line-clamp-1 sm:line-clamp-2">
                 Spotted or picked up an item on campus?
               </span>
             </div>
-            <div className="mt-2.5 flex items-center text-xs font-bold text-emerald-700 gap-1">
+            <div className="mt-2.5 flex items-center text-xs font-extrabold text-[#222022] gap-1">
               <span>Turn in & earn points</span>
-              <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[14px] text-[#222022]">arrow_forward</span>
             </div>
           </button>
         </div>
@@ -179,15 +179,15 @@ export const HomeScreen: React.FC = () => {
                   : 'dashboard'
               )
             }
-            className="w-full text-left p-4 rounded-3xl bg-white border border-slate-200 hover:border-emerald-400 hover:shadow-xs transition-all cursor-pointer group"
+            className="w-full text-left p-4 rounded-3xl bg-white border border-slate-200 hover:border-[#222022] hover:shadow-xs transition-all cursor-pointer group"
           >
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
+                <span className="w-8 h-8 rounded-xl bg-[#222022] text-[#C3D809] flex items-center justify-center">
                   <span className="material-symbols-outlined text-[18px]">query_stats</span>
                 </span>
                 <div>
-                  <h3 className="font-heading font-bold text-sm text-[#0b241c] group-hover:text-emerald-800 transition-colors">
+                  <h3 className="font-heading font-bold text-sm text-[#222022] group-hover:text-[#222022] transition-colors">
                     {currentUser.role === 'faculty'
                       ? 'Faculty Departmental & Campus Dashboard'
                       : 'Student Campus Lost & Found Dashboard'}
@@ -197,16 +197,16 @@ export const HomeScreen: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <span className="material-symbols-outlined text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all text-[20px]">
+              <span className="material-symbols-outlined text-slate-400 group-hover:text-[#222022] group-hover:translate-x-0.5 transition-all text-[20px]">
                 arrow_forward
               </span>
             </div>
 
             <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-100 text-center">
-              <div className="p-2 rounded-xl bg-emerald-50/70 border border-emerald-100">
-                <span className="text-[10px] font-bold text-emerald-800 uppercase block">Found</span>
-                <span className="font-heading font-extrabold text-base text-emerald-900">{found}</span>
-                <span className="text-[9px] text-emerald-700 block">in custody</span>
+              <div className="p-2 rounded-xl bg-[#C3D809]/15 border border-[#C3D809]/30">
+                <span className="text-[10px] font-bold text-[#222022] uppercase block">Found</span>
+                <span className="font-heading font-extrabold text-base text-[#222022]">{found}</span>
+                <span className="text-[9px] text-slate-600 block">in custody</span>
               </div>
               <div className="p-2 rounded-xl bg-amber-50/70 border border-amber-100">
                 <span className="text-[10px] font-bold text-amber-800 uppercase block">Lost</span>
@@ -218,10 +218,10 @@ export const HomeScreen: React.FC = () => {
                 <span className="font-heading font-extrabold text-base text-blue-900">{returned}</span>
                 <span className="text-[9px] text-blue-700 block">reunited</span>
               </div>
-              <div className="p-2 rounded-xl bg-emerald-900 text-white border border-emerald-800">
-                <span className="text-[10px] font-bold text-emerald-200 uppercase block">Recovery</span>
+              <div className="p-2 rounded-xl bg-[#222022] text-[#C3D809] border border-[#222022]">
+                <span className="text-[10px] font-bold text-[#C3D809] uppercase block">Recovery</span>
                 <span className="font-heading font-extrabold text-base text-white">{recoveryRate}%</span>
-                <span className="text-[9px] text-emerald-300 block">{recovered}/{total} secured</span>
+                <span className="text-[9px] text-slate-300 block">{recovered}/{total} secured</span>
               </div>
             </div>
           </button>
@@ -272,20 +272,20 @@ export const HomeScreen: React.FC = () => {
 
       {/* 5. Potential Match Banner (Telemetry Engine) */}
       {pendingMatch && (
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-900 to-teal-950 text-white border border-emerald-700/60 shadow-sm flex flex-col gap-3">
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-[#222022] to-[#2d2a2d] text-white border border-[#3d3a3d] shadow-sm flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+              <span className="w-2 h-2 rounded-full bg-[#C3D809] animate-ping" />
+              <span className="text-xs font-bold uppercase tracking-wider text-[#C3D809]">
                 Potential Match Detected • {pendingMatch.confidenceScore}% Similarity
               </span>
             </div>
-            <span className="text-[10px] font-bold bg-amber-400 text-amber-950 px-2 py-0.5 rounded tracking-wide">
+            <span className="text-[10px] font-black bg-[#C3D809] text-[#222022] px-2 py-0.5 rounded tracking-wide">
               MATCH ≠ OWNERSHIP
             </span>
           </div>
 
-          <div className="flex items-center justify-between gap-3 text-xs bg-black/20 p-2.5 rounded-xl border border-white/10">
+          <div className="flex items-center justify-between gap-3 text-xs bg-black/30 p-2.5 rounded-xl border border-white/10">
             <div>
               <p className="font-semibold text-slate-100">
                 {pendingMatch.lostReport.itemName}
@@ -294,13 +294,13 @@ export const HomeScreen: React.FC = () => {
                 Lost in {pendingMatch.lostReport.location.room}
               </p>
             </div>
-            <span className="material-symbols-outlined text-emerald-400">sync_alt</span>
+            <span className="material-symbols-outlined text-[#C3D809]">sync_alt</span>
             <div className="text-right">
               <p className="font-semibold text-slate-100">
                 {pendingMatch.foundReport.itemName}
               </p>
               <p className="text-[11px] text-slate-300">
-                Turned into {pendingMatch.foundReport.location.areaDescription || 'Safe Hub'}
+                Found at {pendingMatch.foundReport.location.areaDescription || pendingMatch.foundReport.location.room}
               </p>
             </div>
           </div>
@@ -311,7 +311,7 @@ export const HomeScreen: React.FC = () => {
                 setSelectedMatch(pendingMatch);
                 setActiveTab('matches');
               }}
-              className="w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all cursor-pointer"
+              className="w-full py-2 bg-[#C3D809] hover:bg-[#b0c306] text-[#222022] font-black rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all cursor-pointer"
             >
               <span>Review Match & Verify Ownership</span>
               <span className="material-symbols-outlined text-[16px]">verified_user</span>
@@ -324,16 +324,16 @@ export const HomeScreen: React.FC = () => {
       <div className="space-y-3 pt-1">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-heading text-lg font-bold text-[#0b241c]">
+            <h2 className="font-heading text-lg font-bold text-[#222022]">
               Campus Activity Feed
             </h2>
-            <p className="text-xs text-[#3d4a42]">
+            <p className="text-xs text-slate-600">
               Live Lost & Found register across PESCE Mandya
             </p>
           </div>
           <button
             onClick={() => setActiveTab('map')}
-            className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer"
+            className="text-xs font-bold text-[#222022] hover:text-[#000000] flex items-center gap-1 cursor-pointer"
           >
             <span>View on Map</span>
             <span className="material-symbols-outlined text-[15px]">map</span>
@@ -350,7 +350,7 @@ export const HomeScreen: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search items, categories, rooms (e.g. ThinkPad, CS-204, Wallet)..."
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-[#0b241c] placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-[#222022] placeholder:text-slate-400 focus:outline-none focus:border-[#222022] focus:ring-2 focus:ring-[#C3D809]/40 shadow-2xs"
           />
           {searchQuery && (
             <button
@@ -375,10 +375,10 @@ export const HomeScreen: React.FC = () => {
             <button
               key={pill.id}
               onClick={() => setActiveFilter(pill.id)}
-              className={`px-3 py-1.5 rounded-full font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
                 activeFilter === pill.id
-                  ? 'bg-[#0b241c] text-white shadow-xs'
-                  : 'bg-white text-[#3d4a42] border border-slate-200 hover:bg-slate-50'
+                  ? 'bg-[#222022] text-[#C3D809] shadow-xs'
+                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
               }`}
             >
               {pill.label}
@@ -392,7 +392,7 @@ export const HomeScreen: React.FC = () => {
             <span className="material-symbols-outlined text-[36px] text-slate-300">
               search_off
             </span>
-            <p className="font-semibold text-sm text-[#0b241c] mt-2">
+            <p className="font-semibold text-sm text-[#222022] mt-2">
               No matching reports found
             </p>
             <p className="text-xs text-slate-400 mt-1">
@@ -400,7 +400,7 @@ export const HomeScreen: React.FC = () => {
             </p>
             <button
               onClick={() => openReportModal('LOST')}
-              className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 cursor-pointer"
+              className="mt-3 px-4 py-2 bg-[#222022] text-[#C3D809] rounded-xl text-xs font-bold hover:bg-[#333033] cursor-pointer"
             >
               Report Missing Item
             </button>
@@ -411,7 +411,7 @@ export const HomeScreen: React.FC = () => {
               <div
                 key={report.id}
                 onClick={() => setSelectedReportDetail(report)}
-                className="bg-white rounded-2xl border border-slate-200 p-4 hover:border-emerald-300 hover:shadow-xs transition-all cursor-pointer flex gap-3.5 items-start group"
+                className="bg-white rounded-2xl border border-slate-200 p-4 hover:border-[#222022] hover:shadow-xs transition-all cursor-pointer flex gap-3.5 items-start group"
               >
                 {/* Thumbnail / Category Icon */}
                 <div className="w-16 h-16 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center relative">
@@ -436,7 +436,7 @@ export const HomeScreen: React.FC = () => {
                     className={`absolute top-1 left-1 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase ${
                       report.type === 'LOST'
                         ? 'bg-rose-600 text-white'
-                        : 'bg-emerald-600 text-white'
+                        : 'bg-[#222022] text-[#C3D809]'
                     }`}
                   >
                     {report.type}
@@ -449,29 +449,29 @@ export const HomeScreen: React.FC = () => {
                     <span className="font-mono text-[10px] text-slate-400 font-semibold">
                       {report.ticketNumber}
                     </span>
-                    <span className="text-[10px] text-[#3d4a42]/70 font-medium">
+                    <span className="text-[10px] text-slate-500 font-medium">
                       {report.eventDate}, {report.eventTime}
                     </span>
                   </div>
 
-                  <h3 className="font-heading font-bold text-[15px] text-[#0b241c] truncate mt-0.5 group-hover:text-emerald-700 transition-colors">
+                  <h3 className="font-heading font-bold text-[15px] text-[#222022] truncate mt-0.5 group-hover:text-[#222022] transition-colors">
                     {report.itemName}
                   </h3>
 
-                  <p className="text-xs text-[#3d4a42] line-clamp-2 mt-0.5">
+                  <p className="text-xs text-slate-600 line-clamp-2 mt-0.5">
                     {report.description}
                   </p>
 
-                  <div className="flex items-center gap-3 mt-2 text-[11px] text-[#3d4a42]/80">
+                  <div className="flex items-center gap-3 mt-2 text-[11px] text-slate-600">
                     <span className="flex items-center gap-1 font-medium truncate">
-                      <span className="material-symbols-outlined text-[14px] text-emerald-600 shrink-0">
+                      <span className="material-symbols-outlined text-[14px] text-[#222022] shrink-0">
                         location_on
                       </span>
                       {report.location.room} • {report.location.building.split('(')[0]}
                     </span>
 
                     {report.status === 'RETURNED' ? (
-                      <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold text-[10px]">
+                      <span className="px-2 py-0.5 bg-[#C3D809]/20 text-[#222022] border border-[#C3D809]/40 rounded font-black text-[10px]">
                         ✓ RETURNED
                       </span>
                     ) : report.status === 'POTENTIAL_MATCH' ? (
@@ -494,13 +494,13 @@ export const HomeScreen: React.FC = () => {
             <span className="material-symbols-outlined text-amber-500 text-[22px]">
               emoji_events
             </span>
-            <h2 className="font-heading font-bold text-sm text-[#0b241c]">
+            <h2 className="font-heading font-bold text-sm text-[#222022]">
               Campus Heroes • Integrity Leaderboard
             </h2>
           </div>
           <button
             onClick={() => setActiveTab('heroes')}
-            className="text-xs font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer"
+            className="text-xs font-bold text-[#222022] hover:underline cursor-pointer"
           >
             View All →
           </button>
@@ -509,30 +509,30 @@ export const HomeScreen: React.FC = () => {
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
             <span className="text-xs font-bold text-amber-600">🥇 1st</span>
-            <p className="text-xs font-bold text-[#0b241c] truncate mt-0.5">Ananya K.</p>
+            <p className="text-xs font-bold text-[#222022] truncate mt-0.5">Ananya K.</p>
             <p className="text-[10px] text-slate-500">18 Returns</p>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
             <span className="text-xs font-bold text-slate-500">🥈 2nd</span>
-            <p className="text-xs font-bold text-[#0b241c] truncate mt-0.5">Rahul M.</p>
+            <p className="text-xs font-bold text-[#222022] truncate mt-0.5">Rahul M.</p>
             <p className="text-[10px] text-slate-500">15 Returns</p>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
             <span className="text-xs font-bold text-amber-700">🥉 3rd</span>
-            <p className="text-xs font-bold text-[#0b241c] truncate mt-0.5">Priya S.</p>
+            <p className="text-xs font-bold text-[#222022] truncate mt-0.5">Priya S.</p>
             <p className="text-[10px] text-slate-500">13 Returns</p>
           </div>
         </div>
 
         {/* User rank callout */}
-        <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80 flex items-center justify-between text-xs">
+        <div className="p-2.5 rounded-xl bg-[#222022] text-white border border-[#3d3a3d] flex items-center justify-between text-xs">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-emerald-900">Your Rank: #7 (Sarah J.)</span>
-            <span className="text-emerald-700">• 8 returns</span>
+            <span className="font-bold text-white">Your Rank: <span className="text-[#C3D809]">#7 ({currentUser.displayName})</span></span>
+            <span className="text-slate-300">• {currentUser.points || 120} pts</span>
           </div>
           <button
             onClick={() => setActiveTab('heroes')}
-            className="font-bold text-emerald-800 hover:underline"
+            className="font-bold text-[#C3D809] hover:underline cursor-pointer"
           >
             View Certificate
           </button>
@@ -549,7 +549,7 @@ export const HomeScreen: React.FC = () => {
                   className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${
                     selectedReportDetail.type === 'LOST'
                       ? 'bg-rose-600 text-white'
-                      : 'bg-emerald-600 text-white'
+                      : 'bg-[#222022] text-[#C3D809]'
                   }`}
                 >
                   {selectedReportDetail.type}
@@ -577,7 +577,7 @@ export const HomeScreen: React.FC = () => {
             )}
 
             <div>
-              <h2 className="font-heading text-lg font-bold text-[#0b241c]">
+              <h2 className="font-heading text-lg font-bold text-[#222022]">
                 {selectedReportDetail.itemName}
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -635,7 +635,7 @@ export const HomeScreen: React.FC = () => {
                     setSelectedReportDetail(null);
                     setActiveTab('matches');
                   }}
-                  className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold cursor-pointer"
+                  className="flex-1 py-2.5 bg-[#222022] hover:bg-[#333033] text-[#C3D809] rounded-xl text-xs font-black cursor-pointer"
                 >
                   This is Mine (Claim)
                 </button>
@@ -645,7 +645,7 @@ export const HomeScreen: React.FC = () => {
                     setSelectedReportDetail(null);
                     openReportModal('FOUND');
                   }}
-                  className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold cursor-pointer"
+                  className="flex-1 py-2.5 bg-[#C3D809] hover:bg-[#b0c306] text-[#222022] rounded-xl text-xs font-black cursor-pointer"
                 >
                   I Found This Item
                 </button>

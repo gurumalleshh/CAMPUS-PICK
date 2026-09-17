@@ -13,16 +13,16 @@ export const ToastContainer: React.FC = () => {
           key={toast.id}
           className={`pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium transition-all animate-in fade-in slide-in-from-bottom-3 duration-200 ${
             toast.type === 'success'
-              ? 'bg-emerald-900 text-white border-emerald-700 shadow-emerald-950/20'
+              ? 'bg-[#222022] text-[#C3D809] border-[#C3D809]/50 shadow-[#222022]/30'
               : toast.type === 'error'
               ? 'bg-rose-900 text-white border-rose-700 shadow-rose-950/20'
               : toast.type === 'warning'
               ? 'bg-amber-900 text-amber-50 border-amber-700 shadow-amber-950/20'
-              : 'bg-[#0b241c] text-white border-emerald-800/40 shadow-slate-900/30'
+              : 'bg-[#222022] text-white border-white/20 shadow-slate-900/30'
           }`}
         >
           {toast.icon && (
-            <span className="material-symbols-outlined text-[20px] text-emerald-300 shrink-0">
+            <span className="material-symbols-outlined text-[20px] text-[#C3D809] shrink-0">
               {toast.icon}
             </span>
           )}
